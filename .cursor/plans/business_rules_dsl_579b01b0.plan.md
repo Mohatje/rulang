@@ -4,54 +4,54 @@ overview: Implement a lightweight business rules DSL using ANTLR4 for parsing, s
 todos:
   - id: setup-antlr
     content: Set up project structure and ANTLR4 dependencies
-    status: pending
+    status: completed
   - id: write-grammar
     content: Write BusinessRules.g4 grammar file
-    status: pending
+    status: completed
     dependencies:
       - setup-antlr
   - id: generate-parser
     content: Generate Python parser from ANTLR4 grammar
-    status: pending
+    status: completed
     dependencies:
       - write-grammar
   - id: path-resolver
     content: Implement path resolver for flexible entity access
-    status: pending
+    status: completed
     dependencies:
       - setup-antlr
   - id: exceptions
     content: Define custom exception classes
-    status: pending
+    status: completed
     dependencies:
       - setup-antlr
   - id: visitor
     content: Implement AST visitor/interpreter with read/write tracking
-    status: pending
+    status: completed
     dependencies:
       - generate-parser
       - path-resolver
       - exceptions
   - id: dependency-graph
     content: Implement dependency graph builder with cycle detection
-    status: pending
+    status: completed
     dependencies:
       - visitor
   - id: workflows
     content: Implement workflow registry with read/write dependency declarations
-    status: pending
+    status: completed
     dependencies:
       - setup-antlr
   - id: engine
     content: Build RuleEngine facade with rule list support
-    status: pending
+    status: completed
     dependencies:
       - visitor
       - workflows
       - dependency-graph
   - id: tests
     content: Add comprehensive test suite
-    status: pending
+    status: completed
     dependencies:
       - engine
 ---
