@@ -354,7 +354,7 @@ engine.add_rules([
     "entity.subject matches 'INV-\\d+' or entity.has_attachments and entity.attachments endswith '.pdf' => ret 'invoice'",
 
     # Spam detection
-    "entity.from_domain not in ['company.com'] and entity.subject contains 'winner' => ret 'spam'",
+    "entity.from_domain not in ['company.com'] and lower(entity.subject) contains 'winner' => ret 'spam'",
 
     # Default
     "true => ret 'normal'"
