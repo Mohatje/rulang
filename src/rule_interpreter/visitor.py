@@ -94,12 +94,13 @@ class RuleAnalyzer(BaseVisitor):
     Used for dependency graph construction.
     """
 
-    def __init__(self):
+    def __init__(self, entity_name: str = "entity"):
         self.reads: set[str] = set()
         self.writes: set[str] = set()
         self.workflow_calls: set[str] = set()
         self._in_condition = False
         self._in_assignment_target = False
+        self._entity_name = entity_name
 
     def visitRule_(self, ctx: BusinessRulesParser.Rule_Context):
         # Visit condition (left side) - all paths here are reads
@@ -153,7 +154,12 @@ class RuleAnalyzer(BaseVisitor):
         return None
 
     def _get_path_string(self, ctx: BusinessRulesParser.PathContext) -> str:
-        """Convert a path context to a string representation."""
+        """Convert a path context to a string representation.
+
+        Normalizes paths to always include the entity prefix for consistent
+        dependency tracking. This allows both 'entity.age' and 'age' syntax
+        to produce the same path string.
+        """
         parts = [ctx.IDENTIFIER().getText()]
 
         for segment in ctx.pathSegment():
@@ -162,6 +168,10 @@ class RuleAnalyzer(BaseVisitor):
             elif segment.LBRACKET():
                 # For analysis, we just note that there's indexing
                 parts.append("[*]")
+
+        # Normalize: if path doesn't start with entity_name, prepend it
+        if parts[0] != self._entity_name:
+            parts = [self._entity_name] + parts
 
         return ".".join(parts)
 
@@ -608,12 +618,14 @@ class RuleInterpreter(BaseVisitor):
         return parts, null_safe_indices
 
 
-def parse_rule(rule_text: str) -> ParsedRule:
+def parse_rule(rule_text: str, entity_name: str = "entity") -> ParsedRule:
     """
     Parse a rule string and return a ParsedRule with analysis.
 
     Args:
         rule_text: The rule string to parse
+        entity_name: The name of the entity variable (default: "entity").
+                    Used to normalize paths in dependency analysis.
 
     Returns:
         ParsedRule with parse tree and read/write analysis
@@ -638,7 +650,7 @@ def parse_rule(rule_text: str) -> ParsedRule:
         raise RuleSyntaxError(rule_text, msg, line, column)
 
     # Analyze the rule for reads/writes
-    analyzer = RuleAnalyzer()
+    analyzer = RuleAnalyzer(entity_name)
     analyzer.visit(tree)
 
     return ParsedRule(

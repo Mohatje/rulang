@@ -12,6 +12,7 @@ dependencies = [
 dev = [
     "antlr4-tools>=0.2.2",
     "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
 ]
 
 [build-system]
@@ -24,3 +25,10 @@ packages = ["src/rule_interpreter"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+]

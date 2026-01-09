@@ -92,6 +92,27 @@ class PathResolver:
         """Add a variable to the resolution context."""
         self._context[name] = value
 
+    def normalize_path(self, path_parts: list[str | int]) -> list[str | int]:
+        """
+        Normalize a path by prepending the entity_name if the first identifier is not in context.
+
+        This allows users to write shorter paths like 'age' instead of 'entity.age'.
+
+        Args:
+            path_parts: List of path components
+
+        Returns:
+            Normalized path with entity_name prepended if needed
+        """
+        if not path_parts:
+            return path_parts
+
+        root_name = path_parts[0]
+        if isinstance(root_name, str) and root_name not in self._context:
+            # Prepend entity_name for implicit entity access
+            return [self.entity_name] + list(path_parts)
+        return path_parts
+
     def resolve(self, path_parts: list[str | int], null_safe_indices: Optional[set[int]] = None) -> Any:
         """
         Resolve a path to get its value.
@@ -113,6 +134,17 @@ class PathResolver:
 
         if null_safe_indices is None:
             null_safe_indices = set()
+
+        # Save original length to detect if normalization added a prefix
+        original_len = len(path_parts)
+
+        # Normalize path (prepend entity_name if first identifier not in context)
+        path_parts = self.normalize_path(path_parts)
+
+        # Adjust null_safe_indices if path was prepended
+        # (indices are 1-based, so if we prepended, we need to shift them by 1)
+        if len(path_parts) > original_len:
+            null_safe_indices = {i + 1 for i in null_safe_indices}
 
         # Get the root from context
         root_name = path_parts[0]
@@ -170,6 +202,9 @@ class PathResolver:
         Raises:
             PathResolutionError: If the path cannot be resolved
         """
+        # Normalize path first (prepend entity_name if needed)
+        path_parts = self.normalize_path(path_parts)
+
         if len(path_parts) < 2:
             raise PathResolutionError(str(path_parts), type(self.entity).__name__, "Cannot assign to root object")
 
