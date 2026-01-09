@@ -7,6 +7,7 @@ Walks the ANTLR parse tree to:
 - Track read/write sets for dependency analysis
 """
 
+import re
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
@@ -25,6 +26,37 @@ from rule_interpreter.exceptions import (
     WorkflowNotFoundError,
 )
 from rule_interpreter.path_resolver import PathResolver
+
+
+# Built-in functions registry
+BUILTIN_FUNCTIONS: dict[str, Callable[..., Any]] = {
+    # String functions
+    "lower": lambda x: str(x).lower() if x is not None else None,
+    "upper": lambda x: str(x).upper() if x is not None else None,
+    "trim": lambda x: str(x).strip() if x is not None else None,
+    "strip": lambda x: str(x).strip() if x is not None else None,
+    # Type coercion
+    "int": lambda x: int(float(x)) if x is not None else None,
+    "float": lambda x: float(x) if x is not None else None,
+    "str": lambda x: str(x) if x is not None else None,
+    "bool": lambda x: bool(x),
+    # Collection functions
+    "len": lambda x: len(x) if x is not None else 0,
+    "first": lambda x: x[0] if x and len(x) > 0 else None,
+    "last": lambda x: x[-1] if x and len(x) > 0 else None,
+    "keys": lambda d: list(d.keys()) if isinstance(d, dict) else [],
+    "values": lambda d: list(d.values()) if isinstance(d, dict) else [],
+    # Math functions
+    "abs": lambda x: abs(x) if x is not None else None,
+    "round": lambda x, n=0: round(x, n) if x is not None else None,
+    "min": lambda *args: min(args) if args else None,
+    "max": lambda *args: max(args) if args else None,
+    # Type checking
+    "is_list": lambda x: isinstance(x, (list, tuple)),
+    "is_string": lambda x: isinstance(x, str),
+    "is_number": lambda x: isinstance(x, (int, float)),
+    "is_none": lambda x: x is None,
+}
 
 
 class RuleSyntaxErrorListener(ErrorListener):
@@ -122,31 +154,14 @@ class RuleAnalyzer(BaseVisitor):
 
     def _get_path_string(self, ctx: BusinessRulesParser.PathContext) -> str:
         """Convert a path context to a string representation."""
-        parts = []
-        children = list(ctx.getChildren())
-        i = 0
-        while i < len(children):
-            child = children[i]
-            token_type = getattr(child, "symbol", None)
-            if token_type:
-                if token_type.type == BusinessRulesParser.IDENTIFIER:
-                    parts.append(child.getText())
-                elif token_type.type == BusinessRulesParser.DOT:
-                    i += 1  # Skip dot, next is identifier
-                    if i < len(children):
-                        parts.append(children[i].getText())
-                elif token_type.type == BusinessRulesParser.LBRACKET:
-                    # For analysis, we just note that there's indexing
-                    # We can't know the exact index statically
-                    parts.append("[*]")
-                    # Skip until RBRACKET
-                    while i < len(children):
-                        child = children[i]
-                        token_type = getattr(child, "symbol", None)
-                        if token_type and token_type.type == BusinessRulesParser.RBRACKET:
-                            break
-                        i += 1
-            i += 1
+        parts = [ctx.IDENTIFIER().getText()]
+
+        for segment in ctx.pathSegment():
+            if segment.IDENTIFIER():
+                parts.append(segment.IDENTIFIER().getText())
+            elif segment.LBRACKET():
+                # For analysis, we just note that there's indexing
+                parts.append("[*]")
 
         return ".".join(parts)
 
@@ -229,17 +244,25 @@ class RuleInterpreter(BaseVisitor):
         return self.visit(ctx.comparison())
 
     def visitComparison(self, ctx: BusinessRulesParser.ComparisonContext) -> Any:
-        left = self.visit(ctx.addExpr(0))
+        left = self.visit(ctx.nullCoalesce(0))
 
-        if len(ctx.addExpr()) == 1:
+        # Unary operators (no right operand)
+        if ctx.IS_EMPTY():
+            return self._is_empty(left)
+        if ctx.EXISTS():
+            return left is not None
+
+        # Check if there's a second operand
+        if len(ctx.nullCoalesce()) == 1:
             return left
 
-        right = self.visit(ctx.addExpr(1))
+        right = self.visit(ctx.nullCoalesce(1))
 
+        # Standard comparison operators
         if ctx.EQ():
-            return left == right
+            return self._compare_eq(left, right)
         elif ctx.NEQ():
-            return left != right
+            return not self._compare_eq(left, right)
         elif ctx.LT():
             return left < right
         elif ctx.GT():
@@ -249,11 +272,135 @@ class RuleInterpreter(BaseVisitor):
         elif ctx.GTE():
             return left >= right
         elif ctx.IN():
-            return left in right
+            return self._check_in(left, right)
         elif ctx.NOT_IN():
-            return left not in right
+            return not self._check_in(left, right)
+        # New string operators
+        elif ctx.CONTAINS():
+            return self._contains(left, right)
+        elif ctx.NOT_CONTAINS():
+            return not self._contains(left, right)
+        elif ctx.STARTS_WITH():
+            return self._starts_with(left, right)
+        elif ctx.ENDS_WITH():
+            return self._ends_with(left, right)
+        elif ctx.MATCHES():
+            return self._matches(left, right)
+        # New list operators
+        elif ctx.CONTAINS_ANY():
+            return self._contains_any(left, right)
+        elif ctx.CONTAINS_ALL():
+            return self._contains_all(left, right)
 
         return left
+
+    # --- Helper methods for operators with list any-satisfies semantics ---
+
+    def _is_empty(self, value: Any) -> bool:
+        """Check if value is None, empty string, or empty collection."""
+        if value is None:
+            return True
+        if isinstance(value, str):
+            return value.strip() == ""
+        if isinstance(value, (list, tuple, set, dict)):
+            return len(value) == 0
+        return False
+
+    def _compare_eq(self, left: Any, right: Any) -> bool:
+        """Equality with list any-satisfies semantics.
+
+        Any-satisfies applies only when one side is a list and the other is not.
+        When both sides are lists, exact equality is used.
+        """
+        left_is_list = isinstance(left, (list, tuple))
+        right_is_list = isinstance(right, (list, tuple))
+
+        # If both are lists, use exact equality
+        if left_is_list and right_is_list:
+            return list(left) == list(right)
+
+        # If left is list and right is scalar, any-satisfies
+        if left_is_list:
+            return any(item == right for item in left)
+
+        # If right is list and left is scalar, any-satisfies
+        if right_is_list:
+            return any(left == item for item in right)
+
+        return left == right
+
+    def _check_in(self, left: Any, right: Any) -> bool:
+        """Membership check with list any-satisfies semantics."""
+        if isinstance(left, (list, tuple)):
+            return any(item in right for item in left)
+        return left in right
+
+    def _contains(self, haystack: Any, needle: Any) -> bool:
+        """Substring check: haystack contains needle."""
+        if haystack is None or needle is None:
+            return False
+        if isinstance(haystack, (list, tuple)):
+            # Any element contains the needle
+            return any(self._contains(item, needle) for item in haystack)
+        return str(needle) in str(haystack)
+
+    def _starts_with(self, value: Any, prefix: Any) -> bool:
+        """Check if value starts with prefix."""
+        if value is None or prefix is None:
+            return False
+        if isinstance(value, (list, tuple)):
+            return any(self._starts_with(item, prefix) for item in value)
+        return str(value).startswith(str(prefix))
+
+    def _ends_with(self, value: Any, suffix: Any) -> bool:
+        """Check if value ends with suffix."""
+        if value is None or suffix is None:
+            return False
+        if isinstance(value, (list, tuple)):
+            return any(self._ends_with(item, suffix) for item in value)
+        return str(value).endswith(str(suffix))
+
+    def _matches(self, value: Any, pattern: Any) -> bool:
+        """Regex match check."""
+        if value is None or pattern is None:
+            return False
+        if isinstance(value, (list, tuple)):
+            return any(self._matches(item, pattern) for item in value)
+        try:
+            return bool(re.search(str(pattern), str(value)))
+        except re.error:
+            return False
+
+    def _contains_any(self, collection: Any, values: Any) -> bool:
+        """Check if collection contains ANY of the values."""
+        if collection is None or values is None:
+            return False
+        if not isinstance(values, (list, tuple)):
+            values = [values]
+        if not isinstance(collection, (list, tuple)):
+            collection = [collection]
+        return any(v in collection for v in values)
+
+    def _contains_all(self, collection: Any, values: Any) -> bool:
+        """Check if collection contains ALL of the values."""
+        if collection is None or values is None:
+            return False
+        if not isinstance(values, (list, tuple)):
+            values = [values]
+        if not isinstance(collection, (list, tuple)):
+            collection = [collection]
+        return all(v in collection for v in values)
+
+    # --- End helper methods ---
+
+    def visitNullCoalesce(self, ctx: BusinessRulesParser.NullCoalesceContext) -> Any:
+        """Handle null coalescing: a ?? b returns a if a is not None, else b."""
+        result = self.visit(ctx.addExpr(0))
+        for i in range(1, len(ctx.addExpr())):
+            if result is not None:
+                return result
+            result = self.visit(ctx.addExpr(i))
+        return result
 
     def visitAddExpr(self, ctx: BusinessRulesParser.AddExprContext) -> Any:
         result = self.visit(ctx.mulExpr(0))
@@ -265,7 +412,10 @@ class RuleInterpreter(BaseVisitor):
             while op_idx < len(children):
                 child = children[op_idx]
                 token = getattr(child, "symbol", None)
-                if token and token.type in (BusinessRulesParser.PLUS, BusinessRulesParser.MINUS):
+                if token and token.type in (
+                    BusinessRulesParser.PLUS,
+                    BusinessRulesParser.MINUS,
+                ):
                     break
                 op_idx += 1
 
@@ -321,10 +471,28 @@ class RuleInterpreter(BaseVisitor):
             return self.visit(ctx.orExpr())
         elif ctx.literal():
             return self.visit(ctx.literal())
+        elif ctx.functionCall():
+            return self.visit(ctx.functionCall())
         elif ctx.path():
             return self.visit(ctx.path())
         elif ctx.workflowCall():
             return self.visit(ctx.workflowCall())
+
+    def visitFunctionCall(self, ctx: BusinessRulesParser.FunctionCallContext) -> Any:
+        """Handle built-in function calls like lower(), len(), int()."""
+        func_name = ctx.IDENTIFIER().getText()
+
+        if func_name not in BUILTIN_FUNCTIONS:
+            raise EvaluationError("", f"Unknown function: {func_name}")
+
+        # Evaluate arguments
+        args = [self.visit(expr) for expr in ctx.orExpr()]
+
+        func = BUILTIN_FUNCTIONS[func_name]
+        try:
+            return func(*args)
+        except Exception as e:
+            raise EvaluationError("", f"Error in {func_name}(): {e}") from e
 
     def visitLiteral(self, ctx: BusinessRulesParser.LiteralContext) -> Any:
         if ctx.NUMBER():
@@ -332,7 +500,8 @@ class RuleInterpreter(BaseVisitor):
             return float(text) if "." in text else int(text)
         elif ctx.STRING():
             text = ctx.STRING().getText()
-            return text[1:-1]  # Remove quotes
+            # Handle escape sequences
+            return text[1:-1].replace("\\n", "\n").replace("\\t", "\t").replace('\\"', '"').replace("\\'", "'").replace("\\\\", "\\")
         elif ctx.TRUE():
             return True
         elif ctx.FALSE():
@@ -346,8 +515,8 @@ class RuleInterpreter(BaseVisitor):
         return [self.visit(expr) for expr in ctx.orExpr()]
 
     def visitPath(self, ctx: BusinessRulesParser.PathContext) -> Any:
-        path_parts = self._get_path_parts(ctx)
-        return self.resolver.resolve(path_parts)
+        path_parts, null_safe_indices = self._get_path_parts(ctx)
+        return self.resolver.resolve(path_parts, null_safe_indices)
 
     def visitWorkflowCall(self, ctx: BusinessRulesParser.WorkflowCallContext) -> Any:
         workflow_name = ctx.STRING().getText()[1:-1]  # Remove quotes
@@ -390,7 +559,7 @@ class RuleInterpreter(BaseVisitor):
         raise ReturnValue(value)
 
     def visitAssignment(self, ctx: BusinessRulesParser.AssignmentContext) -> None:
-        path_parts = self._get_path_parts(ctx.path())
+        path_parts, _ = self._get_path_parts(ctx.path())
         value = self.visit(ctx.orExpr())
         assign_op = ctx.assignOp()
 
@@ -411,43 +580,32 @@ class RuleInterpreter(BaseVisitor):
                 new_value = value
             self.resolver.assign(path_parts, new_value)
 
-    def _get_path_parts(self, ctx: BusinessRulesParser.PathContext) -> list[str | int]:
-        """Convert a path context to a list of parts for the resolver."""
-        parts: list[str | int] = []
-        children = list(ctx.getChildren())
-        i = 0
+    def _get_path_parts(
+        self, ctx: BusinessRulesParser.PathContext
+    ) -> tuple[list[str | int], set[int]]:
+        """Convert a path context to a list of parts for the resolver.
 
-        while i < len(children):
-            child = children[i]
-            token = getattr(child, "symbol", None)
+        Returns:
+            Tuple of (parts list, null_safe_indices set)
+        """
+        parts: list[str | int] = [ctx.IDENTIFIER().getText()]
+        null_safe_indices: set[int] = set()
 
-            if token:
-                if token.type == BusinessRulesParser.IDENTIFIER:
-                    parts.append(child.getText())
-                elif token.type == BusinessRulesParser.DOT:
-                    pass  # Skip, next will be identifier
-                elif token.type == BusinessRulesParser.LBRACKET:
-                    # Find the expression inside brackets
-                    i += 1
-                    if i < len(children):
-                        expr_ctx = children[i]
-                        if hasattr(expr_ctx, "getRuleIndex"):
-                            # It's an expression context
-                            index = self.visit(expr_ctx)
-                            if isinstance(index, (int, float)):
-                                parts.append(int(index))
-                            else:
-                                parts.append(index)
-                    # Skip to RBRACKET
-                    while i < len(children):
-                        child = children[i]
-                        token = getattr(child, "symbol", None)
-                        if token and token.type == BusinessRulesParser.RBRACKET:
-                            break
-                        i += 1
-            i += 1
+        for segment in ctx.pathSegment():
+            if segment.NULL_SAFE_DOT():
+                null_safe_indices.add(len(parts))
+                parts.append(segment.IDENTIFIER().getText())
+            elif segment.DOT():
+                parts.append(segment.IDENTIFIER().getText())
+            elif segment.LBRACKET():
+                # Evaluate the expression inside brackets
+                index = self.visit(segment.orExpr())
+                if isinstance(index, (int, float)):
+                    parts.append(int(index))
+                else:
+                    parts.append(index)
 
-        return parts
+        return parts, null_safe_indices
 
 
 def parse_rule(rule_text: str) -> ParsedRule:
@@ -490,4 +648,3 @@ def parse_rule(rule_text: str) -> ParsedRule:
         writes=analyzer.writes,
         workflow_calls=analyzer.workflow_calls,
     )
-

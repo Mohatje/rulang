@@ -6,10 +6,11 @@ Supports:
 - Objects (using getattr)
 - Dataclasses / Pydantic models
 - List indexing (including negative indices)
+- Null-safe access (?.)
 """
 
 from dataclasses import fields, is_dataclass
-from typing import Any
+from typing import Any, Optional
 
 from rule_interpreter.exceptions import PathResolutionError
 
@@ -91,21 +92,27 @@ class PathResolver:
         """Add a variable to the resolution context."""
         self._context[name] = value
 
-    def resolve(self, path_parts: list[str | int]) -> Any:
+    def resolve(self, path_parts: list[str | int], null_safe_indices: Optional[set[int]] = None) -> Any:
         """
         Resolve a path to get its value.
 
         Args:
             path_parts: List of path components (strings for attributes, ints for indices)
+            null_safe_indices: Set of indices (1-based) where null-safe access (?.) is used.
+                              If the value at a null-safe position is None, returns None
+                              instead of raising an error.
 
         Returns:
-            The resolved value
+            The resolved value, or None if null-safe access encounters None
 
         Raises:
-            PathResolutionError: If the path cannot be resolved
+            PathResolutionError: If the path cannot be resolved (and not null-safe)
         """
         if not path_parts:
             raise PathResolutionError("", type(self.entity).__name__, "Empty path")
+
+        if null_safe_indices is None:
+            null_safe_indices = set()
 
         # Get the root from context
         root_name = path_parts[0]
@@ -120,15 +127,32 @@ class PathResolver:
         current = self._context[root_name]
         path_str = root_name
 
-        for part in path_parts[1:]:
+        for i, part in enumerate(path_parts[1:], start=1):
+            # Check if we should use null-safe access for this segment
+            is_null_safe = i in null_safe_indices
+
+            # If current is None and we're using null-safe access, return None
+            if current is None:
+                if is_null_safe:
+                    return None
+                else:
+                    raise PathResolutionError(
+                        path_str, type(self.entity).__name__, "Cannot access property of None"
+                    )
+
             try:
                 if isinstance(part, int):
                     path_str += f"[{part}]"
                     current = _get_index(current, part)
                 else:
-                    path_str += f".{part}"
+                    if is_null_safe:
+                        path_str += f"?.{part}"
+                    else:
+                        path_str += f".{part}"
                     current = _get_attribute(current, part)
             except (KeyError, AttributeError, IndexError, TypeError) as e:
+                if is_null_safe:
+                    return None
                 raise PathResolutionError(path_str, type(self.entity).__name__, str(e)) from e
 
         return current

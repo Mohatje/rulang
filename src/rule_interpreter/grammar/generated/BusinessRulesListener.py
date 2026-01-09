@@ -62,6 +62,15 @@ class BusinessRulesListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BusinessRulesParser#nullCoalesce.
+    def enterNullCoalesce(self, ctx:BusinessRulesParser.NullCoalesceContext):
+        pass
+
+    # Exit a parse tree produced by BusinessRulesParser#nullCoalesce.
+    def exitNullCoalesce(self, ctx:BusinessRulesParser.NullCoalesceContext):
+        pass
+
+
     # Enter a parse tree produced by BusinessRulesParser#addExpr.
     def enterAddExpr(self, ctx:BusinessRulesParser.AddExprContext):
         pass
@@ -98,6 +107,15 @@ class BusinessRulesListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BusinessRulesParser#functionCall.
+    def enterFunctionCall(self, ctx:BusinessRulesParser.FunctionCallContext):
+        pass
+
+    # Exit a parse tree produced by BusinessRulesParser#functionCall.
+    def exitFunctionCall(self, ctx:BusinessRulesParser.FunctionCallContext):
+        pass
+
+
     # Enter a parse tree produced by BusinessRulesParser#literal.
     def enterLiteral(self, ctx:BusinessRulesParser.LiteralContext):
         pass
@@ -122,6 +140,15 @@ class BusinessRulesListener(ParseTreeListener):
 
     # Exit a parse tree produced by BusinessRulesParser#path.
     def exitPath(self, ctx:BusinessRulesParser.PathContext):
+        pass
+
+
+    # Enter a parse tree produced by BusinessRulesParser#pathSegment.
+    def enterPathSegment(self, ctx:BusinessRulesParser.PathSegmentContext):
+        pass
+
+    # Exit a parse tree produced by BusinessRulesParser#pathSegment.
+    def exitPathSegment(self, ctx:BusinessRulesParser.PathSegmentContext):
         pass
 
 

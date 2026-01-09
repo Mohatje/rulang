@@ -39,6 +39,11 @@ class BusinessRulesVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BusinessRulesParser#nullCoalesce.
+    def visitNullCoalesce(self, ctx:BusinessRulesParser.NullCoalesceContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BusinessRulesParser#addExpr.
     def visitAddExpr(self, ctx:BusinessRulesParser.AddExprContext):
         return self.visitChildren(ctx)
@@ -59,6 +64,11 @@ class BusinessRulesVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BusinessRulesParser#functionCall.
+    def visitFunctionCall(self, ctx:BusinessRulesParser.FunctionCallContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BusinessRulesParser#literal.
     def visitLiteral(self, ctx:BusinessRulesParser.LiteralContext):
         return self.visitChildren(ctx)
@@ -71,6 +81,11 @@ class BusinessRulesVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BusinessRulesParser#path.
     def visitPath(self, ctx:BusinessRulesParser.PathContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BusinessRulesParser#pathSegment.
+    def visitPathSegment(self, ctx:BusinessRulesParser.PathSegmentContext):
         return self.visitChildren(ctx)
 
 

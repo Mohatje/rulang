@@ -10,6 +10,9 @@ A lightweight DSL for business rules in Python, built with ANTLR4.
 - **Cycle Detection**: Warns about circular dependencies and handles them gracefully
 - **Workflow Integration**: Call custom Python functions from rules with dependency declarations
 - **Multiple Evaluation Modes**: First-match or all-match execution
+- **String Operations**: Contains, startswith, endswith, regex matching
+- **Null-Safe Access**: Optional chaining (`?.`) and null coalescing (`??`)
+- **Built-in Functions**: String manipulation, type coercion, collection utilities
 
 ## Installation
 
@@ -48,8 +51,10 @@ condition => action [; action]* [; ret expression]?
 
 ### Conditions (Left Side)
 
+#### Comparison Operators
+
 ```python
-# Comparisons
+# Basic comparisons
 entity.value == 10
 entity.value != 10
 entity.value < 10
@@ -68,13 +73,164 @@ entity.status not in ['deleted']
 
 # Arithmetic
 entity.price * entity.quantity >= 100
+```
 
+#### String Operators
+
+```python
+# Substring check
+entity.subject contains "invoice"
+entity.subject not contains "spam"
+
+# Prefix/suffix matching
+entity.email startswith "admin@"
+entity.filename endswith ".pdf"
+
+# Alternative syntax
+entity.email starts_with "admin@"
+entity.filename ends_with ".pdf"
+
+# Regex matching
+entity.code matches "INV-\\d{4}"
+entity.email matches "^[a-z]+@[a-z]+\\.[a-z]+$"
+```
+
+#### Existence Operators
+
+```python
+# Check if value is not None
+entity.customer_id exists
+
+# Check if value is None, empty string, or empty collection
+entity.notes is_empty
+
+# Negated forms
+not entity.email exists      # same as checking for None
+not entity.items is_empty    # has content
+```
+
+#### List Operators
+
+```python
+# Check if collection contains ANY of the values
+entity.recipients contains_any ["admin@co.com", "support@co.com"]
+
+# Check if collection contains ALL of the values
+entity.tags contains_all ["reviewed", "approved"]
+```
+
+#### Path Access
+
+```python
 # Nested paths
 entity.user.profile.age >= 18
 
-# List indexing
+# List indexing (including negative indices)
 entity.items[0].value > 10
 entity.items[-1].total >= 100
+
+# Null-safe access (returns None instead of error if parent is None)
+entity.user?.profile?.name == "John"
+
+# Null coalescing (provide default for None values)
+entity.nickname ?? "Anonymous"
+entity.config?.timeout ?? 30
+
+# Combined null-safe access with coalescing
+entity.user?.name ?? "Unknown"
+```
+
+### Built-in Functions
+
+#### String Functions
+
+```python
+# Case conversion
+lower(entity.name) == "john"
+upper(entity.code) == "ABC"
+
+# Whitespace removal
+trim(entity.input) != ""
+strip(entity.text) == "hello"  # alias for trim
+```
+
+#### Collection Functions
+
+```python
+# Length
+len(entity.items) > 0
+len(entity.name) >= 3
+
+# First/last element
+first(entity.items) == "apple"
+last(entity.items) == "banana"
+
+# Dictionary operations
+"name" in keys(entity.data)
+"John" in values(entity.data)
+```
+
+#### Type Coercion
+
+```python
+# Convert to integer
+int(entity.quantity) > 100
+int(entity.price) == 99  # truncates decimals
+
+# Convert to float
+float(entity.amount) >= 99.99
+
+# Convert to string
+str(entity.code) == "123"
+
+# Convert to boolean
+bool(entity.value) == true
+```
+
+#### Math Functions
+
+```python
+# Absolute value
+abs(entity.difference) < 10
+
+# Rounding
+round(entity.price, 2) == 99.99
+round(entity.total) == 100  # rounds to integer
+
+# Min/max
+min(entity.a, entity.b, entity.c) > 0
+max(entity.x, entity.y) < 100
+```
+
+#### Type Checking
+
+```python
+# Check types
+is_list(entity.items) == true
+is_string(entity.name) == true
+is_number(entity.count) == true
+is_none(entity.value) == true
+```
+
+### List Any-Satisfies Semantics
+
+When comparing a list field with a scalar value using `==`, `!=`, `in`, `contains`, `startswith`, `endswith`, or `matches`, the comparison returns true if ANY element in the list satisfies the condition:
+
+```python
+# If entity.tags = ["urgent", "finance"]
+entity.tags == "urgent"           # True (any element matches)
+entity.tags contains "urg"        # True (any element contains substring)
+entity.tags startswith "fin"      # True (any element starts with prefix)
+
+# If entity.domains = ["admin.example.com", "user.example.com"]
+entity.domains startswith "admin" # True (first domain matches)
+entity.domains endswith ".com"    # True (all domains match, but only one needed)
+```
+
+When comparing two lists, exact equality is used:
+
+```python
+entity.tags == ["a", "b", "c"]    # True only if tags is exactly ["a", "b", "c"]
 ```
 
 ### Actions (Right Side)
@@ -184,6 +340,70 @@ print(engine.get_execution_order())  # [1, 0]
 print(engine.get_dependency_graph())  # {1: {0}}  # Rule 0 depends on Rule 1
 ```
 
+## Real-World Examples
+
+### Email Classification
+
+```python
+engine = RuleEngine(mode="first_match")
+engine.add_rules([
+    # High priority: urgent emails from known domains
+    "lower(entity.subject) contains 'urgent' and entity.from_domain in ['company.com', 'partner.com'] => ret 'high'",
+
+    # Invoice detection
+    "entity.subject matches 'INV-\\d+' or entity.has_attachments and entity.attachments endswith '.pdf' => ret 'invoice'",
+
+    # Spam detection
+    "entity.from_domain not in ['company.com'] and entity.subject contains 'winner' => ret 'spam'",
+
+    # Default
+    "true => ret 'normal'"
+])
+```
+
+### Order Processing
+
+```python
+engine = RuleEngine(mode="all_match")
+engine.add_rules([
+    # Apply member discount
+    "entity.customer?.membership exists and entity.customer.membership != 'none' => entity.discount = 0.1",
+
+    # Free shipping for large orders
+    "entity.subtotal >= 100 => entity.shipping = 0",
+
+    # Calculate total
+    "true => entity.total = (entity.subtotal * (1 - (entity.discount ?? 0))) + (entity.shipping ?? 5.99)",
+
+    # Flag for review if total is high
+    "entity.total > 1000 => entity.needs_review = true"
+])
+```
+
+### Data Validation
+
+```python
+engine = RuleEngine(mode="all_match")
+engine.add_rules([
+    # Required fields
+    "entity.email is_empty => entity.errors += ['Email is required']",
+    "entity.name is_empty => entity.errors += ['Name is required']",
+
+    # Format validation
+    "not entity.email is_empty and not entity.email matches '^[^@]+@[^@]+\\.[^@]+$' => entity.errors += ['Invalid email format']",
+
+    # Length validation
+    "len(entity.name ?? '') > 100 => entity.errors += ['Name too long']",
+
+    # Set validity flag
+    "len(entity.errors) == 0 => entity.is_valid = true"
+])
+
+entity = {"email": "", "name": "John", "errors": [], "is_valid": False}
+engine.evaluate(entity)
+print(entity["errors"])  # ['Email is required']
+```
+
 ## Error Handling
 
 ```python
@@ -233,4 +453,3 @@ uv run antlr4 -Dlanguage=Python3 -visitor -o src/rule_interpreter/grammar/genera
 ## License
 
 MIT
-
