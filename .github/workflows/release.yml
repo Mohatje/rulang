@@ -34,15 +34,11 @@ jobs:
         if: steps.bump-type.outputs.type == 'skip'
         run: echo "No version tag (#major, #minor, #patch) found in commit message. Skipping release."
 
-      - name: Install uv
+      - name: Set up uv and Python
         if: steps.bump-type.outputs.type != 'skip'
-        uses: astral-sh/setup-uv@v4
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "latest"
-
-      - name: Set up Python
-        if: steps.bump-type.outputs.type != 'skip'
-        run: uv python install 3.12
+          python-version: "3.12"
 
       - name: Install dependencies
         if: steps.bump-type.outputs.type != 'skip'
