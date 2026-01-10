@@ -67,7 +67,7 @@ jobs:
       - name: Commit version bump
         if: steps.bump-type.outputs.type != 'skip'
         run: |
-          git add pyproject.toml src/rule_interpreter/__init__.py
+          git add pyproject.toml src/rulang/__init__.py
           git commit -m "Bump version: ${{ steps.version.outputs.old_version }} → ${{ steps.version.outputs.new_version }}"
           git tag "v${{ steps.version.outputs.new_version }}"
 

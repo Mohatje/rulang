@@ -1,5 +1,5 @@
 """
-Rule Interpreter - A lightweight DSL for business rules.
+Rulang - A lightweight DSL for business rules.
 """
 
 from rulang.engine import RuleEngine
