@@ -1,6 +1,6 @@
 [project]
 name = "rulang"
-version = "0.1.0"
+version = "1.0.0"
 description = "A lightweight DSL for business rules with dependency analysis"
 readme = "README.md"
 license = "MIT"
@@ -66,7 +66,7 @@ exclude_lines = [
 ]
 
 [tool.bumpversion]
-current_version = "0.1.0"
+current_version = "1.0.0"
 commit = false
 tag = false
 
