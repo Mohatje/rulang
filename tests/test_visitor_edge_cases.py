@@ -415,20 +415,6 @@ class TestVisitorEdgeCases:
         matched, _ = interpreter.execute(rule.tree)
         assert entity["modified"] is True
 
-    def test_arithmetic_with_strings_should_fail(self):
-        """Test arithmetic with strings raises error."""
-        entity = {"a": "10", "b": "5"}
-        rule = parse_rule("entity.a + entity.b >= 0 => ret true")
-        interpreter = RuleInterpreter(entity)
-        # String concatenation might work, or raise error
-        try:
-            matched, _ = interpreter.execute(rule.tree)
-            # If it works, it's string concatenation
-            assert matched is True
-        except (TypeError, EvaluationError):
-            # If it fails, that's also acceptable
-            pass
-
     def test_comparison_different_types(self):
         """Test comparison between different types."""
         entity = {"value": 10}

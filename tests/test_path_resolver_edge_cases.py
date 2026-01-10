@@ -715,34 +715,6 @@ class TestNullSafeAccessEdgeCases:
             resolver.resolve(["unknown"])
 
 
-class TestPathResolverUnknownIdentifier:
-    """Test PathResolver with unknown identifier in context."""
-
-    def test_explicit_unknown_root_identifier(self):
-        """Line 157: Unknown identifier when explicitly provided."""
-        entity = {"value": 10}
-        resolver = PathResolver(entity)
-
-        # Add a context variable so we have more than just 'entity'
-        resolver.add_to_context("known", {"data": 20})
-
-        # Now if we pass an unknown identifier that's already in the path,
-        # and it's not normalized (because it's already "unknown" not "entity.unknown")
-        # Actually, with normalize_path, if the first element is not in context,
-        # it gets prepended with entity_name. So "unknown" becomes ["entity", "unknown"]
-
-        # To hit line 157, we need the normalized path to still have an unknown root
-        # This won't happen with normalize_path since it always prepends entity_name
-        # unless the first element IS in context
-
-        # The only way to hit line 157 is if normalize_path is bypassed
-        # or if we manually construct a scenario where normalization doesn't help
-
-        # Actually, line 157 is now unreachable in normal usage due to normalize_path
-        # It's defensive code for edge cases
-        pass
-
-
 class TestPathToString:
     """Test _path_to_string method."""
 

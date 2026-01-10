@@ -1,7 +1,7 @@
-"""Tests for README documentation examples.
+"""Example-based tests for rule interpreter features.
 
-These tests ensure that all examples in the README.md work correctly.
-If any of these tests fail, the documentation needs to be updated.
+These tests verify common usage patterns and real-world scenarios.
+They also serve as living documentation for the library's capabilities.
 """
 
 import pytest
@@ -9,8 +9,8 @@ import pytest
 from rule_interpreter import RuleEngine, Workflow
 
 
-class TestReadmeQuickStart:
-    """Test the Quick Start example from README."""
+class TestBasicRuleChaining:
+    """Test basic rule chaining with automatic dependency ordering."""
 
     def test_quick_start_example(self):
         """Test the basic quick start example."""
@@ -26,8 +26,8 @@ class TestReadmeQuickStart:
         assert entity == {"age": 25, "is_adult": True, "discount": 0.1}
 
 
-class TestReadmeStringOperators:
-    """Test string operator examples from README."""
+class TestStringOperatorExamples:
+    """Test string operators: contains, startswith, endswith, matches."""
 
     def test_contains_example(self):
         engine = RuleEngine()
@@ -60,8 +60,8 @@ class TestReadmeStringOperators:
         assert engine.evaluate({"code": "ORD-1234"}) is None
 
 
-class TestReadmeExistenceOperators:
-    """Test existence operator examples from README."""
+class TestExistenceOperatorExamples:
+    """Test existence operators: exists, is_empty."""
 
     def test_exists_example(self):
         engine = RuleEngine()
@@ -89,8 +89,8 @@ class TestReadmeExistenceOperators:
         assert engine.evaluate({"items": []}) is None
 
 
-class TestReadmeListOperators:
-    """Test list operator examples from README."""
+class TestListOperatorExamples:
+    """Test list operators: contains_any, contains_all."""
 
     def test_contains_any_example(self):
         engine = RuleEngine()
@@ -109,8 +109,8 @@ class TestReadmeListOperators:
         assert engine.evaluate({"tags": ["reviewed"]}) is None
 
 
-class TestReadmeNullSafeAccess:
-    """Test null-safe access examples from README."""
+class TestNullSafeAccessExamples:
+    """Test null-safe access (?.) and null coalescing (??) operators."""
 
     def test_null_safe_access_example(self):
         engine = RuleEngine()
@@ -132,8 +132,8 @@ class TestReadmeNullSafeAccess:
         assert engine.evaluate({"user": {"name": "John"}}) is None
 
 
-class TestReadmeBuiltinFunctions:
-    """Test built-in function examples from README."""
+class TestBuiltinFunctionExamples:
+    """Test built-in functions: lower, upper, trim, len, first, last, etc."""
 
     def test_lower_upper_examples(self):
         engine = RuleEngine()
@@ -199,8 +199,8 @@ class TestReadmeBuiltinFunctions:
         assert engine.evaluate({"x": 50, "y": 150}) is None
 
 
-class TestReadmeAnySatisfiesSemantics:
-    """Test any-satisfies semantics examples from README."""
+class TestAnySatisfiesSemantics:
+    """Test any-satisfies semantics for list comparisons."""
 
     def test_equality_any_satisfies(self):
         """entity.tags == 'urgent' is True if any tag matches."""
@@ -232,8 +232,8 @@ class TestReadmeAnySatisfiesSemantics:
         assert engine.evaluate({"tags": ["c", "b", "a"]}) is None
 
 
-class TestReadmeEmailClassification:
-    """Test the Email Classification example from README."""
+class TestEmailClassificationScenario:
+    """Test email classification scenario with priority routing."""
 
     def test_email_classification_high_priority(self):
         engine = RuleEngine(mode="first_match")
@@ -317,8 +317,8 @@ class TestReadmeEmailClassification:
         }) == "normal"
 
 
-class TestReadmeOrderProcessing:
-    """Test the Order Processing example from README."""
+class TestOrderProcessingScenario:
+    """Test order processing scenario with discounts and shipping."""
 
     def test_vip_customer_large_order(self):
         engine = RuleEngine(mode="all_match")
@@ -369,8 +369,8 @@ class TestReadmeOrderProcessing:
         assert order["needs_review"] is False
 
 
-class TestReadmeDataValidation:
-    """Test the Data Validation example from README."""
+class TestDataValidationScenario:
+    """Test data validation scenario with error accumulation."""
 
     def test_valid_data(self):
         engine = RuleEngine(mode="all_match")
@@ -421,8 +421,8 @@ class TestReadmeDataValidation:
         assert entity["is_valid"] is False
 
 
-class TestReadmeWorkflows:
-    """Test the Workflow examples from README."""
+class TestWorkflowExamples:
+    """Test workflow integration with rule engine."""
 
     def test_workflow_decorator_example(self):
         @RuleEngine.workflow("calculate_tax", reads=["entity.subtotal"], writes=["entity.tax"])
@@ -458,8 +458,8 @@ class TestReadmeWorkflows:
         assert entity["total"] == 90.0
 
 
-class TestReadmeEvaluationModes:
-    """Test the Evaluation Modes examples from README."""
+class TestEvaluationModeExamples:
+    """Test first_match vs all_match evaluation modes."""
 
     def test_first_match_mode(self):
         engine = RuleEngine(mode="first_match")
@@ -485,8 +485,8 @@ class TestReadmeEvaluationModes:
         assert entity["can_vote"] is True
 
 
-class TestReadmeDependencyGraph:
-    """Test the Dependency Graph examples from README."""
+class TestDependencyGraphExamples:
+    """Test dependency graph analysis and execution ordering."""
 
     def test_execution_order(self):
         engine = RuleEngine(mode="all_match")
