@@ -568,3 +568,18 @@ class TestEngineEdgeCases:
         result = engine.evaluate({"a": 1, "b": 2, "c": 3})
         assert result is True
 
+
+class TestEngineExceptionHandling:
+    """Test engine exception handling."""
+
+    def test_generic_exception_wrapped_in_evaluation_error(self):
+        """Test generic exception wrapped in EvaluationError."""
+        engine = RuleEngine()
+        engine.add_rules("entity.x > 0 => workflow('failing')")
+
+        def failing_workflow(e):
+            raise RuntimeError("Something went wrong")
+
+        with pytest.raises(EvaluationError):
+            engine.evaluate({"x": 5}, workflows={"failing": failing_workflow})
+

@@ -642,10 +642,49 @@ class TestGraphAPIExpanded:
     def test_len(self):
         graph = DependencyGraph()
         assert len(graph) == 0
-        
+
         graph.add_rule(parse_rule("entity.a > 0 => entity.b = 1"))
         assert len(graph) == 1
-        
+
         graph.add_rule(parse_rule("entity.c > 0 => entity.d = 1"))
         assert len(graph) == 2
+
+
+class TestComplexDependencyChains:
+    """Test complex dependency chain resolution."""
+
+    def test_complex_dependency_chain(self):
+        """Test complex dependency chains are resolved correctly."""
+        graph = DependencyGraph()
+
+        parsed1 = parse_rule("entity.a > 0 => entity.b = 1")
+        parsed2 = parse_rule("entity.b > 0 => entity.c = 1")
+        parsed3 = parse_rule("entity.c > 0 => entity.d = 1")
+        parsed4 = parse_rule("entity.d > 0 => entity.e = 1")
+
+        graph.add_rule(parsed1)
+        graph.add_rule(parsed2)
+        graph.add_rule(parsed3)
+        graph.add_rule(parsed4)
+
+        order = graph.get_execution_order()
+        assert order == [0, 1, 2, 3]
+
+
+class TestRuleAnalyzerEdgeCases:
+    """Test RuleAnalyzer edge cases."""
+
+    def test_analyzer_with_workflow_args(self):
+        """Test analyzer captures workflow call arguments as reads."""
+        parsed = parse_rule("entity.x > 0 => workflow('process', entity.y, entity.z)")
+
+        assert "entity.y" in parsed.reads
+        assert "entity.z" in parsed.reads
+        assert "process" in parsed.workflow_calls
+
+    def test_analyzer_with_bracket_indexing(self):
+        """Test analyzer handles bracket indexing in paths."""
+        parsed = parse_rule("entity.items[0].value > 0 => entity.result = true")
+
+        assert any("[*]" in read for read in parsed.reads)
 

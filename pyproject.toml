@@ -32,3 +32,15 @@ addopts = [
     "--cov-report=term-missing",
     "--cov-report=html:htmlcov",
 ]
+
+[tool.coverage.run]
+omit = [
+    "src/rule_interpreter/grammar/generated/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]

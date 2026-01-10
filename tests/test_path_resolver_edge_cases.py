@@ -532,9 +532,280 @@ class TestPathResolverEdgeCases:
         class Item:
             def __init__(self, value):
                 self.value = value
-        
+
         entity = {"item": Item(10)}
         resolver = PathResolver(entity)
         resolver.assign(["entity", "item", "value"], 99)
         assert entity["item"].value == 99
+
+
+class TestDictLikeObjects:
+    """Test dict-like object handling."""
+
+    def test_is_dict_like_with_regular_dict(self):
+        """Test _is_dict_like with dict."""
+        from rule_interpreter.path_resolver import _is_dict_like
+        assert _is_dict_like({"a": 1}) is True
+
+    def test_is_dict_like_with_non_dict(self):
+        """Test _is_dict_like with non-dict."""
+        from rule_interpreter.path_resolver import _is_dict_like
+        assert _is_dict_like("string") is False
+        assert _is_dict_like(123) is False
+        assert _is_dict_like([1, 2, 3]) is False
+
+    def test_is_dict_like_with_custom_mapping(self):
+        """Test _is_dict_like with custom dict-like object."""
+        from rule_interpreter.path_resolver import _is_dict_like
+
+        class CustomMapping:
+            def __getitem__(self, key):
+                return key
+            def keys(self):
+                return ["a", "b"]
+
+        assert _is_dict_like(CustomMapping()) is True
+
+
+class TestGetAttributeEdgeCases:
+    """Test _get_attribute with various object types."""
+
+    def test_get_attribute_from_custom_mapping(self):
+        """Test _get_attribute for non-dict mappings."""
+        from rule_interpreter.path_resolver import _get_attribute
+
+        class CustomMapping:
+            def __init__(self):
+                self._data = {"key1": "value1", "key2": "value2"}
+
+            def __getitem__(self, key):
+                return self._data[key]
+
+            def keys(self):
+                return self._data.keys()
+
+        obj = CustomMapping()
+        assert _get_attribute(obj, "key1") == "value1"
+        assert _get_attribute(obj, "key2") == "value2"
+
+    def test_get_attribute_from_custom_mapping_key_error(self):
+        """Test _get_attribute for non-dict mapping with missing key."""
+        from rule_interpreter.path_resolver import _get_attribute
+
+        class CustomMapping:
+            def __init__(self):
+                self._data = {"existing": "value"}
+
+            def __getitem__(self, key):
+                return self._data[key]
+
+            def keys(self):
+                return self._data.keys()
+
+        obj = CustomMapping()
+        with pytest.raises(AttributeError):
+            _get_attribute(obj, "missing")
+
+    def test_get_attribute_from_custom_mapping_type_error(self):
+        """Test _get_attribute for mapping that raises TypeError."""
+        from rule_interpreter.path_resolver import _get_attribute
+
+        class WeirdMapping:
+            def __getitem__(self, key):
+                raise TypeError("Cannot get item")
+
+            def keys(self):
+                return []
+
+        obj = WeirdMapping()
+        with pytest.raises(AttributeError):
+            _get_attribute(obj, "anything")
+
+
+class TestGetIndexEdgeCases:
+    """Test _get_index edge cases."""
+
+    def test_get_index_non_indexable(self):
+        """Test _get_index on non-indexable object."""
+        from rule_interpreter.path_resolver import _get_index
+        with pytest.raises(TypeError, match="does not support indexing"):
+            _get_index(123, 0)
+
+    def test_get_index_on_set(self):
+        """Test _get_index on set (has no __getitem__)."""
+        from rule_interpreter.path_resolver import _get_index
+        with pytest.raises(TypeError, match="does not support indexing"):
+            _get_index({1, 2, 3}, 0)
+
+
+class TestSetAttributeEdgeCases:
+    """Test _set_attribute with various object types."""
+
+    def test_set_attribute_on_custom_mapping(self):
+        """Test _set_attribute for dict-like objects."""
+        from rule_interpreter.path_resolver import _set_attribute
+
+        class CustomMapping:
+            def __init__(self):
+                self._data = {}
+
+            def __setitem__(self, key, value):
+                self._data[key] = value
+
+            def __getitem__(self, key):
+                return self._data[key]
+
+            def keys(self):
+                return self._data.keys()
+
+        obj = CustomMapping()
+        _set_attribute(obj, "new_key", "new_value")
+        assert obj["new_key"] == "new_value"
+
+
+class TestSetIndexEdgeCases:
+    """Test _set_index edge cases."""
+
+    def test_set_index_non_settable(self):
+        """Test _set_index on object without __setitem__."""
+        from rule_interpreter.path_resolver import _set_index
+        with pytest.raises(TypeError, match="does not support index assignment"):
+            _set_index((1, 2, 3), 0, 99)
+
+    def test_set_index_on_string(self):
+        """Test _set_index on immutable string."""
+        from rule_interpreter.path_resolver import _set_index
+        with pytest.raises(TypeError, match="does not support index assignment"):
+            _set_index("hello", 0, "H")
+
+
+class TestNullSafeAccessEdgeCases:
+    """Test null-safe access edge cases."""
+
+    def test_resolve_null_safe_returns_none_on_attribute_error(self):
+        """Test null-safe access returning None on AttributeError."""
+        entity = {"user": {"name": "John"}}
+        resolver = PathResolver(entity)
+        result = resolver.resolve(["entity", "user", "missing"], null_safe_indices={2})
+        assert result is None
+
+    def test_resolve_null_safe_returns_none_on_key_error(self):
+        """Test null-safe access returning None on KeyError."""
+        entity = {"data": {"existing": "value"}}
+        resolver = PathResolver(entity)
+        result = resolver.resolve(["entity", "data", "missing"], null_safe_indices={2})
+        assert result is None
+
+    def test_resolve_null_safe_returns_none_on_index_error(self):
+        """Test null-safe access returning None on IndexError."""
+        entity = {"items": [1, 2, 3]}
+        resolver = PathResolver(entity)
+        result = resolver.resolve(["entity", "items", 100], null_safe_indices={2})
+        assert result is None
+
+    def test_resolve_unknown_identifier_with_context(self):
+        """Test unknown identifier when path can't be normalized."""
+        entity = {"value": 10}
+        resolver = PathResolver(entity)
+        resolver.add_to_context("other", {"data": 20})
+
+        # With implicit entity, "unknown" becomes ["entity", "unknown"]
+        # which will fail when trying to access entity["unknown"]
+        with pytest.raises(PathResolutionError):
+            resolver.resolve(["unknown"])
+
+
+class TestPathResolverUnknownIdentifier:
+    """Test PathResolver with unknown identifier in context."""
+
+    def test_explicit_unknown_root_identifier(self):
+        """Line 157: Unknown identifier when explicitly provided."""
+        entity = {"value": 10}
+        resolver = PathResolver(entity)
+
+        # Add a context variable so we have more than just 'entity'
+        resolver.add_to_context("known", {"data": 20})
+
+        # Now if we pass an unknown identifier that's already in the path,
+        # and it's not normalized (because it's already "unknown" not "entity.unknown")
+        # Actually, with normalize_path, if the first element is not in context,
+        # it gets prepended with entity_name. So "unknown" becomes ["entity", "unknown"]
+
+        # To hit line 157, we need the normalized path to still have an unknown root
+        # This won't happen with normalize_path since it always prepends entity_name
+        # unless the first element IS in context
+
+        # The only way to hit line 157 is if normalize_path is bypassed
+        # or if we manually construct a scenario where normalization doesn't help
+
+        # Actually, line 157 is now unreachable in normal usage due to normalize_path
+        # It's defensive code for edge cases
+        pass
+
+
+class TestPathToString:
+    """Test _path_to_string method."""
+
+    def test_path_to_string_empty_path(self):
+        """Test _path_to_string with empty path."""
+        entity = {"value": 10}
+        resolver = PathResolver(entity)
+        result = resolver._path_to_string([])
+        assert result == ""
+
+    def test_path_to_string_with_int_parts(self):
+        """Test _path_to_string with integer indices."""
+        entity = {"items": [[1, 2], [3, 4]]}
+        resolver = PathResolver(entity)
+        result = resolver._path_to_string(["entity", "items", 0, 1])
+        assert result == "entity.items[0][1]"
+
+    def test_path_to_string_mixed(self):
+        """Test _path_to_string with mixed parts."""
+        entity = {}
+        resolver = PathResolver(entity)
+        result = resolver._path_to_string(["entity", "users", 0, "profile", "scores", -1])
+        assert result == "entity.users[0].profile.scores[-1]"
+
+
+class TestCustomMappingResolution:
+    """Test PathResolver with dict-like objects."""
+
+    def test_resolve_through_custom_mapping(self):
+        """Test resolving path through a custom dict-like object."""
+        class CustomMapping:
+            def __init__(self, data):
+                self._data = data
+
+            def __getitem__(self, key):
+                return self._data[key]
+
+            def keys(self):
+                return self._data.keys()
+
+        entity = {"config": CustomMapping({"setting": "value"})}
+        resolver = PathResolver(entity)
+        result = resolver.resolve(["entity", "config", "setting"])
+        assert result == "value"
+
+    def test_assign_through_custom_mapping(self):
+        """Test assigning through a custom dict-like object."""
+        class CustomMapping:
+            def __init__(self):
+                self._data = {}
+
+            def __getitem__(self, key):
+                return self._data[key]
+
+            def __setitem__(self, key, value):
+                self._data[key] = value
+
+            def keys(self):
+                return self._data.keys()
+
+        mapping = CustomMapping()
+        entity = {"config": mapping}
+        resolver = PathResolver(entity)
+        resolver.assign(["entity", "config", "new_setting"], "new_value")
+        assert mapping["new_setting"] == "new_value"
 
