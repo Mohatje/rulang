@@ -2,8 +2,8 @@
 
 import pytest
 from dataclasses import dataclass
-from rule_interpreter.path_resolver import PathResolver
-from rule_interpreter.exceptions import PathResolutionError
+from rulang.path_resolver import PathResolver
+from rulang.exceptions import PathResolutionError
 
 
 class TestPathResolverEdgeCases:
@@ -544,19 +544,19 @@ class TestDictLikeObjects:
 
     def test_is_dict_like_with_regular_dict(self):
         """Test _is_dict_like with dict."""
-        from rule_interpreter.path_resolver import _is_dict_like
+        from rulang.path_resolver import _is_dict_like
         assert _is_dict_like({"a": 1}) is True
 
     def test_is_dict_like_with_non_dict(self):
         """Test _is_dict_like with non-dict."""
-        from rule_interpreter.path_resolver import _is_dict_like
+        from rulang.path_resolver import _is_dict_like
         assert _is_dict_like("string") is False
         assert _is_dict_like(123) is False
         assert _is_dict_like([1, 2, 3]) is False
 
     def test_is_dict_like_with_custom_mapping(self):
         """Test _is_dict_like with custom dict-like object."""
-        from rule_interpreter.path_resolver import _is_dict_like
+        from rulang.path_resolver import _is_dict_like
 
         class CustomMapping:
             def __getitem__(self, key):
@@ -572,7 +572,7 @@ class TestGetAttributeEdgeCases:
 
     def test_get_attribute_from_custom_mapping(self):
         """Test _get_attribute for non-dict mappings."""
-        from rule_interpreter.path_resolver import _get_attribute
+        from rulang.path_resolver import _get_attribute
 
         class CustomMapping:
             def __init__(self):
@@ -590,7 +590,7 @@ class TestGetAttributeEdgeCases:
 
     def test_get_attribute_from_custom_mapping_key_error(self):
         """Test _get_attribute for non-dict mapping with missing key."""
-        from rule_interpreter.path_resolver import _get_attribute
+        from rulang.path_resolver import _get_attribute
 
         class CustomMapping:
             def __init__(self):
@@ -608,7 +608,7 @@ class TestGetAttributeEdgeCases:
 
     def test_get_attribute_from_custom_mapping_type_error(self):
         """Test _get_attribute for mapping that raises TypeError."""
-        from rule_interpreter.path_resolver import _get_attribute
+        from rulang.path_resolver import _get_attribute
 
         class WeirdMapping:
             def __getitem__(self, key):
@@ -627,13 +627,13 @@ class TestGetIndexEdgeCases:
 
     def test_get_index_non_indexable(self):
         """Test _get_index on non-indexable object."""
-        from rule_interpreter.path_resolver import _get_index
+        from rulang.path_resolver import _get_index
         with pytest.raises(TypeError, match="does not support indexing"):
             _get_index(123, 0)
 
     def test_get_index_on_set(self):
         """Test _get_index on set (has no __getitem__)."""
-        from rule_interpreter.path_resolver import _get_index
+        from rulang.path_resolver import _get_index
         with pytest.raises(TypeError, match="does not support indexing"):
             _get_index({1, 2, 3}, 0)
 
@@ -643,7 +643,7 @@ class TestSetAttributeEdgeCases:
 
     def test_set_attribute_on_custom_mapping(self):
         """Test _set_attribute for dict-like objects."""
-        from rule_interpreter.path_resolver import _set_attribute
+        from rulang.path_resolver import _set_attribute
 
         class CustomMapping:
             def __init__(self):
@@ -668,13 +668,13 @@ class TestSetIndexEdgeCases:
 
     def test_set_index_non_settable(self):
         """Test _set_index on object without __setitem__."""
-        from rule_interpreter.path_resolver import _set_index
+        from rulang.path_resolver import _set_index
         with pytest.raises(TypeError, match="does not support index assignment"):
             _set_index((1, 2, 3), 0, 99)
 
     def test_set_index_on_string(self):
         """Test _set_index on immutable string."""
-        from rule_interpreter.path_resolver import _set_index
+        from rulang.path_resolver import _set_index
         with pytest.raises(TypeError, match="does not support index assignment"):
             _set_index("hello", 0, "H")
 

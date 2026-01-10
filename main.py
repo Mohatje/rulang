@@ -1,12 +1,12 @@
 """
-Demo script for the rule-interpreter DSL.
+Demo script for the Rulang DSL.
 """
 
-from rule_interpreter import RuleEngine, Workflow
+from rulang import RuleEngine, Workflow
 
 
 def main():
-    print("=== Rule Interpreter Demo ===\n")
+    print("=== Rulang Demo ===\n")
 
     # Create an engine in all_match mode
     engine = RuleEngine(mode="all_match")

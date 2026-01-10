@@ -1,10 +1,10 @@
 """
-Custom exceptions for the rule interpreter.
+Custom exceptions for Rulang.
 """
 
 
 class RuleInterpreterError(Exception):
-    """Base exception for all rule interpreter errors."""
+    """Base exception for all Rulang errors."""
 
     pass
 

@@ -12,7 +12,7 @@ Supports:
 from dataclasses import fields, is_dataclass
 from typing import Any, Optional
 
-from rule_interpreter.exceptions import PathResolutionError
+from rulang.exceptions import PathResolutionError
 
 
 def _is_dict_like(obj: Any) -> bool:

@@ -3,14 +3,14 @@
 import pytest
 from dataclasses import dataclass
 
-from rule_interpreter import RuleEngine, Workflow
-from rule_interpreter.exceptions import PathResolutionError
+from rulang import RuleEngine, Workflow
+from rulang.exceptions import PathResolutionError
 
 
 @pytest.fixture(autouse=True)
 def clear_registry():
     """Clear workflow registry before each test."""
-    from rule_interpreter.workflows import clear_workflow_registry
+    from rulang.workflows import clear_workflow_registry
     clear_workflow_registry()
     yield
     clear_workflow_registry()

@@ -1,0 +1,94 @@
+name: Release
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine version bump type
+        id: bump-type
+        run: |
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          if echo "$COMMIT_MSG" | grep -qi "#major"; then
+            echo "type=major" >> $GITHUB_OUTPUT
+          elif echo "$COMMIT_MSG" | grep -qi "#minor"; then
+            echo "type=minor" >> $GITHUB_OUTPUT
+          elif echo "$COMMIT_MSG" | grep -qi "#patch"; then
+            echo "type=patch" >> $GITHUB_OUTPUT
+          else
+            echo "type=skip" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip if no version tag
+        if: steps.bump-type.outputs.type == 'skip'
+        run: echo "No version tag (#major, #minor, #patch) found in commit message. Skipping release."
+
+      - name: Set up uv and Python
+        if: steps.bump-type.outputs.type != 'skip'
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        if: steps.bump-type.outputs.type != 'skip'
+        run: uv sync --all-extras
+
+      - name: Configure git
+        if: steps.bump-type.outputs.type != 'skip'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version
+        if: steps.bump-type.outputs.type != 'skip'
+        id: version
+        run: |
+          OLD_VERSION=$(uv run bump-my-version show current_version)
+          uv run bump-my-version bump ${{ steps.bump-type.outputs.type }}
+          NEW_VERSION=$(uv run bump-my-version show current_version)
+          echo "old_version=$OLD_VERSION" >> $GITHUB_OUTPUT
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit version bump
+        if: steps.bump-type.outputs.type != 'skip'
+        run: |
+          git add pyproject.toml src/rulang/__init__.py
+          git commit -m "Bump version: ${{ steps.version.outputs.old_version }} → ${{ steps.version.outputs.new_version }}"
+          git tag "v${{ steps.version.outputs.new_version }}"
+
+      - name: Push changes
+        if: steps.bump-type.outputs.type != 'skip'
+        run: |
+          git push origin master
+          git push origin "v${{ steps.version.outputs.new_version }}"
+
+      - name: Create GitHub Release
+        if: steps.bump-type.outputs.type != 'skip'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ steps.version.outputs.new_version }}"
+          name: "v${{ steps.version.outputs.new_version }}"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build package
+        if: steps.bump-type.outputs.type != 'skip'
+        run: uv build
+
+      - name: Publish to PyPI
+        if: steps.bump-type.outputs.type != 'skip'
+        run: uv publish
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}

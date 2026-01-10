@@ -1,10 +1,10 @@
 """
-Rule Interpreter - A lightweight DSL for business rules.
+Rulang - A lightweight DSL for business rules.
 """
 
-from rule_interpreter.engine import RuleEngine
-from rule_interpreter.workflows import Workflow, workflow
-from rule_interpreter.exceptions import (
+from rulang.engine import RuleEngine
+from rulang.workflows import Workflow, workflow
+from rulang.exceptions import (
     RuleInterpreterError,
     PathResolutionError,
     RuleSyntaxError,

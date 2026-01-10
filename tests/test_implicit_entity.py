@@ -8,11 +8,11 @@ import pytest
 import warnings
 from dataclasses import dataclass
 
-from rule_interpreter import RuleEngine, Workflow
-from rule_interpreter.path_resolver import PathResolver
-from rule_interpreter.visitor import parse_rule, RuleInterpreter
-from rule_interpreter.exceptions import CyclicDependencyWarning
-from rule_interpreter.workflows import clear_workflow_registry
+from rulang import RuleEngine, Workflow
+from rulang.path_resolver import PathResolver
+from rulang.visitor import parse_rule, RuleInterpreter
+from rulang.exceptions import CyclicDependencyWarning
+from rulang.workflows import clear_workflow_registry
 
 
 @pytest.fixture(autouse=True)

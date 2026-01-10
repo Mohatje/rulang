@@ -3,10 +3,10 @@
 import pytest
 import warnings
 
-from rule_interpreter.visitor import parse_rule
-from rule_interpreter.dependency_graph import DependencyGraph
-from rule_interpreter.workflows import Workflow
-from rule_interpreter.exceptions import CyclicDependencyWarning
+from rulang.visitor import parse_rule
+from rulang.dependency_graph import DependencyGraph
+from rulang.workflows import Workflow
+from rulang.exceptions import CyclicDependencyWarning
 
 
 class TestDependencyDetection:

@@ -10,10 +10,10 @@ Provides a clean API for:
 
 from typing import Any, Callable, Literal
 
-from rule_interpreter.dependency_graph import DependencyGraph
-from rule_interpreter.exceptions import EvaluationError, PathResolutionError, WorkflowNotFoundError
-from rule_interpreter.visitor import ParsedRule, RuleInterpreter, parse_rule
-from rule_interpreter.workflows import Workflow, merge_workflows, workflow as workflow_decorator
+from rulang.dependency_graph import DependencyGraph
+from rulang.exceptions import EvaluationError, PathResolutionError, WorkflowNotFoundError
+from rulang.visitor import ParsedRule, RuleInterpreter, parse_rule
+from rulang.workflows import Workflow, merge_workflows, workflow as workflow_decorator
 
 
 class RuleEngine:

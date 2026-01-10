@@ -2,7 +2,7 @@
 
 import pytest
 
-from rule_interpreter import RuleEngine
+from rulang import RuleEngine
 
 
 class TestExistsOperator:

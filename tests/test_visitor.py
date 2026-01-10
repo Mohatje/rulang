@@ -3,8 +3,8 @@
 import pytest
 from dataclasses import dataclass
 
-from rule_interpreter.visitor import parse_rule, RuleInterpreter
-from rule_interpreter.exceptions import PathResolutionError, WorkflowNotFoundError
+from rulang.visitor import parse_rule, RuleInterpreter
+from rulang.exceptions import PathResolutionError, WorkflowNotFoundError
 
 
 class TestConditionEvaluation:

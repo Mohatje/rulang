@@ -3,8 +3,8 @@
 import pytest
 from dataclasses import dataclass
 
-from rule_interpreter.visitor import parse_rule, RuleInterpreter
-from rule_interpreter.exceptions import PathResolutionError, EvaluationError, RuleSyntaxError
+from rulang.visitor import parse_rule, RuleInterpreter
+from rulang.exceptions import PathResolutionError, EvaluationError, RuleSyntaxError
 
 
 class TestVisitorEdgeCases:
@@ -500,7 +500,7 @@ class TestTruthyConditions:
 
     def test_truthy_value_as_condition(self):
         """Test truthy check with no comparison operator."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.enabled => entity.result = 'yes'")
 
@@ -514,7 +514,7 @@ class TestTruthyConditions:
 
     def test_numeric_truthy_as_condition(self):
         """Test numeric value as truthy condition."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.count => entity.has_items = true")
 
@@ -528,7 +528,7 @@ class TestTruthyConditions:
 
     def test_string_truthy_as_condition(self):
         """Test string value as truthy condition."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.name => entity.has_name = true")
 
@@ -542,7 +542,7 @@ class TestTruthyConditions:
 
     def test_comparison_no_operator_fallthrough(self):
         """Test comparison with just a value, no operator."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.active => entity.checked = true")
 
@@ -556,7 +556,7 @@ class TestTruthyConditions:
 
     def test_comparison_with_just_value(self):
         """Test truthy check with just a value."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.count => entity.has_items = true")
 
@@ -570,7 +570,7 @@ class TestContainsOperatorEdgeCases:
 
     def test_contains_any_with_scalar_values(self):
         """Test _contains_any with non-list values."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.tag contains_any 'urgent' => entity.priority = 'high'")
 
@@ -580,7 +580,7 @@ class TestContainsOperatorEdgeCases:
 
     def test_contains_any_with_scalar_collection(self):
         """Test _contains_any with scalar as collection."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.value contains_any [1, 2, 3] => entity.found = true")
 
@@ -590,7 +590,7 @@ class TestContainsOperatorEdgeCases:
 
     def test_contains_all_with_scalar_values(self):
         """Test _contains_all with non-list values."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.tags contains_all 'required' => entity.valid = true")
 
@@ -600,7 +600,7 @@ class TestContainsOperatorEdgeCases:
 
     def test_contains_all_with_scalar_collection(self):
         """Test _contains_all with scalar as collection."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.value contains_all [5] => entity.exact = true")
 
@@ -614,7 +614,7 @@ class TestUnknownFunction:
 
     def test_unknown_function_error(self):
         """Test unknown function raises EvaluationError."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("unknown_func(entity.value) > 0 => entity.result = true")
 
@@ -627,7 +627,7 @@ class TestActionsWithReturn:
 
     def test_return_stops_subsequent_actions(self):
         """Test early return break in actions loop."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x > 0 => ret 'early'; entity.y = 100")
 
@@ -639,7 +639,7 @@ class TestActionsWithReturn:
 
     def test_return_in_middle_of_actions(self):
         """Test return in the middle of multiple actions."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a > 0 => entity.b = 1; ret 'done'; entity.c = 1")
 
@@ -652,7 +652,7 @@ class TestActionsWithReturn:
 
     def test_three_actions_return_in_middle(self):
         """Test three actions with return in middle."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x > 0 => entity.a = 1; entity.b = 2; ret 'stop'; entity.c = 3")
 
@@ -666,7 +666,7 @@ class TestActionsWithReturn:
 
     def test_first_action_returns(self):
         """Test return as first action stops all subsequent."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x > 0 => ret 42; entity.y = 100")
 
@@ -682,7 +682,7 @@ class TestCompoundAssignments:
 
     def test_all_compound_assignments(self):
         """Ensure all compound assignments work."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine(mode="all_match")
         engine.add_rules([
             "entity.a > 0 => entity.a += 5",
@@ -704,7 +704,7 @@ class TestDynamicPathIndex:
 
     def test_string_key_in_brackets(self):
         """Test non-numeric index (string key) in path brackets."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.data[entity.key] > 0 => entity.found = true")
 
@@ -714,7 +714,7 @@ class TestDynamicPathIndex:
 
     def test_dynamic_string_key(self):
         """Test dynamic string key in brackets."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.config[entity.setting_name] == 'enabled' => entity.active = true")
 
@@ -732,7 +732,7 @@ class TestComplexArithmeticExpressions:
 
     def test_complex_addition_expression(self):
         """Test multiple additions."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a + entity.b - entity.c + entity.d > 10 => entity.result = true")
 
@@ -742,7 +742,7 @@ class TestComplexArithmeticExpressions:
 
     def test_multiple_subtractions(self):
         """Test multiple subtractions."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x - entity.y - entity.z == 5 => entity.correct = true")
 
@@ -752,7 +752,7 @@ class TestComplexArithmeticExpressions:
 
     def test_multiple_multiplications(self):
         """Test multiple * operators in expression."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a * entity.b * entity.c > 50 => entity.result = true")
 
@@ -762,7 +762,7 @@ class TestComplexArithmeticExpressions:
 
     def test_mixed_mul_div_mod(self):
         """Test mixed *, /, % operators."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a * entity.b / entity.c % entity.d == 2 => entity.ok = true")
 
@@ -782,7 +782,7 @@ class TestReturnStatementVariants:
 
     def test_return_complex_expression(self):
         """Test return with complex expression."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x > 0 => ret (entity.x + entity.y) * 2")
 
@@ -791,7 +791,7 @@ class TestReturnStatementVariants:
 
     def test_return_function_result(self):
         """Test return with function call."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.name != '' => ret upper(entity.name)")
 
@@ -829,7 +829,7 @@ class TestListLiterals:
 
     def test_list_literal_with_in_operator(self):
         """Test list literal on right side of 'in' operator."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.status in ['active', 'pending'] => entity.valid = true")
 
@@ -843,7 +843,7 @@ class TestListLiterals:
 
     def test_list_literal_assignment(self):
         """Test assigning a list literal."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.init == true => entity.items = [1, 2, 3]")
 
@@ -857,7 +857,7 @@ class TestUnaryOperators:
 
     def test_unary_minus_in_condition(self):
         """Test unary minus in condition."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("-entity.value > 0 => entity.negative = true")
 
@@ -867,7 +867,7 @@ class TestUnaryOperators:
 
     def test_unary_minus_in_assignment(self):
         """Test unary minus in assignment."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x > 0 => entity.y = -entity.x")
 
@@ -881,7 +881,7 @@ class TestShortCircuitEvaluation:
 
     def test_or_short_circuit_first_true(self):
         """Test OR short-circuits on first true value."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a > 0 or entity.missing.path > 0 => entity.result = true")
 
@@ -891,7 +891,7 @@ class TestShortCircuitEvaluation:
 
     def test_or_evaluates_all_when_needed(self):
         """Test OR evaluates all conditions when first is false."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a > 10 or entity.b > 10 => entity.result = true")
 
@@ -901,7 +901,7 @@ class TestShortCircuitEvaluation:
 
     def test_and_short_circuit_first_false(self):
         """Test AND short-circuits on first false value."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a < 0 and entity.missing.path > 0 => entity.result = true")
 
@@ -911,7 +911,7 @@ class TestShortCircuitEvaluation:
 
     def test_and_evaluates_all_when_needed(self):
         """Test AND evaluates all conditions when first is true."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.a > 0 and entity.b > 0 => entity.result = true")
 
@@ -925,7 +925,7 @@ class TestNotOperator:
 
     def test_not_true_becomes_false(self):
         """Test NOT with true value."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("not entity.active => entity.inactive = true")
 
@@ -935,7 +935,7 @@ class TestNotOperator:
 
     def test_not_false_becomes_true(self):
         """Test NOT with false value."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("not entity.active => entity.inactive = true")
 
@@ -945,7 +945,7 @@ class TestNotOperator:
 
     def test_double_not(self):
         """Test double NOT."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("not not entity.value => entity.result = true")
 
@@ -959,7 +959,7 @@ class TestNullCoalesceOperator:
 
     def test_null_coalesce_returns_first_non_none(self):
         """Test ?? returns first non-None value."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x > 0 => entity.result = entity.a ?? entity.b ?? entity.c")
 
@@ -969,7 +969,7 @@ class TestNullCoalesceOperator:
 
     def test_null_coalesce_returns_first_value(self):
         """Test ?? returns first value when not None."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.x > 0 => entity.result = entity.a ?? entity.b ?? 'default'")
 
@@ -983,7 +983,7 @@ class TestRegexAndIsEmpty:
 
     def test_matches_with_invalid_regex(self):
         """Test matches operator with invalid regex pattern returns False."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.text matches '[invalid' => entity.matched = true")
 
@@ -993,7 +993,7 @@ class TestRegexAndIsEmpty:
 
     def test_is_empty_with_set(self):
         """Test is_empty with set."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.items is_empty => entity.empty = true")
 
@@ -1003,7 +1003,7 @@ class TestRegexAndIsEmpty:
 
     def test_is_empty_with_whitespace_string(self):
         """Test is_empty with whitespace-only string."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("entity.text is_empty => entity.blank = true")
 
@@ -1016,7 +1016,7 @@ class TestFunctionErrorHandling:
 
     def test_function_with_wrong_args(self):
         """Test function raising error with wrong arguments."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("round(entity.value, entity.precision) > 0 => entity.ok = true")
 
@@ -1026,7 +1026,7 @@ class TestFunctionErrorHandling:
 
     def test_function_error_wrapped(self):
         """Test that function errors are wrapped in EvaluationError."""
-        from rule_interpreter import RuleEngine
+        from rulang import RuleEngine
         engine = RuleEngine()
         engine.add_rules("int(entity.value) > 0 => entity.ok = true")
 

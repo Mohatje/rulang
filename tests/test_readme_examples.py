@@ -1,4 +1,4 @@
-"""Example-based tests for rule interpreter features.
+"""Example-based tests for Rulang features.
 
 These tests verify common usage patterns and real-world scenarios.
 They also serve as living documentation for the library's capabilities.
@@ -6,7 +6,7 @@ They also serve as living documentation for the library's capabilities.
 
 import pytest
 
-from rule_interpreter import RuleEngine, Workflow
+from rulang import RuleEngine, Workflow
 
 
 class TestBasicRuleChaining:
