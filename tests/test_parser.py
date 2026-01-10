@@ -2,8 +2,8 @@
 
 import pytest
 
-from rule_interpreter.visitor import parse_rule
-from rule_interpreter.exceptions import RuleSyntaxError
+from rulang.visitor import parse_rule
+from rulang.exceptions import RuleSyntaxError
 
 
 class TestBasicParsing:

@@ -4,8 +4,8 @@ import pytest
 from dataclasses import dataclass, field
 from typing import Any
 
-from rule_interpreter.path_resolver import PathResolver
-from rule_interpreter.exceptions import PathResolutionError
+from rulang.path_resolver import PathResolver
+from rulang.exceptions import PathResolutionError
 
 
 class TestDictEntityResolution:

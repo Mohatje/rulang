@@ -9,11 +9,11 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
-from rule_interpreter.exceptions import CyclicDependencyWarning
+from rulang.exceptions import CyclicDependencyWarning
 
 if TYPE_CHECKING:
-    from rule_interpreter.visitor import ParsedRule
-    from rule_interpreter.workflows import Workflow
+    from rulang.visitor import ParsedRule
+    from rulang.workflows import Workflow
 
 
 @dataclass

@@ -1,8 +1,8 @@
 """Edge case tests for RuleEngine."""
 
 import pytest
-from rule_interpreter import RuleEngine
-from rule_interpreter.exceptions import RuleSyntaxError, PathResolutionError, WorkflowNotFoundError, EvaluationError
+from rulang import RuleEngine
+from rulang.exceptions import RuleSyntaxError, PathResolutionError, WorkflowNotFoundError, EvaluationError
 
 
 class TestEngineEdgeCases:
@@ -296,7 +296,7 @@ class TestEngineEdgeCases:
 
     def test_rule_with_workflow_dependencies(self):
         """Test rules with workflow dependencies."""
-        from rule_interpreter.workflows import Workflow
+        from rulang.workflows import Workflow
         
         def modify_a(entity):
             entity["a"] = 100

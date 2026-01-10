@@ -1,4 +1,4 @@
-# Rule Interpreter
+# Rulang
 
 A lightweight DSL for business rules in Python, built with ANTLR4.
 
@@ -17,13 +17,13 @@ A lightweight DSL for business rules in Python, built with ANTLR4.
 ## Installation
 
 ```bash
-uv add rule-interpreter
+uv add rulang
 ```
 
 ## Quick Start
 
 ```python
-from rule_interpreter import RuleEngine
+from rulang import RuleEngine
 
 # Create an engine
 engine = RuleEngine(mode="all_match")
@@ -263,7 +263,7 @@ entity.processed = true; workflow('notify'); ret entity
 Workflows allow you to call Python functions from rules:
 
 ```python
-from rule_interpreter import RuleEngine, Workflow
+from rulang import RuleEngine, Workflow
 
 # Using the decorator
 @RuleEngine.workflow("calculate_tax", reads=["entity.subtotal"], writes=["entity.tax"])
@@ -407,7 +407,7 @@ print(entity["errors"])  # ['Email is required']
 ## Error Handling
 
 ```python
-from rule_interpreter import (
+from rulang import (
     RuleEngine,
     RuleSyntaxError,
     PathResolutionError,

@@ -2,7 +2,7 @@
 
 import pytest
 
-from rule_interpreter.workflows import (
+from rulang.workflows import (
     Workflow,
     workflow,
     get_registered_workflows,

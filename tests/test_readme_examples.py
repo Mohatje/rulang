@@ -6,7 +6,7 @@ They also serve as living documentation for the library's capabilities.
 
 import pytest
 
-from rule_interpreter import RuleEngine, Workflow
+from rulang import RuleEngine, Workflow
 
 
 class TestBasicRuleChaining:

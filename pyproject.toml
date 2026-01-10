@@ -1,16 +1,36 @@
 [project]
-name = "rule-interpreter"
-version = "0.0.1"
+name = "rulang"
+version = "0.1.0"
 description = "A lightweight DSL for business rules with dependency analysis"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.12"
+authors = [
+    {name = "Mohammed Al-Ogaili"}
+]
+keywords = ["rules", "dsl", "business-rules", "rule-engine", "domain-specific-language"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "antlr4-python3-runtime>=4.13.2",
 ]
 
+[project.urls]
+Homepage = "https://github.com/Mohatje/rulang"
+Repository = "https://github.com/Mohatje/rulang"
+Issues = "https://github.com/Mohatje/rulang/issues"
+
 [project.optional-dependencies]
 dev = [
     "antlr4-tools>=0.2.2",
+    "bump-my-version>=0.28.0",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
 ]
@@ -20,7 +40,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/rule_interpreter"]
+packages = ["src/rulang"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -35,7 +55,7 @@ addopts = [
 
 [tool.coverage.run]
 omit = [
-    "src/rule_interpreter/grammar/generated/*",
+    "src/rulang/grammar/generated/*",
 ]
 
 [tool.coverage.report]
@@ -44,3 +64,18 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "raise NotImplementedError",
 ]
+
+[tool.bumpversion]
+current_version = "0.1.0"
+commit = false
+tag = false
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "src/rulang/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'

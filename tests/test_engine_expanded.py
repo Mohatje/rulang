@@ -4,13 +4,13 @@ import pytest
 import warnings
 from dataclasses import dataclass
 
-from rule_interpreter import RuleEngine, Workflow
-from rule_interpreter.exceptions import (
+from rulang import RuleEngine, Workflow
+from rulang.exceptions import (
     RuleSyntaxError,
     PathResolutionError,
     WorkflowNotFoundError,
 )
-from rule_interpreter.workflows import clear_workflow_registry
+from rulang.workflows import clear_workflow_registry
 
 
 @pytest.fixture(autouse=True)

@@ -4,8 +4,8 @@ import pytest
 from dataclasses import dataclass
 from math import inf, nan
 
-from rule_interpreter.visitor import parse_rule, RuleInterpreter
-from rule_interpreter.exceptions import PathResolutionError, WorkflowNotFoundError, EvaluationError
+from rulang.visitor import parse_rule, RuleInterpreter
+from rulang.exceptions import PathResolutionError, WorkflowNotFoundError, EvaluationError
 
 
 class TestComparisonEvaluation:
@@ -576,7 +576,7 @@ class TestWorkflowExecution:
             interpreter.execute(rule.tree)
 
     def test_workflow_with_wrapper_class(self):
-        from rule_interpreter.workflows import Workflow
+        from rulang.workflows import Workflow
         
         def process(e):
             e["processed"] = True

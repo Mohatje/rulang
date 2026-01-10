@@ -14,18 +14,18 @@ from typing import Any, Callable
 from antlr4 import CommonTokenStream, InputStream
 from antlr4.error.ErrorListener import ErrorListener
 
-from rule_interpreter.grammar.generated.BusinessRulesLexer import BusinessRulesLexer
-from rule_interpreter.grammar.generated.BusinessRulesParser import BusinessRulesParser
-from rule_interpreter.grammar.generated.BusinessRulesVisitor import (
+from rulang.grammar.generated.BusinessRulesLexer import BusinessRulesLexer
+from rulang.grammar.generated.BusinessRulesParser import BusinessRulesParser
+from rulang.grammar.generated.BusinessRulesVisitor import (
     BusinessRulesVisitor as BaseVisitor,
 )
-from rule_interpreter.exceptions import (
+from rulang.exceptions import (
     EvaluationError,
     PathResolutionError,
     RuleSyntaxError,
     WorkflowNotFoundError,
 )
-from rule_interpreter.path_resolver import PathResolver
+from rulang.path_resolver import PathResolver
 
 
 # Built-in functions registry

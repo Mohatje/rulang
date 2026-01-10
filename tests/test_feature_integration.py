@@ -12,7 +12,7 @@ Tests comprehensive scenarios combining:
 
 import pytest
 
-from rule_interpreter import RuleEngine, Workflow
+from rulang import RuleEngine, Workflow
 
 
 class TestDependencyTrackingWithNewOperators:
@@ -50,7 +50,7 @@ class TestDependencyTrackingWithNewOperators:
 
     def test_null_coalescing_dependency_tracking(self):
         """Test that null coalescing tracks both paths."""
-        from rule_interpreter.visitor import parse_rule
+        from rulang.visitor import parse_rule
 
         rule = parse_rule("entity.primary ?? entity.fallback > 0 => entity.has_value = true")
 
@@ -409,7 +409,7 @@ class TestErrorHandlingWithNewOperators:
 
     def test_syntax_error_missing_contains_operand(self):
         """Test syntax error when contains is missing operand."""
-        from rule_interpreter import RuleSyntaxError
+        from rulang import RuleSyntaxError
 
         engine = RuleEngine()
         with pytest.raises(RuleSyntaxError):
@@ -417,7 +417,7 @@ class TestErrorHandlingWithNewOperators:
 
     def test_syntax_error_missing_startswith_operand(self):
         """Test syntax error when startswith is missing operand."""
-        from rule_interpreter import RuleSyntaxError
+        from rulang import RuleSyntaxError
 
         engine = RuleEngine()
         with pytest.raises(RuleSyntaxError):
@@ -425,7 +425,7 @@ class TestErrorHandlingWithNewOperators:
 
     def test_syntax_error_missing_null_coalesce_default(self):
         """Test syntax error when ?? is missing default value."""
-        from rule_interpreter import RuleSyntaxError
+        from rulang import RuleSyntaxError
 
         engine = RuleEngine()
         with pytest.raises(RuleSyntaxError):
@@ -433,7 +433,7 @@ class TestErrorHandlingWithNewOperators:
 
     def test_syntax_error_missing_null_safe_property(self):
         """Test syntax error when ?. is missing property."""
-        from rule_interpreter import RuleSyntaxError
+        from rulang import RuleSyntaxError
 
         engine = RuleEngine()
         with pytest.raises(RuleSyntaxError):
@@ -441,7 +441,7 @@ class TestErrorHandlingWithNewOperators:
 
     def test_path_resolution_error_without_null_safe(self):
         """Test PathResolutionError when accessing None without null-safe."""
-        from rule_interpreter import PathResolutionError
+        from rulang import PathResolutionError
 
         engine = RuleEngine()
         engine.add_rules(["entity.user.name == 'test' => ret true"])
@@ -469,7 +469,7 @@ class TestErrorHandlingWithNewOperators:
 
     def test_type_coercion_error(self):
         """Test that invalid type coercion raises EvaluationError."""
-        from rule_interpreter import EvaluationError
+        from rulang import EvaluationError
 
         engine = RuleEngine()
         engine.add_rules(["int(entity.value) > 10 => ret true"])
@@ -636,7 +636,7 @@ class TestRuleAnalyzerWithNewOperators:
 
     def test_string_operators_reads(self):
         """Test reads extraction for string operators."""
-        from rule_interpreter.visitor import parse_rule
+        from rulang.visitor import parse_rule
 
         rule = parse_rule("entity.text contains 'test' => entity.found = true")
         assert "entity.text" in rule.reads
@@ -644,7 +644,7 @@ class TestRuleAnalyzerWithNewOperators:
 
     def test_function_calls_reads(self):
         """Test reads extraction for function calls."""
-        from rule_interpreter.visitor import parse_rule
+        from rulang.visitor import parse_rule
 
         rule = parse_rule("lower(entity.name) == 'john' => entity.matched = true")
         assert "entity.name" in rule.reads
@@ -652,7 +652,7 @@ class TestRuleAnalyzerWithNewOperators:
 
     def test_null_safe_and_coalescing_reads(self):
         """Test reads extraction for null-safe and coalescing."""
-        from rule_interpreter.visitor import parse_rule
+        from rulang.visitor import parse_rule
 
         rule = parse_rule("entity.a?.b ?? entity.c > 0 => entity.result = true")
         assert "entity.a.b" in rule.reads  # null-safe path
@@ -661,7 +661,7 @@ class TestRuleAnalyzerWithNewOperators:
 
     def test_compound_assignment_reads_and_writes(self):
         """Test compound assignment tracks both read and write."""
-        from rule_interpreter.visitor import parse_rule
+        from rulang.visitor import parse_rule
 
         rule = parse_rule("true => entity.counter += 1")
         assert "entity.counter" in rule.reads
