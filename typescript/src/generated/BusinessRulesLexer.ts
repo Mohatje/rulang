@@ -1,17 +1,19 @@
 // @ts-nocheck
 // Generated from BusinessRules.g4 by ANTLR 4.13.2
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
-import {
-	ATN,
-	ATNDeserializer,
-	CharStream,
-	DecisionState, DFA,
-	Lexer,
-	LexerATNSimulator,
-	RuleContext,
-	PredictionContextCache,
-	Token
-} from "antlr4";
+import * as antlr4 from "antlr4";
+const {
+  ATN,
+  ATNDeserializer,
+  CharStream,
+  DecisionState,
+  DFA,
+  Lexer,
+  LexerATNSimulator,
+  RuleContext,
+  PredictionContextCache,
+  Token
+} = antlr4;
 export default class BusinessRulesLexer extends Lexer {
 	public static readonly TRUE = 1;
 	public static readonly FALSE = 2;

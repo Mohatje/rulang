@@ -16,7 +16,8 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "npm run build && vitest run && npm run test:esm-import",
+    "test:esm-import": "node --input-type=module -e \"import('./dist/index.js').catch((error) => { console.error(error); process.exit(1); })\""
   },
   "dependencies": {
     "antlr4": "^4.13.2"

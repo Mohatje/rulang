@@ -24,3 +24,5 @@ for generated_file in "$TYPESCRIPT_OUT"/BusinessRules*.ts; do
   } > "$tmp_file"
   mv "$tmp_file" "$generated_file"
 done
+
+node "$ROOT_DIR/scripts/patch_antlr_typescript_imports.mjs" "$TYPESCRIPT_OUT"

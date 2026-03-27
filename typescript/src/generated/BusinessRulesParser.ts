@@ -2,16 +2,29 @@
 // Generated from BusinessRules.g4 by ANTLR 4.13.2
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 
-import {
-	ATN,
-	ATNDeserializer, DecisionState, DFA, FailedPredicateException,
-	RecognitionException, NoViableAltException, BailErrorStrategy,
-	Parser, ParserATNSimulator,
-	RuleContext, ParserRuleContext, PredictionMode, PredictionContextCache,
-	TerminalNode, RuleNode,
-	Token, TokenStream,
-	Interval, IntervalSet
-} from 'antlr4';
+import * as antlr4 from "antlr4";
+const {
+  ATN,
+  ATNDeserializer,
+  DecisionState,
+  DFA,
+  FailedPredicateException,
+  RecognitionException,
+  NoViableAltException,
+  BailErrorStrategy,
+  Parser,
+  ParserATNSimulator,
+  RuleContext,
+  ParserRuleContext,
+  PredictionMode,
+  PredictionContextCache,
+  TerminalNode,
+  RuleNode,
+  Token,
+  TokenStream,
+  Interval,
+  IntervalSet
+} = antlr4;
 import BusinessRulesListener from "./BusinessRulesListener.js";
 import BusinessRulesVisitor from "./BusinessRulesVisitor.js";
 

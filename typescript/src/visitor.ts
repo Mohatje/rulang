@@ -39,6 +39,11 @@ import { Workflow, type WorkflowLike } from "./workflows.js";
 
 type PathPart = string | number;
 
+function isPlainObject(value: object): boolean {
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
+}
+
 function pythonTruthiness(value: unknown): boolean {
   if (value === null || value === undefined) {
     return false;
@@ -62,28 +67,87 @@ function pythonTruthiness(value: unknown): boolean {
     return value.size > 0;
   }
   if (typeof value === "object") {
-    return Object.keys(value as Record<string, unknown>).length > 0;
+    if (isPlainObject(value)) {
+      return Object.keys(value as Record<string, unknown>).length > 0;
+    }
+    return true;
   }
   return true;
 }
 
-function pythonRound(value: number, digits = 0): number {
-  const factor = 10 ** digits;
-  const scaled = value * factor;
-  const floorValue = Math.floor(scaled);
-  const diff = scaled - floorValue;
+function powerOfTen(exponent: number): bigint {
+  return 10n ** BigInt(exponent);
+}
 
-  let rounded: number;
-  if (diff > 0.5) {
-    rounded = floorValue + 1;
-  } else if (diff < 0.5) {
-    rounded = floorValue;
-  } else {
-    rounded = floorValue % 2 === 0 ? floorValue : floorValue + 1;
+function roundHalfEven(value: bigint, divisor: bigint): bigint {
+  const quotient = value / divisor;
+  const remainder = value % divisor;
+  const doubledRemainder = remainder * 2n;
+
+  if (doubledRemainder < divisor) {
+    return quotient;
+  }
+  if (doubledRemainder > divisor) {
+    return quotient + 1n;
+  }
+  return quotient % 2n === 0n ? quotient : quotient + 1n;
+}
+
+function decomposeFloat(value: number): {
+  sign: 1 | -1;
+  digits: bigint;
+  exponent10: number;
+} {
+  const sign = value < 0 || Object.is(value, -0) ? -1 : 1;
+  const normalized = Math.abs(value).toPrecision(17);
+  const [mantissa, exponentText = "0"] = normalized.toLowerCase().split("e");
+  const exponentPart = Number.parseInt(exponentText, 10);
+  const unsignedMantissa = mantissa.replace(/^[+-]/, "");
+  const decimalIndex = unsignedMantissa.indexOf(".");
+  const fractionalDigits = decimalIndex === -1 ? 0 : unsignedMantissa.length - decimalIndex - 1;
+  let digitsText = unsignedMantissa.replace(".", "").replace(/^0+(?=\d)/, "");
+  let exponent10 = exponentPart - fractionalDigits;
+
+  if (digitsText === "") {
+    return { sign: 1, digits: 0n, exponent10: 0 };
   }
 
-  const result = rounded / factor;
-  return digits === 0 ? Math.trunc(result) : Number(result.toFixed(digits));
+  while (digitsText.length > 1 && digitsText.endsWith("0")) {
+    digitsText = digitsText.slice(0, -1);
+    exponent10 += 1;
+  }
+
+  return {
+    sign,
+    digits: BigInt(digitsText),
+    exponent10,
+  };
+}
+
+function pythonRound(value: number, digits = 0): number {
+  if (!Number.isFinite(value)) {
+    return value;
+  }
+
+  const precision = Math.trunc(digits);
+  const { sign, digits: coefficient, exponent10 } = decomposeFloat(value);
+  const shift = exponent10 + precision;
+
+  let roundedCoefficient: bigint;
+  if (shift >= 0) {
+    roundedCoefficient = coefficient * powerOfTen(shift);
+  } else {
+    roundedCoefficient = roundHalfEven(coefficient, powerOfTen(-shift));
+  }
+
+  let result: number;
+  if (precision >= 0) {
+    result = Number(roundedCoefficient) / 10 ** precision;
+  } else {
+    result = Number(roundedCoefficient) * 10 ** -precision;
+  }
+
+  return sign === -1 ? -result : result;
 }
 
 function mapKeys(value: unknown): string[] {

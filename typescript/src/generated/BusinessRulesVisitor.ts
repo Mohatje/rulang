@@ -1,7 +1,10 @@
 // @ts-nocheck
 // Generated from BusinessRules.g4 by ANTLR 4.13.2
 
-import {ParseTreeVisitor} from 'antlr4';
+import * as antlr4 from "antlr4";
+const {
+  ParseTreeVisitor
+} = antlr4;
 
 
 import { Rule_Context } from "./BusinessRulesParser.js";

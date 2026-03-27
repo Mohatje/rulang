@@ -22,6 +22,7 @@ export class RuleEngine {
   private readonly rules: ParsedRule[] = [];
   private graph = new DependencyGraph();
   private executionOrder: number[] | null = null;
+  private executionOrderWorkflowKey: string | null = null;
 
   public constructor(private readonly mode: EvaluationMode = "first_match") {}
 
@@ -39,9 +40,7 @@ export class RuleEngine {
     entityName = "entity",
   ): unknown {
     const allWorkflows = mergeWorkflows(workflows);
-    if (this.executionOrder === null) {
-      this.buildExecutionOrder(allWorkflows);
-    }
+    this.ensureExecutionOrder(allWorkflows);
 
     let anyMatched = false;
     let lastReturnValue: unknown = null;
@@ -80,24 +79,50 @@ export class RuleEngine {
   }
 
   private buildExecutionOrder(
-    workflows?: Record<string, WorkflowLike>,
+    workflows: Record<string, WorkflowLike>,
+    workflowKey: string,
   ): void {
     this.graph = new DependencyGraph();
     this.rules.forEach((rule) => this.graph.addRule(rule, workflows));
     this.executionOrder = this.graph.getExecutionOrder();
+    this.executionOrderWorkflowKey = workflowKey;
+  }
+
+  private getWorkflowDependencyKey(workflows: Record<string, WorkflowLike>): string {
+    const entries = Object.entries(workflows)
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([name, workflowLike]) => {
+        if (typeof workflowLike === "function") {
+          return [name, null];
+        }
+
+        return [
+          name,
+          [...workflowLike.reads].sort(),
+          [...workflowLike.writes].sort(),
+        ];
+      });
+
+    return JSON.stringify(entries);
+  }
+
+  private ensureExecutionOrder(workflows: Record<string, WorkflowLike>): void {
+    const workflowKey = this.getWorkflowDependencyKey(workflows);
+    if (
+      this.executionOrder === null ||
+      this.executionOrderWorkflowKey !== workflowKey
+    ) {
+      this.buildExecutionOrder(workflows, workflowKey);
+    }
   }
 
   public getDependencyGraph(): Record<number, Set<number>> {
-    if (this.executionOrder === null) {
-      this.buildExecutionOrder();
-    }
+    this.ensureExecutionOrder(mergeWorkflows());
     return this.graph.getGraph();
   }
 
   public getExecutionOrder(): number[] {
-    if (this.executionOrder === null) {
-      this.buildExecutionOrder();
-    }
+    this.ensureExecutionOrder(mergeWorkflows());
     return [...(this.executionOrder ?? [])];
   }
 
@@ -128,6 +153,7 @@ export class RuleEngine {
     this.rules.splice(0, this.rules.length);
     this.graph = new DependencyGraph();
     this.executionOrder = null;
+    this.executionOrderWorkflowKey = null;
   }
 
   public get size(): number {
