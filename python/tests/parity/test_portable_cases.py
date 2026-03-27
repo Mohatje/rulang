@@ -10,8 +10,17 @@ from rulang.visitor import parse_rule
 
 
 CASES_PATH = Path(__file__).resolve().parents[3] / "spec" / "generated" / "python-portable-cases.json"
-WORKFLOW_CASES_PATH = Path(__file__).resolve().parents[3] / "spec" / "portable" / "workflow-portable-cases.json"
-CASES = json.loads(CASES_PATH.read_text()) + json.loads(WORKFLOW_CASES_PATH.read_text())
+PORTABLE_CASES_DIR = Path(__file__).resolve().parents[3] / "spec" / "portable"
+
+
+def _load_cases():
+    cases = json.loads(CASES_PATH.read_text())
+    for path in sorted(PORTABLE_CASES_DIR.glob("*.json")):
+        cases.extend(json.loads(path.read_text()))
+    return cases
+
+
+CASES = _load_cases()
 
 
 def _get_path(entity, path: str):

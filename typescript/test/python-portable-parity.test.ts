@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { readdirSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { describe, expect, test } from "vitest";
 import { RuleEngine, RuleSyntaxError, Workflow, parseRule } from "../src/index.js";
 
@@ -52,10 +53,13 @@ type PortableCase =
     };
 
 const casesPath = resolve(process.cwd(), "..", "spec", "generated", "python-portable-cases.json");
-const workflowCasesPath = resolve(process.cwd(), "..", "spec", "portable", "workflow-portable-cases.json");
+const portableCasesDir = resolve(process.cwd(), "..", "spec", "portable");
 const cases = [
   ...(JSON.parse(readFileSync(casesPath, "utf8")) as PortableCase[]),
-  ...(JSON.parse(readFileSync(workflowCasesPath, "utf8")) as PortableCase[]),
+  ...readdirSync(portableCasesDir)
+    .filter((file) => file.endsWith(".json"))
+    .sort()
+    .flatMap((file) => JSON.parse(readFileSync(join(portableCasesDir, file), "utf8")) as PortableCase[]),
 ];
 
 function getPath(entity: Record<string, unknown>, path: string): unknown {
