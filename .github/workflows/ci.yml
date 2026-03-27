@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  python:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -23,16 +23,37 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: uv sync --all-extras
+        run: uv --directory python sync --all-extras
 
       - name: Run tests
-        run: uv run pytest --cov=src --cov-report=xml --cov-report=term-missing
+        run: uv --directory python run python -m pytest --cov=src --cov-report=xml --cov-report=term-missing
 
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.12'
         uses: codecov/codecov-action@v5
         with:
-          files: ./coverage.xml
+          files: ./python/coverage.xml
           fail_ci_if_error: false
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  typescript:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript package
+        run: npm run build:typescript
+
+      - name: Run TypeScript tests
+        run: npm run test:typescript

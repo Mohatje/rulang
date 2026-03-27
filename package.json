@@ -1,0 +1,14 @@
+{
+  "name": "rulang-monorepo",
+  "private": true,
+  "workspaces": [
+    "typescript"
+  ],
+  "scripts": {
+    "generate:parsers": "./scripts/generate_parsers.sh",
+    "sync:python": "uv --directory python sync --all-extras",
+    "test:python": "uv --directory python run --extra dev python -m pytest",
+    "test:typescript": "npm --workspace typescript test",
+    "build:typescript": "npm --workspace typescript run build"
+  }
+}

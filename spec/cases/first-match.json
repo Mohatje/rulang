@@ -1,0 +1,19 @@
+{
+  "id": "first-match",
+  "description": "First-match mode returns the first matching rule result",
+  "mode": "first_match",
+  "rules": [
+    "entity.value > 100 => ret 'high'",
+    "entity.value > 50 => ret 'medium'",
+    "entity.value > 0 => ret 'low'"
+  ],
+  "input": {
+    "value": 75
+  },
+  "expected": {
+    "result": "medium",
+    "entity": {
+      "value": 75
+    }
+  }
+}

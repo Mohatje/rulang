@@ -1,0 +1,26 @@
+{
+  "id": "dependency-order",
+  "description": "Dependency graph reorders rules to satisfy read-after-write dependencies",
+  "mode": "all_match",
+  "rules": [
+    "entity.b > 0 => entity.c = 1",
+    "entity.a > 0 => entity.b = 1"
+  ],
+  "input": {
+    "a": 10,
+    "b": 0,
+    "c": 0
+  },
+  "expected": {
+    "result": true,
+    "entity": {
+      "a": 10,
+      "b": 1,
+      "c": 1
+    },
+    "execution_order": [
+      1,
+      0
+    ]
+  }
+}

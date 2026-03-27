@@ -2,6 +2,9 @@
 
 A lightweight DSL for business rules in Python, built with ANTLR4.
 
+This repository now also contains a TypeScript runtime that targets the same
+DSL grammar and a shared cross-runtime spec suite.
+
 ## Features
 
 - **Expressive DSL**: Define business rules with a clean, readable syntax
@@ -18,6 +21,13 @@ A lightweight DSL for business rules in Python, built with ANTLR4.
 
 ```bash
 uv add rulang
+```
+
+For the TypeScript runtime in this repository:
+
+```bash
+npm install
+npm run build:typescript
 ```
 
 ## Quick Start
@@ -40,6 +50,13 @@ engine.evaluate(entity)
 
 print(entity)  # {'age': 25, 'is_adult': True, 'discount': 0.1}
 ```
+
+## Repository Layout
+
+- `grammar/`: shared ANTLR grammar source of truth
+- `spec/cases/`: language-neutral behavior spec
+- `python/`: Python package, tests, and lockfile
+- `typescript/`: TypeScript runtime
 
 ## DSL Syntax
 
@@ -441,13 +458,17 @@ except WorkflowNotFoundError as e:
 
 ```bash
 # Install dev dependencies
-uv sync --all-extras
+npm install
+uv --directory python sync --all-extras
 
-# Run tests
-uv run pytest tests/ -v
+# Run Python tests
+uv --directory python run python -m pytest tests/ -v
+
+# Run TypeScript tests
+npm run test:typescript
 
 # Regenerate parser (after grammar changes)
-uv run antlr4 -Dlanguage=Python3 -visitor -o src/rule_interpreter/grammar/generated src/rule_interpreter/grammar/BusinessRules.g4
+npm run generate:parsers
 ```
 
 ## License

@@ -1,0 +1,16 @@
+{
+  "id": "read-write-analysis",
+  "description": "Rule analysis normalizes implicit entity references",
+  "parse_only": true,
+  "rule": "age >= 18 and status == 'active' => discount = 0.1",
+  "expected": {
+    "reads": [
+      "entity.age",
+      "entity.status"
+    ],
+    "writes": [
+      "entity.discount"
+    ],
+    "workflow_calls": []
+  }
+}

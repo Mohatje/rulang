@@ -1,0 +1,9 @@
+{
+  "id": "syntax-error",
+  "description": "Invalid rules fail with a syntax error",
+  "parse_only": true,
+  "rule": "entity.age >= => entity.valid = true",
+  "expected": {
+    "error_type": "RuleSyntaxError"
+  }
+}

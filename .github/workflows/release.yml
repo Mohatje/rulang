@@ -42,7 +42,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.bump-type.outputs.type != 'skip'
-        run: uv sync --all-extras
+        run: uv --directory python sync --all-extras
 
       - name: Configure git
         if: steps.bump-type.outputs.type != 'skip'
@@ -54,16 +54,16 @@ jobs:
         if: steps.bump-type.outputs.type != 'skip'
         id: version
         run: |
-          OLD_VERSION=$(uv run bump-my-version show current_version)
-          uv run bump-my-version bump ${{ steps.bump-type.outputs.type }}
-          NEW_VERSION=$(uv run bump-my-version show current_version)
+          OLD_VERSION=$(uv --directory python run bump-my-version show current_version)
+          uv --directory python run bump-my-version bump ${{ steps.bump-type.outputs.type }}
+          NEW_VERSION=$(uv --directory python run bump-my-version show current_version)
           echo "old_version=$OLD_VERSION" >> $GITHUB_OUTPUT
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit version bump
         if: steps.bump-type.outputs.type != 'skip'
         run: |
-          git add pyproject.toml src/rulang/__init__.py
+          git add python/pyproject.toml python/src/rulang/__init__.py
           git commit -m "Bump version: ${{ steps.version.outputs.old_version }} → ${{ steps.version.outputs.new_version }}"
           git tag "v${{ steps.version.outputs.new_version }}"
 
@@ -85,10 +85,10 @@ jobs:
 
       - name: Build package
         if: steps.bump-type.outputs.type != 'skip'
-        run: uv build
+        run: uv --directory python build
 
       - name: Publish to PyPI
         if: steps.bump-type.outputs.type != 'skip'
-        run: uv publish
+        run: uv --directory python publish
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
