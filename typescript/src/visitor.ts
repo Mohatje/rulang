@@ -453,10 +453,10 @@ export class RuleInterpreter extends BaseRuleVisitor<unknown> {
 
     if (ctx.EQ()) return this.compareEq(left, right);
     if (ctx.NEQ()) return !this.compareEq(left, right);
-    if (ctx.LT()) return Number(left) < Number(right);
-    if (ctx.GT()) return Number(left) > Number(right);
-    if (ctx.LTE()) return Number(left) <= Number(right);
-    if (ctx.GTE()) return Number(left) >= Number(right);
+    if (ctx.LT()) return this.compareOrder(left, right, "lt");
+    if (ctx.GT()) return this.compareOrder(left, right, "gt");
+    if (ctx.LTE()) return this.compareOrder(left, right, "lte");
+    if (ctx.GTE()) return this.compareOrder(left, right, "gte");
     if (ctx.IN()) return this.checkIn(left, right);
     if (ctx.NOT_IN()) return !this.checkIn(left, right);
     if (ctx.CONTAINS()) return this.contains(left, right);
@@ -500,6 +500,20 @@ export class RuleInterpreter extends BaseRuleVisitor<unknown> {
       return right.some((item) => isDeepStrictEqual(left, item));
     }
     return isDeepStrictEqual(left, right);
+  }
+
+  private compareOrder(left: unknown, right: unknown, op: "lt" | "gt" | "lte" | "gte"): boolean {
+    if (typeof left === "string" && typeof right === "string") {
+      if (op === "lt") return left < right;
+      if (op === "gt") return left > right;
+      if (op === "lte") return left <= right;
+      return left >= right;
+    }
+
+    if (op === "lt") return (left as never) < (right as never);
+    if (op === "gt") return (left as never) > (right as never);
+    if (op === "lte") return (left as never) <= (right as never);
+    return (left as never) >= (right as never);
   }
 
   private checkIn(left: unknown, right: unknown): boolean {

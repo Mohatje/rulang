@@ -1,5 +1,11 @@
 [
   {
+    "expected_entity": {
+      "items": [
+        "apple",
+        "banana"
+      ]
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_first_basic::1",
     "input": {
@@ -15,6 +21,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        "banana",
+        "apple"
+      ]
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestCollectionFunctions.test_first_basic::2",
     "input": {
@@ -30,6 +42,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": []
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_first_empty::1",
     "input": {
@@ -42,6 +57,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "data": {
+        "age": 30,
+        "name": "John"
+      }
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_keys_basic::1",
     "input": {
@@ -57,6 +78,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "data": {
+        "age": 30
+      }
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestCollectionFunctions.test_keys_basic::2",
     "input": {
@@ -71,6 +97,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        "apple",
+        "banana"
+      ]
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_last_basic::1",
     "input": {
@@ -86,6 +118,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        "banana",
+        "apple"
+      ]
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestCollectionFunctions.test_last_basic::2",
     "input": {
@@ -101,6 +139,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": []
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_last_empty::1",
     "input": {
@@ -113,6 +154,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "meta": {
+        "a": 1,
+        "b": 2
+      }
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_len_dict::1",
     "input": {
@@ -128,6 +175,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "meta": {
+        "a": 1
+      }
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestCollectionFunctions.test_len_dict::2",
     "input": {
@@ -142,6 +194,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        1,
+        2,
+        3
+      ]
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_len_list::1",
     "input": {
@@ -158,6 +217,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": []
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestCollectionFunctions.test_len_list::2",
     "input": {
@@ -170,6 +232,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "Jonathan"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_len_string::1",
     "input": {
@@ -182,6 +247,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "John"
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestCollectionFunctions.test_len_string::2",
     "input": {
@@ -194,6 +262,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": null
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_len_with_none::1",
     "input": {
@@ -206,6 +277,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "data": {
+        "age": 30,
+        "name": "John"
+      }
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestCollectionFunctions.test_values_basic::1",
     "input": {
@@ -221,6 +298,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "data": {
+        "name": "Jane"
+      }
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestCollectionFunctions.test_values_basic::2",
     "input": {
@@ -235,6 +317,18 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": [
+        1,
+        2,
+        3
+      ],
+      "b": [
+        4,
+        5,
+        6
+      ]
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestFunctionWithOperators.test_arithmetic_with_functions::1",
     "input": {
@@ -256,6 +350,14 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": [
+        1
+      ],
+      "b": [
+        2
+      ]
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestFunctionWithOperators.test_arithmetic_with_functions::2",
     "input": {
@@ -273,6 +375,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "User@EXAMPLE.com"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestFunctionWithOperators.test_lower_contains::1",
     "input": {
@@ -285,6 +390,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": -10
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_abs_negative::1",
     "input": {
@@ -297,6 +405,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 10
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_abs_positive::1",
     "input": {
@@ -309,6 +420,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": 3,
+      "b": 1,
+      "c": 2
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_max_function::1",
     "input": {
@@ -323,6 +439,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": 3,
+      "b": 1,
+      "c": 2
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_min_function::1",
     "input": {
@@ -337,6 +458,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": 99.994
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_round_basic::1",
     "input": {
@@ -349,6 +473,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": 99.986
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_round_basic::2",
     "input": {
@@ -361,6 +488,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": 99.5
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_round_no_decimals::1",
     "input": {
@@ -373,6 +503,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": 100.4
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestMathFunctions.test_round_no_decimals::2",
     "input": {
@@ -385,6 +518,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "data": {
+        "name": "John"
+      }
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestNestedFunctionCalls.test_first_of_keys::1",
     "input": {
@@ -399,6 +537,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": -10.5
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestNestedFunctionCalls.test_int_of_abs::1",
     "input": {
@@ -411,6 +552,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "  hello  "
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestNestedFunctionCalls.test_len_of_trim::1",
     "input": {
@@ -423,6 +567,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "  HELLO  "
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestNestedFunctionCalls.test_lower_of_trim::1",
     "input": {
@@ -435,6 +582,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "JOHN"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::1",
     "input": {
@@ -447,6 +597,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "John"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::2",
     "input": {
@@ -459,6 +612,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "john"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::3",
     "input": {
@@ -471,6 +627,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "Jane"
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::4",
     "input": {
@@ -483,6 +642,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "subject": "URGENT: Please review"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_in_contains::1",
     "input": {
@@ -495,6 +657,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "subject": "Urgent request"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_in_contains::2",
     "input": {
@@ -507,6 +672,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "subject": "Normal message"
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_in_contains::3",
     "input": {
@@ -519,6 +687,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": null
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_lower_with_none::1",
     "input": {
@@ -531,6 +702,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "  hello  "
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_strip_alias::1",
     "input": {
@@ -543,6 +717,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "  hello  "
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_trim_basic::1",
     "input": {
@@ -555,6 +732,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "hello"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_trim_basic::2",
     "input": {
@@ -567,6 +747,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "\thello\n"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_trim_basic::3",
     "input": {
@@ -579,6 +762,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "code": "abc"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_upper_basic::1",
     "input": {
@@ -591,6 +777,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "code": "Abc"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_upper_basic::2",
     "input": {
@@ -603,6 +792,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "code": "ABC"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestStringFunctions.test_upper_basic::3",
     "input": {
@@ -615,6 +807,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": "not a list"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_false::1",
     "input": {
@@ -627,6 +822,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": 123
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_false::2",
     "input": {
@@ -639,6 +837,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        1,
+        2,
+        3
+      ]
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_true::1",
     "input": {
@@ -655,6 +860,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": []
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_true::2",
     "input": {
@@ -667,6 +875,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": ""
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_false::1",
     "input": {
@@ -679,6 +890,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 0
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_false::2",
     "input": {
@@ -691,6 +905,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": false
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_false::3",
     "input": {
@@ -703,6 +920,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": null
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_true::1",
     "input": {
@@ -715,6 +935,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": "123"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_false::1",
     "input": {
@@ -727,6 +950,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": null
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_false::2",
     "input": {
@@ -739,6 +965,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 123
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_true::1",
     "input": {
@@ -751,6 +980,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 3.14
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_true::2",
     "input": {
@@ -763,6 +995,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 123
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_false::1",
     "input": {
@@ -775,6 +1010,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": [
+        1,
+        2
+      ]
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_false::2",
     "input": {
@@ -790,6 +1031,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "John"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_true::1",
     "input": {
@@ -802,6 +1046,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": ""
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_true::2",
     "input": {
@@ -814,6 +1061,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 0
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_falsy::1",
     "input": {
@@ -826,6 +1076,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": ""
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_falsy::2",
     "input": {
@@ -838,6 +1091,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": []
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_falsy::3",
     "input": {
@@ -850,6 +1106,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 1
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_truthy::1",
     "input": {
@@ -862,6 +1121,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": "yes"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_truthy::2",
     "input": {
@@ -874,6 +1136,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": [
+        1,
+        2
+      ]
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_truthy::3",
     "input": {
@@ -889,6 +1157,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 100
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_int::1",
     "input": {
@@ -901,6 +1172,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": "99.99"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_string::1",
     "input": {
@@ -913,6 +1187,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": "100.50"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_string::2",
     "input": {
@@ -925,6 +1202,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": "50.00"
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_string::3",
     "input": {
@@ -937,6 +1217,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "price": 99.99
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_from_float::1",
     "input": {
@@ -949,6 +1232,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "quantity": "150"
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_from_string::1",
     "input": {
@@ -961,6 +1247,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "quantity": "50"
+    },
     "expected_result": null,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_from_string::2",
     "input": {
@@ -973,6 +1262,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": null
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_with_none::1",
     "input": {
@@ -985,6 +1277,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "code": 123
+    },
     "expected_result": true,
     "id": "test_builtin_functions::TestTypeCoercionFunctions.test_str_from_number::1",
     "input": {
@@ -997,6 +1292,871 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 150
+    },
+    "expected_result": "high",
+    "id": "test_engine::TestBasicUsage.test_multiple_rules_as_list::1",
+    "input": {
+      "value": 150
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 100 => ret 'high'",
+      "entity.value > 50 => ret 'medium'",
+      "entity.value > 0 => ret 'low'"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 15
+    },
+    "expected_result": true,
+    "id": "test_engine::TestBasicUsage.test_single_rule::1",
+    "input": {
+      "value": 15
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 10 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "counter": 3,
+      "value": 10
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_all_match_mode_executes_all::1",
+    "input": {
+      "counter": 0,
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.value > 0 => entity.counter += 1",
+      "entity.value > 0 => entity.counter += 1",
+      "entity.value > 0 => entity.counter += 1"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": 3,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_all_match_mode_returns_last_value::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.value > 0 => ret 1",
+      "entity.value > 0 => ret 2",
+      "entity.value > 0 => ret 3"
+    ]
+  },
+  {
+    "expected_entity": {
+      "counter": 1,
+      "value": 10
+    },
+    "expected_result": 1,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_first_match_mode_stops_after_first::1",
+    "input": {
+      "counter": 0,
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => entity.counter = 1; ret 1",
+      "entity.value > 0 => entity.counter = 2; ret 2",
+      "entity.value > 0 => entity.counter = 3; ret 3"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": 1,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_replacement::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret 1"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": 1,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_replacement::2",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret 1",
+      "entity.value > 0 => ret 2"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 5,
+      "b": 5
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_arithmetic_addition::1",
+    "input": {
+      "a": 5,
+      "b": 5
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a + entity.b >= 10 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 5
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_arithmetic_division::1",
+    "input": {
+      "a": 10,
+      "b": 5
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a / entity.b >= 2 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 5
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_arithmetic_modulo::1",
+    "input": {
+      "a": 10,
+      "b": 5
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a % entity.b == 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 5,
+      "b": 4
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_arithmetic_multiplication::1",
+    "input": {
+      "a": 5,
+      "b": 4
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a * entity.b >= 20 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 5
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_arithmetic_subtraction::1",
+    "input": {
+      "a": 10,
+      "b": 5
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a - entity.b >= 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": false
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_boolean_false::1",
+    "input": {
+      "value": false
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == false => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": true
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_boolean_true::1",
+    "input": {
+      "value": true
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == true => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "w": 30,
+      "x": 10,
+      "y": 10,
+      "z": 20
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_complex_dependencies::1",
+    "input": {
+      "w": 0,
+      "x": 10,
+      "y": 0,
+      "z": 0
+    },
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.x > 0 => entity.y = 10",
+      "entity.y > 0 => entity.z = 20",
+      "entity.z > 0 => entity.w = 30",
+      "entity.w > 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 10
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_cycle_detection::1",
+    "input": {
+      "a": 10,
+      "b": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a > 0 => entity.b = 10",
+      "entity.b > 0 => entity.a = 20"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 10,
+      "c": 20
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_dependency_chain::1",
+    "input": {
+      "a": 10,
+      "b": 0,
+      "c": 0
+    },
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.a > 0 => entity.b = 10",
+      "entity.b > 5 => entity.c = 20",
+      "entity.c > 15 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "index": 1,
+      "items": [
+        10,
+        100,
+        30
+      ]
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_dynamic_index::1",
+    "input": {
+      "index": 1,
+      "items": [
+        10,
+        20,
+        30
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.items[entity.index] > 0 => entity.items[entity.index] = 100; ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": []
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_empty_list::1",
+    "input": {
+      "value": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == [] => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": ""
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_empty_string::1",
+    "input": {
+      "value": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == \"\" => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 3.14
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_float::1",
+    "input": {
+      "value": 3.14
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == 3.14 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_list::1",
+    "input": {
+      "value": [
+        1,
+        2,
+        3
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == [1, 2, 3] => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "items": [
+        100,
+        20,
+        30
+      ]
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_list_indexing::1",
+    "input": {
+      "items": [
+        10,
+        20,
+        30
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.items[0] > 0 => entity.items[0] = 100; ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 20
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_logical_and::1",
+    "input": {
+      "a": 10,
+      "b": 20
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a > 0 and entity.b > 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": -10
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_logical_not::1",
+    "input": {
+      "value": -10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "not entity.value > 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 0
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_logical_or::1",
+    "input": {
+      "a": 10,
+      "b": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a > 0 or entity.b > 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 2
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_membership_in::1",
+    "input": {
+      "value": 2
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value in [1, 2, 3] => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 5
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_membership_not_in::1",
+    "input": {
+      "value": 5
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value not in [1, 2, 3] => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 10,
+      "c": 20,
+      "d": 20
+    },
+    "expected_result": 3,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_mixed_dependencies::1",
+    "input": {
+      "a": 10,
+      "b": 0,
+      "c": 20,
+      "d": 0
+    },
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.a > 0 => entity.b = 10",
+      "entity.c > 0 => ret 2",
+      "entity.b > 0 => entity.d = 20; ret 3"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": -3.14
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_negative_float::1",
+    "input": {
+      "value": -3.14
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == -3.14 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "items": [
+        10,
+        20,
+        100
+      ]
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_negative_index::1",
+    "input": {
+      "items": [
+        10,
+        20,
+        30
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.items[-1] > 0 => entity.items[-1] = 100; ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 0
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_negative_zero::1",
+    "input": {
+      "value": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_nested_list::1",
+    "input": {
+      "value": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == [[1, 2], [3, 4]] => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "level1": {
+        "level2": {
+          "result": 10,
+          "value": 10
+        }
+      }
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_nested_paths::1",
+    "input": {
+      "level1": {
+        "level2": {
+          "result": 0,
+          "value": 10
+        }
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.level1.level2.value > 0 => entity.level1.level2.result = 10; ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 10,
+      "b": 20,
+      "c": 30
+    },
+    "expected_result": 1,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_no_dependencies::1",
+    "input": {
+      "a": 10,
+      "b": 20,
+      "c": 30
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a > 0 => ret 1",
+      "entity.b > 0 => ret 2",
+      "entity.c > 0 => ret 3"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": null
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_none_value::1",
+    "input": {
+      "value": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == none => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "a": 1,
+      "b": 2,
+      "c": 3
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_parentheses::1",
+    "input": {
+      "a": 1,
+      "b": 2,
+      "c": 3
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "((entity.a + entity.b) * entity.c) > 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": false,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_return_boolean::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret false"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": {
+      "value": 10
+    },
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_return_entity::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret entity"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": 42,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_return_literal::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret 42"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": "success",
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_return_string::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret \"success\""
+    ]
+  },
+  {
+    "expected_entity": {
+      "name": "test"
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_string_comparison::1",
+    "input": {
+      "name": "test"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name == \"test\" => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "name": "z"
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_string_greater_than::1",
+    "input": {
+      "name": "z"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name > \"a\" => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "name": "other"
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_string_inequality::1",
+    "input": {
+      "name": "other"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name != \"test\" => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "name": "a"
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_string_less_than::1",
+    "input": {
+      "name": "a"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name < \"z\" => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": -10
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_unary_minus::1",
+    "input": {
+      "value": -10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "-entity.value >= 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 999999999999999999
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_very_large_number::1",
+    "input": {
+      "value": 999999999999999999
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == 999999999999999999 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 10
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_whitespace::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "  entity.value  >  0  =>  ret  true  "
+    ]
+  },
+  {
+    "expected_entity": {
+      "value": 0
+    },
+    "expected_result": true,
+    "id": "test_engine_edge_cases::TestEngineEdgeCases.test_rule_with_zero::1",
+    "input": {
+      "value": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == 0 => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "name": "John"
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestCombinedExistenceOperators.test_exists_and_not_empty::1",
     "input": {
@@ -1009,6 +2169,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": ""
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestCombinedExistenceOperators.test_exists_and_not_empty::2",
     "input": {
@@ -1021,6 +2184,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": null
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestCombinedExistenceOperators.test_exists_and_not_empty::3",
     "input": {
@@ -1033,6 +2199,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": 1,
+      "b": 2,
+      "c": null
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestCombinedExistenceOperators.test_multiple_existence_checks::1",
     "input": {
@@ -1047,6 +2218,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": 1,
+      "b": null,
+      "c": null
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestCombinedExistenceOperators.test_multiple_existence_checks::2",
     "input": {
@@ -1061,6 +2237,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": 1,
+      "b": 2,
+      "c": 3
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestCombinedExistenceOperators.test_multiple_existence_checks::3",
     "input": {
@@ -1075,6 +2256,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "profile": {
+          "name": "John"
+        }
+      }
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_nested_path::1",
     "input": {
@@ -1091,6 +2279,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": []
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_empty_list::1",
     "input": {
@@ -1103,6 +2294,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": ""
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_empty_string::1",
     "input": {
@@ -1115,6 +2309,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "flag": false
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_false::1",
     "input": {
@@ -1127,6 +2324,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "customer_id": null
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_none::1",
     "input": {
@@ -1139,6 +2339,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "customer_id": "C123"
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::1",
     "input": {
@@ -1151,6 +2354,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "customer_id": 123
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::2",
     "input": {
@@ -1163,6 +2369,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "customer_id": 0
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::3",
     "input": {
@@ -1175,6 +2384,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "customer_id": ""
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::4",
     "input": {
@@ -1187,6 +2399,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "count": 0
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_exists_with_zero::1",
     "input": {
@@ -1199,6 +2414,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "customer_id": null
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestExistsOperator.test_not_exists::1",
     "input": {
@@ -1211,6 +2429,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "customer_id": "C123"
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestExistsOperator.test_not_exists::2",
     "input": {
@@ -1223,6 +2444,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": "Some content"
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_content::1",
     "input": {
@@ -1235,6 +2459,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": [
+        1,
+        2,
+        3
+      ]
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_content::2",
     "input": {
@@ -1251,6 +2482,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": {
+        "key": "value"
+      }
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_content::3",
     "input": {
@@ -1265,6 +2501,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "metadata": {}
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_empty_dict::1",
     "input": {
@@ -1277,6 +2516,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": []
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_empty_list::1",
     "input": {
@@ -1289,6 +2531,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": ""
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_empty_string::1",
     "input": {
@@ -1301,6 +2546,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "flag": false
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_false::1",
     "input": {
@@ -1313,6 +2561,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": null
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_none::1",
     "input": {
@@ -1325,6 +2576,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": "   "
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_whitespace_only::1",
     "input": {
@@ -1337,6 +2591,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": "\t\n"
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_whitespace_only::2",
     "input": {
@@ -1349,6 +2606,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "count": 0
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_zero::1",
     "input": {
@@ -1361,6 +2621,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": ""
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_isempty_alias::1",
     "input": {
@@ -1373,6 +2636,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": null
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_isempty_alias::2",
     "input": {
@@ -1385,6 +2651,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": "Has content"
+    },
     "expected_result": true,
     "id": "test_existence_operators::TestIsEmptyOperator.test_not_is_empty::1",
     "input": {
@@ -1397,6 +2666,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": ""
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestIsEmptyOperator.test_not_is_empty::2",
     "input": {
@@ -1409,6 +2681,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "notes": null
+    },
     "expected_result": null,
     "id": "test_existence_operators::TestIsEmptyOperator.test_not_is_empty::3",
     "input": {
@@ -1527,6 +2802,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 150
+    },
     "expected_result": "high",
     "id": "test_implicit_entity::TestRuleEngineImplicitEntity.test_implicit_multiple_rules::1",
     "input": {
@@ -1541,6 +2819,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 75
+    },
     "expected_result": "medium",
     "id": "test_implicit_entity::TestRuleEngineImplicitEntity.test_implicit_multiple_rules::2",
     "input": {
@@ -1555,6 +2836,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 25
+    },
     "expected_result": "low",
     "id": "test_implicit_entity::TestRuleEngineImplicitEntity.test_implicit_multiple_rules::3",
     "input": {
@@ -1569,6 +2853,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "urgent",
+        "normal"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_left_list::1",
     "input": {
@@ -1584,6 +2874,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "normal",
+        "low"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_left_list::2",
     "input": {
@@ -1599,6 +2895,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "status": "active"
+    },
     "expected_result": true,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_right_list::1",
     "input": {
@@ -1611,6 +2910,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "status": "inactive"
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_right_list::2",
     "input": {
@@ -1623,6 +2925,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        1,
+        2,
+        3
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_both_lists_exact_match::1",
     "input": {
@@ -1639,6 +2948,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        1,
+        2
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_both_lists_exact_match::2",
     "input": {
@@ -1654,6 +2969,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        3,
+        2,
+        1
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_both_lists_exact_match::3",
     "input": {
@@ -1670,6 +2992,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "score": 95
+    },
     "expected_result": true,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_greater_than_with_scalar::1",
     "input": {
@@ -1682,6 +3007,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "score": 85
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_greater_than_with_scalar::2",
     "input": {
@@ -1694,6 +3022,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "urgent",
+        "normal"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_in_operator_any_satisfies::1",
     "input": {
@@ -1709,6 +3043,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "normal",
+        "low"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_in_operator_any_satisfies::2",
     "input": {
@@ -1724,6 +3064,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "score": 40
+    },
     "expected_result": true,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_less_than_with_scalar::1",
     "input": {
@@ -1736,6 +3079,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "score": 60
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_less_than_with_scalar::2",
     "input": {
@@ -1748,6 +3094,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "good",
+        "content"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_not_equal_any_satisfies::1",
     "input": {
@@ -1763,6 +3115,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "spam",
+        "content"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestAnySatisfiesSemantics.test_not_equal_any_satisfies::2",
     "input": {
@@ -1778,6 +3136,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "URGENT",
+        "normal"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestCombinedListOperators.test_any_satisfies_with_function::1",
     "input": {
@@ -1793,6 +3157,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "urgent",
+        "normal"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestCombinedListOperators.test_any_satisfies_with_function::2",
     "input": {
@@ -1808,6 +3178,15 @@
     ]
   },
   {
+    "expected_entity": {
+      "labels": [
+        "urgent"
+      ],
+      "tags": [
+        "approved",
+        "done"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestCombinedListOperators.test_contains_any_and_contains_all::1",
     "input": {
@@ -1826,6 +3205,14 @@
     ]
   },
   {
+    "expected_entity": {
+      "labels": [
+        "low"
+      ],
+      "tags": [
+        "approved"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestCombinedListOperators.test_contains_any_and_contains_all::2",
     "input": {
@@ -1843,6 +3230,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        "normal",
+        "special"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestCombinedListOperators.test_contains_any_with_len::1",
     "input": {
@@ -1858,6 +3251,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": []
+    },
     "expected_result": null,
     "id": "test_list_operators::TestCombinedListOperators.test_contains_any_with_len::2",
     "input": {
@@ -1870,6 +3266,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "reviewed",
+        "approved",
+        "done"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_all_present::1",
     "input": {
@@ -1886,6 +3289,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "reviewed",
+        "approved"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_all_present::2",
     "input": {
@@ -1901,6 +3310,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": []
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_empty_list::1",
     "input": {
@@ -1913,6 +3325,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "reviewed"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_partial_match::1",
     "input": {
@@ -1927,6 +3344,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "approved"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_partial_match::2",
     "input": {
@@ -1941,6 +3363,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "status": "active"
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_scalar_left::1",
     "input": {
@@ -1953,6 +3378,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "status": "inactive"
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_scalar_left::2",
     "input": {
@@ -1965,6 +3393,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": null
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_with_none::1",
     "input": {
@@ -1977,6 +3408,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "codes": [
+        100,
+        200,
+        300
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_with_numbers::1",
     "input": {
@@ -1993,6 +3431,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "codes": [
+        100,
+        300
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAllOperator.test_contains_all_with_numbers::2",
     "input": {
@@ -2008,6 +3452,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": []
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_empty_list::1",
     "input": {
@@ -2020,6 +3467,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "urgent",
+        "critical"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_multiple_matches::1",
     "input": {
@@ -2035,6 +3488,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "normal"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_multiple_matches::2",
     "input": {
@@ -2049,6 +3507,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "status": "active"
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_scalar_left::1",
     "input": {
@@ -2061,6 +3522,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "status": "inactive"
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_scalar_left::2",
     "input": {
@@ -2073,6 +3537,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "recipients": [
+        "admin@co.com",
+        "user@co.com"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_single_match::1",
     "input": {
@@ -2088,6 +3558,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "recipients": [
+        "user@co.com",
+        "other@co.com"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_single_match::2",
     "input": {
@@ -2103,6 +3579,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": null
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_with_none::1",
     "input": {
@@ -2115,6 +3594,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "codes": [
+        100,
+        400
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_with_numbers::1",
     "input": {
@@ -2130,6 +3615,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "codes": [
+        400,
+        500
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_with_numbers::2",
     "input": {
@@ -2145,6 +3636,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "anything"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestListEdgeCases.test_contains_all_empty_check_list::1",
     "input": {
@@ -2159,6 +3655,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "anything"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestListEdgeCases.test_empty_check_list::1",
     "input": {
@@ -2173,6 +3674,18 @@
     ]
   },
   {
+    "expected_entity": {
+      "matrix": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestListEdgeCases.test_nested_list_comparison::1",
     "input": {
@@ -2194,6 +3707,18 @@
     ]
   },
   {
+    "expected_entity": {
+      "matrix": [
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestListEdgeCases.test_nested_list_comparison::2",
     "input": {
@@ -2215,6 +3740,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
     "expected_result": true,
     "id": "test_list_operators::TestListEdgeCases.test_tuple_treated_as_list::1",
     "input": {
@@ -2231,6 +3763,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "items": [
+        "x",
+        "y",
+        "z"
+      ]
+    },
     "expected_result": null,
     "id": "test_list_operators::TestListEdgeCases.test_tuple_treated_as_list::2",
     "input": {
@@ -2247,6 +3786,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "order": {
+        "shipping": 10,
+        "total": 100
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_complex_null_safe_expression::1",
     "input": {
@@ -2262,6 +3807,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "order": {
+        "shipping": null,
+        "total": 100
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_complex_null_safe_expression::2",
     "input": {
@@ -2277,6 +3828,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "order": null
+    },
     "expected_result": null,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_complex_null_safe_expression::3",
     "input": {
@@ -2289,6 +3843,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "config": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::1",
     "input": {
@@ -2301,6 +3858,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "config": {
+        "database": null
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::2",
     "input": {
@@ -2315,6 +3877,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "config": {
+        "database": {
+          "timeout": null
+        }
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::3",
     "input": {
@@ -2331,6 +3900,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "config": {
+        "database": {
+          "timeout": 60
+        }
+      }
+    },
     "expected_result": null,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::4",
     "input": {
@@ -2347,6 +3923,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "name": "John"
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_coalescing::1",
     "input": {
@@ -2361,6 +3942,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_coalescing_fallback::1",
     "input": {
@@ -2373,6 +3957,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "name": null
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_coalescing_fallback::2",
     "input": {
@@ -2387,6 +3976,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "name": "JOHN"
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_function::1",
     "input": {
@@ -2401,6 +3995,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": null
+    },
     "expected_result": null,
     "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_function::2",
     "input": {
@@ -2413,6 +4010,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": "found",
+      "b": null,
+      "c": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain::1",
     "input": {
@@ -2427,6 +4029,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": null,
+      "b": "found",
+      "c": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain::2",
     "input": {
@@ -2441,6 +4048,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": null,
+      "b": null,
+      "c": "found"
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain::3",
     "input": {
@@ -2455,6 +4067,10 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": null,
+      "b": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain_default::1",
     "input": {
@@ -2468,6 +4084,10 @@
     ]
   },
   {
+    "expected_entity": {
+      "bonus": 100,
+      "salary": 1000
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_arithmetic::1",
     "input": {
@@ -2481,6 +4101,10 @@
     ]
   },
   {
+    "expected_entity": {
+      "bonus": null,
+      "salary": 1100
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_arithmetic::2",
     "input": {
@@ -2494,6 +4118,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": ""
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_empty_string::1",
     "input": {
@@ -2506,6 +4133,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "flag": false
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_false::1",
     "input": {
@@ -2518,6 +4148,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_none::1",
     "input": {
@@ -2530,6 +4163,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "name": "John"
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_value::1",
     "input": {
@@ -2542,6 +4178,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "count": 0
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_zero::1",
     "input": {
@@ -2554,6 +4193,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "profile": {
+          "name": "John"
+        }
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain::1",
     "input": {
@@ -2570,6 +4216,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "profile": null
+      }
+    },
     "expected_result": null,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain::2",
     "input": {
@@ -2584,6 +4235,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": null
+    },
     "expected_result": null,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain::3",
     "input": {
@@ -2596,6 +4250,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain_returns_none::1",
     "input": {
@@ -2608,6 +4265,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": {
+        "b": null
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain_returns_none::2",
     "input": {
@@ -2622,6 +4284,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": {
+        "b": {
+          "c": null
+        }
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain_returns_none::3",
     "input": {
@@ -2638,6 +4307,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "order": {
+        "status": "shipped",
+        "tracking": "ABC123"
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_in_condition::1",
     "input": {
@@ -2653,6 +4328,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "order": {
+        "status": "shipped",
+        "tracking": null
+      }
+    },
     "expected_result": null,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_in_condition::2",
     "input": {
@@ -2668,6 +4349,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "order": null
+    },
     "expected_result": null,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_in_condition::3",
     "input": {
@@ -2680,6 +4364,13 @@
     ]
   },
   {
+    "expected_entity": {
+      "config": {
+        "settings": {
+          "timeout": 30
+        }
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_mixed_with_regular::1",
     "input": {
@@ -2696,6 +4387,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "email": "test@example.com"
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_exists::1",
     "input": {
@@ -2710,6 +4406,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "email": null
+      }
+    },
     "expected_result": null,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_exists::2",
     "input": {
@@ -2724,6 +4425,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": null
+    },
     "expected_result": null,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_exists::3",
     "input": {
@@ -2736,6 +4440,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": null
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_none_parent::1",
     "input": {
@@ -2748,6 +4455,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "name": "John"
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_value::1",
     "input": {
@@ -2762,6 +4474,10 @@
     ]
   },
   {
+    "expected_entity": {
+      "a": null,
+      "b": "b_value"
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_double_question_mark_is_coalesce_not_safe_safe::1",
     "input": {
@@ -2775,6 +4491,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": 0
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::1",
     "input": {
@@ -2787,6 +4506,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": ""
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::2",
     "input": {
@@ -2799,6 +4521,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": false
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::3",
     "input": {
@@ -2811,6 +4536,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "value": []
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::4",
     "input": {
@@ -2823,6 +4551,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "name": ""
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_preserves_empty_string::1",
     "input": {
@@ -2837,6 +4570,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "active": false
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_preserves_false::1",
     "input": {
@@ -2851,6 +4589,11 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "count": 0
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_preserves_zero::1",
     "input": {
@@ -2865,6 +4608,14 @@
     ]
   },
   {
+    "expected_entity": {
+      "user": {
+        "items": [
+          "first",
+          "second"
+        ]
+      }
+    },
     "expected_result": true,
     "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_with_list_access::1",
     "input": {
@@ -3088,6 +4839,84 @@
     "id": "test_parser::TestBasicParsing.test_membership_operators::2",
     "kind": "parse",
     "rule": "entity.status not in ['deleted'] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_simple_comparison_operators::1",
+    "kind": "parse",
+    "rule": "entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_simple_comparison_operators::2",
+    "kind": "parse",
+    "rule": "entity.value != 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_simple_comparison_operators::3",
+    "kind": "parse",
+    "rule": "entity.value < 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_simple_comparison_operators::4",
+    "kind": "parse",
+    "rule": "entity.value > 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_simple_comparison_operators::5",
+    "kind": "parse",
+    "rule": "entity.value <= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_simple_comparison_operators::6",
+    "kind": "parse",
+    "rule": "entity.value >= 10 => ret true"
   },
   {
     "entity_name": null,
@@ -3399,6 +5228,3092 @@
     "rule": "=> ret true"
   },
   {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d",
+        "entity.e",
+        "entity.f",
+        "entity.g",
+        "entity.h",
+        "entity.result"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.result"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_all_operators_in_one_rule::1",
+    "kind": "parse",
+    "rule": "entity.a + entity.b * entity.c - entity.d / entity.e % entity.f >= 0 and entity.g < 10 or entity.h > 20 => entity.result = (entity.a + entity.b) * entity.c; ret entity.result"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_all_whitespace_variations::1",
+    "kind": "parse",
+    "rule": "  entity.value  ==  10  =>  ret  true  "
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_arithmetic_with_negatives::1",
+    "kind": "parse",
+    "rule": "entity.a + (-entity.b) * entity.c >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_arrow_in_wrong_place::1",
+    "kind": "parse_error",
+    "rule": "=> entity.value == 10 ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.users.[*].profile.settings.theme"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_assignment_to_complex_path::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.users[0].profile.settings.theme = 'dark'"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.active",
+        "entity.enabled"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_boolean_comparisons::1",
+    "kind": "parse",
+    "rule": "entity.active == true and entity.enabled == false => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_chained_logical_operators::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 and entity.b > 0 and entity.c > 0 and entity.d > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_comment_in_middle::1",
+    "kind": "parse_error",
+    "rule": "entity.value == 10 # comment => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_comparison_with_expressions::1",
+    "kind": "parse",
+    "rule": "entity.a + entity.b == entity.c * entity.d => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_complex_nested_expressions::1",
+    "kind": "parse",
+    "rule": "((((((((((((((((((((entity.value)))))))))))))))))))) == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_compound_assignment_all_types::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total += entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_compound_assignment_all_types::2",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total -= entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_compound_assignment_all_types::3",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total *= entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_compound_assignment_all_types::4",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total /= entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.divisor",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_division_operations::1",
+    "kind": "parse",
+    "rule": "entity.value / entity.divisor >= 1 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_empty_actions_should_fail::1",
+    "kind": "parse_error",
+    "rule": "entity.value > 0 =>"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_empty_string_literal::1",
+    "kind": "parse",
+    "rule": "entity.name == \"\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.message"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_escaped_quotes_in_string::1",
+    "kind": "parse",
+    "rule": "entity.message == \"Say \\\"hello\\\"\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_in_with_empty_list::1",
+    "kind": "parse",
+    "rule": "entity.value in [] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_invalid_identifier::1",
+    "kind": "parse_error",
+    "rule": "entity.123invalid == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_invalid_operator_combination::1",
+    "kind": "parse_error",
+    "rule": "entity.value == == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_invalid_path_syntax::1",
+    "kind": "parse_error",
+    "rule": "entity..value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_keyword_misuse::1",
+    "kind": "parse_error",
+    "rule": "entity.and == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_leading_trailing_whitespace::1",
+    "kind": "parse",
+    "rule": "   entity.value == 10 => ret true   "
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_list_with_many_elements::1",
+    "kind": "parse",
+    "rule": "entity.value in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_logical_with_comparisons::1",
+    "kind": "parse",
+    "rule": "(entity.a > 0 and entity.b < 10) or (entity.c == 5 and entity.d != 0) => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.field0",
+        "entity.field1",
+        "entity.field10",
+        "entity.field11",
+        "entity.field12",
+        "entity.field13",
+        "entity.field14",
+        "entity.field15",
+        "entity.field16",
+        "entity.field17",
+        "entity.field18",
+        "entity.field19",
+        "entity.field2",
+        "entity.field20",
+        "entity.field21",
+        "entity.field22",
+        "entity.field23",
+        "entity.field24",
+        "entity.field25",
+        "entity.field26",
+        "entity.field27",
+        "entity.field28",
+        "entity.field29",
+        "entity.field3",
+        "entity.field30",
+        "entity.field31",
+        "entity.field32",
+        "entity.field33",
+        "entity.field34",
+        "entity.field35",
+        "entity.field36",
+        "entity.field37",
+        "entity.field38",
+        "entity.field39",
+        "entity.field4",
+        "entity.field40",
+        "entity.field41",
+        "entity.field42",
+        "entity.field43",
+        "entity.field44",
+        "entity.field45",
+        "entity.field46",
+        "entity.field47",
+        "entity.field48",
+        "entity.field49",
+        "entity.field5",
+        "entity.field6",
+        "entity.field7",
+        "entity.field8",
+        "entity.field9"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_many_actions::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.field0 = 0; entity.field1 = 1; entity.field2 = 2; entity.field3 = 3; entity.field4 = 4; entity.field5 = 5; entity.field6 = 6; entity.field7 = 7; entity.field8 = 8; entity.field9 = 9; entity.field10 = 10; entity.field11 = 11; entity.field12 = 12; entity.field13 = 13; entity.field14 = 14; entity.field15 = 15; entity.field16 = 16; entity.field17 = 17; entity.field18 = 18; entity.field19 = 19; entity.field20 = 20; entity.field21 = 21; entity.field22 = 22; entity.field23 = 23; entity.field24 = 24; entity.field25 = 25; entity.field26 = 26; entity.field27 = 27; entity.field28 = 28; entity.field29 = 29; entity.field30 = 30; entity.field31 = 31; entity.field32 = 32; entity.field33 = 33; entity.field34 = 34; entity.field35 = 35; entity.field36 = 36; entity.field37 = 37; entity.field38 = 38; entity.field39 = 39; entity.field40 = 40; entity.field41 = 41; entity.field42 = 42; entity.field43 = 43; entity.field44 = 44; entity.field45 = 45; entity.field46 = 46; entity.field47 = 47; entity.field48 = 48; entity.field49 = 49"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_membership_with_expressions::1",
+    "kind": "parse",
+    "rule": "entity.value in [entity.a, entity.b, entity.c] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_missing_operand::1",
+    "kind": "parse_error",
+    "rule": "entity.value == => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_missing_semicolon_between_actions::1",
+    "kind": "parse_error",
+    "rule": "entity.ready == true => entity.a = 1 entity.b = 2"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name",
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_mixed_string_quotes::1",
+    "kind": "parse",
+    "rule": "entity.name == \"test\" and entity.status == 'active' => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_mixed_whitespace::1",
+    "kind": "parse",
+    "rule": "entity.value\t ==\t 10 =>\t ret\ttrue"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.divisor",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_modulo_operations::1",
+    "kind": "parse",
+    "rule": "entity.value % entity.divisor == 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_multiple_arrows::1",
+    "kind": "parse_error",
+    "rule": "entity.value > 0 => => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.matrix.[*].[*].[*].[*]"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_multiple_brackets_in_path::1",
+    "kind": "parse",
+    "rule": "entity.matrix[0][1][2][3] == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_multiple_not_operators::1",
+    "kind": "parse",
+    "rule": "not not not entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_multiple_returns_should_fail::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => ret 1; ret 2"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.other",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_negative_numbers_in_expressions::1",
+    "kind": "parse",
+    "rule": "entity.value == -10 and entity.other == -5.5 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_nested_lists_deep::1",
+    "kind": "parse",
+    "rule": "entity.value in [[[[[1]]]]] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.other",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_none_comparisons::1",
+    "kind": "parse",
+    "rule": "entity.value == none and entity.other == null => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_not_in_with_empty_list::1",
+    "kind": "parse",
+    "rule": "entity.value not in [] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_numeric_starting_identifier_should_fail::1",
+    "kind": "parse_error",
+    "rule": "entity.123field == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_operator_without_spaces::1",
+    "kind": "parse",
+    "rule": "entity.value==10=>ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_parentheses_override_precedence::1",
+    "kind": "parse",
+    "rule": "(entity.a + entity.b) * entity.c == entity.d => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.level0.level1.level2.level3.level4.level5.level6.level7.level8.level9.level10.level11.level12.level13.level14.level15.level16.level17.level18.level19"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_path_with_many_levels::1",
+    "kind": "parse",
+    "rule": "entity.level0.level1.level2.level3.level4.level5.level6.level7.level8.level9.level10.level11.level12.level13.level14.level15.level16.level17.level18.level19 == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_path_with_spaces_should_fail::1",
+    "kind": "parse_error",
+    "rule": "entity.my field == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d",
+        "entity.e",
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_return_with_complex_expression::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => ret (entity.a + entity.b) * (entity.c - entity.d) / entity.e"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_rule_with_newlines::1",
+    "kind": "parse",
+    "rule": "entity.value == 10\n=>\nret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_rule_with_only_whitespace::1",
+    "kind": "parse",
+    "rule": "entity.value    ==    10    =>    ret    true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_rule_with_tabs::1",
+    "kind": "parse",
+    "rule": "entity.value\t==\t10\t=>\tret\ttrue"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_scientific_notation_not_supported::1",
+    "kind": "parse_error",
+    "rule": "entity.value == 1e10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.message"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_special_characters_in_string::1",
+    "kind": "parse",
+    "rule": "entity.message == \"Hello! @#$%^&*()\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.message"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_string_with_newline_escaped::1",
+    "kind": "parse",
+    "rule": "entity.message == \"line1\\nline2\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.message"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_string_with_tab_escaped::1",
+    "kind": "parse",
+    "rule": "entity.message == \"col1\\tcol2\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_unary_minus_multiple::1",
+    "kind": "parse",
+    "rule": "----entity.value >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_unclosed_list::1",
+    "kind": "parse_error",
+    "rule": "entity.value in [1, 2, 3 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_unclosed_parentheses::1",
+    "kind": "parse_error",
+    "rule": "(entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_unclosed_string::1",
+    "kind": "parse_error",
+    "rule": "entity.name == \"test => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_unicode_in_identifiers::1",
+    "kind": "parse_error",
+    "rule": "entity.\u6d4b\u8bd5 == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_unicode_in_strings::1",
+    "kind": "parse",
+    "rule": "entity.name == \"Jos\u00e9\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_very_large_number::1",
+    "kind": "parse",
+    "rule": "entity.value == 999999999999999999999 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_very_long_identifier::1",
+    "kind": "parse",
+    "rule": "entity.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.field0",
+        "entity.field1",
+        "entity.field10",
+        "entity.field11",
+        "entity.field12",
+        "entity.field13",
+        "entity.field14",
+        "entity.field15",
+        "entity.field16",
+        "entity.field17",
+        "entity.field18",
+        "entity.field19",
+        "entity.field2",
+        "entity.field20",
+        "entity.field21",
+        "entity.field22",
+        "entity.field23",
+        "entity.field24",
+        "entity.field25",
+        "entity.field26",
+        "entity.field27",
+        "entity.field28",
+        "entity.field29",
+        "entity.field3",
+        "entity.field30",
+        "entity.field31",
+        "entity.field32",
+        "entity.field33",
+        "entity.field34",
+        "entity.field35",
+        "entity.field36",
+        "entity.field37",
+        "entity.field38",
+        "entity.field39",
+        "entity.field4",
+        "entity.field40",
+        "entity.field41",
+        "entity.field42",
+        "entity.field43",
+        "entity.field44",
+        "entity.field45",
+        "entity.field46",
+        "entity.field47",
+        "entity.field48",
+        "entity.field49",
+        "entity.field5",
+        "entity.field6",
+        "entity.field7",
+        "entity.field8",
+        "entity.field9"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.result"
+      ]
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_very_long_rule::1",
+    "kind": "parse",
+    "rule": "entity.field0 > 0 and entity.field1 > 0 and entity.field2 > 0 and entity.field3 > 0 and entity.field4 > 0 and entity.field5 > 0 and entity.field6 > 0 and entity.field7 > 0 and entity.field8 > 0 and entity.field9 > 0 and entity.field10 > 0 and entity.field11 > 0 and entity.field12 > 0 and entity.field13 > 0 and entity.field14 > 0 and entity.field15 > 0 and entity.field16 > 0 and entity.field17 > 0 and entity.field18 > 0 and entity.field19 > 0 and entity.field20 > 0 and entity.field21 > 0 and entity.field22 > 0 and entity.field23 > 0 and entity.field24 > 0 and entity.field25 > 0 and entity.field26 > 0 and entity.field27 > 0 and entity.field28 > 0 and entity.field29 > 0 and entity.field30 > 0 and entity.field31 > 0 and entity.field32 > 0 and entity.field33 > 0 and entity.field34 > 0 and entity.field35 > 0 and entity.field36 > 0 and entity.field37 > 0 and entity.field38 > 0 and entity.field39 > 0 and entity.field40 > 0 and entity.field41 > 0 and entity.field42 > 0 and entity.field43 > 0 and entity.field44 > 0 and entity.field45 > 0 and entity.field46 > 0 and entity.field47 > 0 and entity.field48 > 0 and entity.field49 > 0 => entity.result = 1"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_very_small_float::1",
+    "kind": "parse",
+    "rule": "entity.value == 0.0000000001 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [],
+      "workflow_calls": [
+        "check"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_workflow_in_condition::1",
+    "kind": "parse",
+    "rule": "workflow('check') == true => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "calculate"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_workflow_in_return::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => ret workflow('calculate')"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.arg0",
+        "entity.arg1",
+        "entity.arg10",
+        "entity.arg11",
+        "entity.arg12",
+        "entity.arg13",
+        "entity.arg14",
+        "entity.arg15",
+        "entity.arg16",
+        "entity.arg17",
+        "entity.arg18",
+        "entity.arg19",
+        "entity.arg2",
+        "entity.arg3",
+        "entity.arg4",
+        "entity.arg5",
+        "entity.arg6",
+        "entity.arg7",
+        "entity.arg8",
+        "entity.arg9",
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_workflow_with_many_args::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process', entity.arg0, entity.arg1, entity.arg2, entity.arg3, entity.arg4, entity.arg5, entity.arg6, entity.arg7, entity.arg8, entity.arg9, entity.arg10, entity.arg11, entity.arg12, entity.arg13, entity.arg14, entity.arg15, entity.arg16, entity.arg17, entity.arg18, entity.arg19)"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_edge_cases::TestParserEdgeCases.test_zero_values::1",
+    "kind": "parse",
+    "rule": "entity.value == 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_all_additions::1",
+    "kind": "parse",
+    "rule": "entity.a + entity.b + entity.c + entity.d >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_all_divisions::1",
+    "kind": "parse",
+    "rule": "entity.a / entity.b / entity.c / entity.d >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_all_modulo::1",
+    "kind": "parse",
+    "rule": "entity.a % entity.b % entity.c >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_all_multiplications::1",
+    "kind": "parse",
+    "rule": "entity.a * entity.b * entity.c * entity.d >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_all_subtractions::1",
+    "kind": "parse",
+    "rule": "entity.a - entity.b - entity.c - entity.d >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d",
+        "entity.e"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_mixed_arithmetic::1",
+    "kind": "parse",
+    "rule": "entity.a + entity.b * entity.c - entity.d / entity.e >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_unary_minus_multiple::1",
+    "kind": "parse",
+    "rule": "--entity.value >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_unary_minus_simple::1",
+    "kind": "parse",
+    "rule": "-entity.value >= -10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestArithmeticOperators.test_unary_minus_with_parentheses::1",
+    "kind": "parse",
+    "rule": "-(entity.value + 10) >= -20 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_all_compound_assignments::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total += entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_all_compound_assignments::2",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total -= entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_all_compound_assignments::3",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total *= entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_all_compound_assignments::4",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total /= entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.items.[*].value"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_assignment_to_indexed_path::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.items[0].value = 100"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.user.profile.name"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_assignment_to_nested_path::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.user.profile.name = 'John'"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.result"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_assignment_with_arithmetic_expression::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.result = entity.a + entity.b * entity.c"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.discount",
+        "entity.price",
+        "entity.quantity",
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_assignment_with_complex_expression::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.total = entity.price * entity.quantity * (1 - entity.discount)"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "calculate"
+      ],
+      "writes": [
+        "entity.result"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_assignment_with_function_call::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.result = workflow('calculate')"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.result"
+      ]
+    },
+    "id": "test_parser_expanded::TestAssignmentParsing.test_simple_assignment::1",
+    "kind": "parse",
+    "rule": "entity.value == 10 => entity.result = 20"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestAssociativity.test_left_associative_and::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 and entity.b > 0 and entity.c > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestAssociativity.test_left_associative_division::1",
+    "kind": "parse",
+    "rule": "entity.a / entity.b / entity.c >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestAssociativity.test_left_associative_modulo::1",
+    "kind": "parse",
+    "rule": "entity.a % entity.b % entity.c >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestAssociativity.test_left_associative_or::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 or entity.b > 0 or entity.c > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestAssociativity.test_left_associative_subtraction::1",
+    "kind": "parse",
+    "rule": "entity.a - entity.b - entity.c >= 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestComparisonOperators.test_chained_comparison_should_fail::1",
+    "kind": "parse_error",
+    "rule": "entity.a < entity.b < entity.c => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.active"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_booleans::1",
+    "kind": "parse",
+    "rule": "entity.active == true => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.active"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_booleans::2",
+    "kind": "parse",
+    "rule": "entity.active != true => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_numbers::1",
+    "kind": "parse",
+    "rule": "entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_numbers::2",
+    "kind": "parse",
+    "rule": "entity.value != 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_numbers::3",
+    "kind": "parse",
+    "rule": "entity.value < 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_numbers::4",
+    "kind": "parse",
+    "rule": "entity.value > 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_numbers::5",
+    "kind": "parse",
+    "rule": "entity.value <= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_numbers::6",
+    "kind": "parse",
+    "rule": "entity.value >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_strings::1",
+    "kind": "parse",
+    "rule": "entity.name == \"test\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_strings::2",
+    "kind": "parse",
+    "rule": "entity.name != \"test\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_strings::3",
+    "kind": "parse",
+    "rule": "entity.name < \"test\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_strings::4",
+    "kind": "parse",
+    "rule": "entity.name > \"test\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_strings::5",
+    "kind": "parse",
+    "rule": "entity.name <= \"test\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestComparisonOperators.test_comparison_with_strings::6",
+    "kind": "parse",
+    "rule": "entity.name >= \"test\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_boolean_none_keywords::1",
+    "kind": "parse",
+    "rule": "entity.value == true => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_boolean_none_keywords::2",
+    "kind": "parse",
+    "rule": "entity.value == True => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_boolean_none_keywords::3",
+    "kind": "parse",
+    "rule": "entity.value == false => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_boolean_none_keywords::4",
+    "kind": "parse",
+    "rule": "entity.value == False => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_boolean_none_keywords::5",
+    "kind": "parse",
+    "rule": "entity.value == none => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_boolean_none_keywords::6",
+    "kind": "parse",
+    "rule": "entity.value == None => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_boolean_none_keywords::7",
+    "kind": "parse",
+    "rule": "entity.value == null => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestLexerTokens.test_comment_before_arrow::1",
+    "kind": "parse_error",
+    "rule": "entity.value == 10 # comment => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_comment_end_of_line::1",
+    "kind": "parse",
+    "rule": "entity.value == 10 => ret true # comment"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.my_value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_identifier_underscore_middle::1",
+    "kind": "parse",
+    "rule": "entity.my_value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity._private"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_identifier_underscore_start::1",
+    "kind": "parse",
+    "rule": "entity._private == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_identifier_very_long::1",
+    "kind": "parse",
+    "rule": "entity.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_number_leading_zeros::1",
+    "kind": "parse",
+    "rule": "entity.value == 007 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_number_negative_zero::1",
+    "kind": "parse",
+    "rule": "entity.value == -0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_number_trailing_zeros::1",
+    "kind": "parse",
+    "rule": "entity.value == 10.00 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_number_very_large_integer::1",
+    "kind": "parse",
+    "rule": "entity.value == 999999999999999999 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_number_very_small_float::1",
+    "kind": "parse",
+    "rule": "entity.value == 0.0000001 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::1",
+    "kind": "parse",
+    "rule": "entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::10",
+    "kind": "parse",
+    "rule": "entity.value / 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::11",
+    "kind": "parse",
+    "rule": "entity.value % 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::2",
+    "kind": "parse",
+    "rule": "entity.value != 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::3",
+    "kind": "parse",
+    "rule": "entity.value < 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::4",
+    "kind": "parse",
+    "rule": "entity.value > 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::5",
+    "kind": "parse",
+    "rule": "entity.value <= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::6",
+    "kind": "parse",
+    "rule": "entity.value >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::7",
+    "kind": "parse",
+    "rule": "entity.value + 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::8",
+    "kind": "parse",
+    "rule": "entity.value - 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_operator_tokens::9",
+    "kind": "parse",
+    "rule": "entity.value * 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_string_empty_double_quotes::1",
+    "kind": "parse",
+    "rule": "entity.name == \"\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_string_empty_single_quotes::1",
+    "kind": "parse",
+    "rule": "entity.name == '' => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.path"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_string_escaped_backslash::1",
+    "kind": "parse",
+    "rule": "entity.path == \"path\\\\to\\\\file\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.message"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_string_escaped_quotes_double::1",
+    "kind": "parse",
+    "rule": "entity.message == \"say \\\"hello\\\"\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.message"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_string_escaped_quotes_single::1",
+    "kind": "parse",
+    "rule": "entity.message == 'say \\'hello\\'' => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_string_unicode_characters::1",
+    "kind": "parse",
+    "rule": "entity.name == \"Jos\u00e9\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_whitespace_multiple_spaces::1",
+    "kind": "parse",
+    "rule": "entity.value    ==    10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLexerTokens.test_whitespace_tabs::1",
+    "kind": "parse",
+    "rule": "entity.value\t==\t10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestListLiterals.test_empty_list::1",
+    "kind": "parse",
+    "rule": "entity.value in [] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestListLiterals.test_list_with_arithmetic::1",
+    "kind": "parse",
+    "rule": "entity.value in [entity.a + 1, entity.b * 2] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestListLiterals.test_list_with_expressions::1",
+    "kind": "parse",
+    "rule": "entity.value in [entity.a, entity.b, entity.c] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestListLiterals.test_list_with_mixed_types::1",
+    "kind": "parse",
+    "rule": "entity.value in [1, 'two', 3.0, true, false] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestListLiterals.test_multiple_elements_list::1",
+    "kind": "parse",
+    "rule": "entity.value in [1, 2, 3, 4, 5] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestListLiterals.test_nested_lists::1",
+    "kind": "parse",
+    "rule": "entity.value in [[1, 2], [3, 4]] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestListLiterals.test_single_element_list::1",
+    "kind": "parse",
+    "rule": "entity.value in [42] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLogicalOperators.test_mixed_and_or::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 and entity.b > 0 or entity.c > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLogicalOperators.test_multiple_and_chain::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 and entity.b > 0 and entity.c > 0 and entity.d > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLogicalOperators.test_multiple_not::1",
+    "kind": "parse",
+    "rule": "not not entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLogicalOperators.test_multiple_or_chain::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 or entity.b > 0 or entity.c > 0 or entity.d > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLogicalOperators.test_not_with_arithmetic::1",
+    "kind": "parse",
+    "rule": "not entity.value + 10 > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLogicalOperators.test_not_with_comparison::1",
+    "kind": "parse",
+    "rule": "not entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestLogicalOperators.test_not_with_logical::1",
+    "kind": "parse",
+    "rule": "not (entity.a > 0 and entity.b > 0) => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestMembershipOperators.test_in_with_empty_list::1",
+    "kind": "parse",
+    "rule": "entity.value in [] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestMembershipOperators.test_in_with_list::1",
+    "kind": "parse",
+    "rule": "entity.status in [1, 2, 3] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestMembershipOperators.test_in_with_mixed_list::1",
+    "kind": "parse",
+    "rule": "entity.value in [1, 'two', 3.0] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestMembershipOperators.test_in_with_nested_expressions::1",
+    "kind": "parse",
+    "rule": "entity.value in [entity.a, entity.b, entity.c] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestMembershipOperators.test_in_with_single_element_list::1",
+    "kind": "parse",
+    "rule": "entity.value in [42] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestMembershipOperators.test_in_with_string_list::1",
+    "kind": "parse",
+    "rule": "entity.status in ['active', 'pending'] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestMembershipOperators.test_not_in_with_list::1",
+    "kind": "parse",
+    "rule": "entity.status not in ['deleted', 'archived'] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestMultipleActions.test_actions_with_different_separators::1",
+    "kind": "parse_error",
+    "rule": "entity.ready == true => entity.a = 1;; entity.b = 2"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.field0",
+        "entity.field1",
+        "entity.field2",
+        "entity.field3",
+        "entity.field4",
+        "entity.field5",
+        "entity.field6",
+        "entity.field7",
+        "entity.field8",
+        "entity.field9"
+      ]
+    },
+    "id": "test_parser_expanded::TestMultipleActions.test_many_actions_10::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.field0 = 0; entity.field1 = 1; entity.field2 = 2; entity.field3 = 3; entity.field4 = 4; entity.field5 = 5; entity.field6 = 6; entity.field7 = 7; entity.field8 = 8; entity.field9 = 9"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.b",
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": [
+        "entity.a",
+        "entity.b"
+      ]
+    },
+    "id": "test_parser_expanded::TestMultipleActions.test_mixed_action_types::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.a = 1; workflow('process'); entity.b = 2; ret entity.b"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.a",
+        "entity.b"
+      ]
+    },
+    "id": "test_parser_expanded::TestMultipleActions.test_two_actions::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.a = 1; entity.b = 2"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestNestedExpressions.test_deep_nesting_10_levels::1",
+    "kind": "parse",
+    "rule": "((((((((((entity.value)))))))))) == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestNestedExpressions.test_mixed_nesting_arithmetic_logical::1",
+    "kind": "parse",
+    "rule": "(entity.a + entity.b) > 0 and (entity.c - entity.d) < 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestNestedExpressions.test_nested_arithmetic::1",
+    "kind": "parse",
+    "rule": "(entity.a + entity.b) * (entity.c - entity.d) >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestNestedExpressions.test_nested_comparisons::1",
+    "kind": "parse",
+    "rule": "(entity.a == 1) == true => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestNestedExpressions.test_nested_logical::1",
+    "kind": "parse",
+    "rule": "(entity.a > 0 and entity.b > 0) or (entity.c > 0 and entity.d > 0) => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestOperatorPrecedence.test_arithmetic_precedence_division_before_subtraction::1",
+    "kind": "parse",
+    "rule": "entity.a - entity.b / entity.c >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestOperatorPrecedence.test_arithmetic_precedence_multiplication_before_addition::1",
+    "kind": "parse",
+    "rule": "entity.a + entity.b * entity.c >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestOperatorPrecedence.test_comparison_precedence_before_logical::1",
+    "kind": "parse",
+    "rule": "entity.a == 1 and entity.b == 2 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.d",
+        "entity.e"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestOperatorPrecedence.test_complex_precedence::1",
+    "kind": "parse",
+    "rule": "entity.a + entity.b * entity.c == entity.d / entity.e => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestOperatorPrecedence.test_logical_precedence_and_before_or::1",
+    "kind": "parse",
+    "rule": "entity.a == 1 or entity.b == 2 and entity.c == 3 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestOperatorPrecedence.test_unary_precedence_before_binary::1",
+    "kind": "parse",
+    "rule": "-entity.value * 2 >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestParentheses.test_deep_nested_parentheses::1",
+    "kind": "parse",
+    "rule": "((((entity.value)))) == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestParentheses.test_nested_parentheses::1",
+    "kind": "parse",
+    "rule": "((entity.value)) == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestParentheses.test_parentheses_override_precedence::1",
+    "kind": "parse",
+    "rule": "(entity.a + entity.b) * entity.c >= 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestParentheses.test_single_parentheses::1",
+    "kind": "parse",
+    "rule": "(entity.value) == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestParentheses.test_unbalanced_parentheses_left::1",
+    "kind": "parse_error",
+    "rule": "(entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestParentheses.test_unbalanced_parentheses_right::1",
+    "kind": "parse_error",
+    "rule": "entity.value) == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.items.[*]"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestPathExpressions.test_bracket_with_arithmetic::1",
+    "kind": "parse",
+    "rule": "entity.items[entity.index + 1] == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.items.[*]"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestPathExpressions.test_bracket_with_expression::1",
+    "kind": "parse",
+    "rule": "entity.items[entity.index] == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.items.[*]"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestPathExpressions.test_bracket_with_negative_index::1",
+    "kind": "parse",
+    "rule": "entity.items[-1] == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.level0.level1.level2.level3.level4.level5.level6.level7.level8.level9"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestPathExpressions.test_deep_nesting_10_levels::1",
+    "kind": "parse",
+    "rule": "entity.level0.level1.level2.level3.level4.level5.level6.level7.level8.level9 == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.users.[*].profile.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestPathExpressions.test_mixed_dot_bracket::1",
+    "kind": "parse",
+    "rule": "entity.users[0].profile.name == 'test' => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.matrix.[*].[*].[*]"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestPathExpressions.test_multiple_consecutive_brackets::1",
+    "kind": "parse",
+    "rule": "entity.matrix[0][1][2] == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.other.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestPathExpressions.test_path_starting_with_different_identifier::1",
+    "kind": "parse",
+    "rule": "other.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestReturnStatementParsing.test_return_with_boolean::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestReturnStatementParsing.test_return_with_expression::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => ret entity.a + entity.b"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestReturnStatementParsing.test_return_with_literal::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => ret 42"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestReturnStatementParsing.test_return_with_none::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => ret none"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.result",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestReturnStatementParsing.test_return_with_path::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => ret entity.result"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestReturnStatementParsing.test_return_with_string::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => ret 'success'"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [
+        "calculate"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestReturnStatementParsing.test_return_with_workflow_call::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => ret workflow('calculate')"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestRuleStructure.test_arrow_spacing::1",
+    "kind": "parse",
+    "rule": "entity.value==10=>ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestRuleStructure.test_arrow_with_spaces::1",
+    "kind": "parse",
+    "rule": "entity.value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestRuleStructure.test_complex_condition::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 and entity.b < 10 or entity.c == 5 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestRuleStructure.test_minimal_rule::1",
+    "kind": "parse",
+    "rule": "true => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ]
+    },
+    "id": "test_parser_expanded::TestRuleStructure.test_multiple_actions::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.a = 1; entity.b = 2; entity.c = 3"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready",
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.status"
+      ]
+    },
+    "id": "test_parser_expanded::TestRuleStructure.test_with_return_statement::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.status = 'done'; ret entity.status"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.status"
+      ]
+    },
+    "id": "test_parser_expanded::TestRuleStructure.test_without_return_statement::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.status = 'done'"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_invalid_characters::1",
+    "kind": "parse_error",
+    "rule": "entity.value @ 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_invalid_identifier_start::1",
+    "kind": "parse_error",
+    "rule": "entity.123value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_invalid_number_format::1",
+    "kind": "parse_error",
+    "rule": "entity.value == 10. => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_invalid_operator::1",
+    "kind": "parse_error",
+    "rule": "entity.value <> 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_invalid_path_syntax::1",
+    "kind": "parse_error",
+    "rule": "entity..value == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_keyword_as_identifier::1",
+    "kind": "parse_error",
+    "rule": "entity.and == 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_malformed_string_unclosed_double::1",
+    "kind": "parse_error",
+    "rule": "entity.name == \"test => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_malformed_string_unclosed_single::1",
+    "kind": "parse_error",
+    "rule": "entity.name == 'test => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_missing_action::1",
+    "kind": "parse_error",
+    "rule": "entity.value > 10 =>"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_missing_arrow::1",
+    "kind": "parse_error",
+    "rule": "entity.value > 10 ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_missing_closing_bracket::1",
+    "kind": "parse_error",
+    "rule": "entity.value in [1, 2, 3 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_missing_closing_paren::1",
+    "kind": "parse_error",
+    "rule": "entity.value == (10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_missing_comma_in_list::1",
+    "kind": "parse_error",
+    "rule": "entity.value in [1 2 3] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser_expanded::TestSyntaxErrors.test_missing_condition::1",
+    "kind": "parse_error",
+    "rule": "=> ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_multiple_arguments::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process', entity.a, entity.b, entity.c)"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "proces\u0219"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_name_unicode::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('proces\u0219')"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_name_with_quotes::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow(\"process\")"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "helper",
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_nested_call::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process', workflow('helper'))"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_no_arguments::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process')"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready",
+        "entity.value"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_single_argument::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process', entity.value)"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b",
+        "entity.c",
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_with_expression_arguments::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process', entity.a + entity.b, entity.c * 2)"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser_expanded::TestWorkflowCallParsing.test_workflow_with_literal_arguments::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process', 10, 'test', true)"
+  },
+  {
+    "expected_entity": {
+      "email": "admin@example.com"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestCombinedStringOperators.test_contains_and_startswith::1",
     "input": {
@@ -3411,6 +8326,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "admin@other.com"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestCombinedStringOperators.test_contains_and_startswith::2",
     "input": {
@@ -3423,6 +8341,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "user@example.com"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestCombinedStringOperators.test_contains_and_startswith::3",
     "input": {
@@ -3435,6 +8356,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.pdf"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::1",
     "input": {
@@ -3447,6 +8371,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "temp_file.pdf"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::2",
     "input": {
@@ -3459,6 +8386,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "report.txt"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::3",
     "input": {
@@ -3471,6 +8401,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "temp_file.txt"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::4",
     "input": {
@@ -3483,6 +8416,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "hello world"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestContainsOperator.test_contains_basic::1",
     "input": {
@@ -3495,6 +8431,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "world"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestContainsOperator.test_contains_basic::2",
     "input": {
@@ -3507,6 +8446,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "Hello world"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestContainsOperator.test_contains_case_sensitive::1",
     "input": {
@@ -3519,6 +8461,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "hello world"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestContainsOperator.test_contains_case_sensitive::2",
     "input": {
@@ -3531,6 +8476,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "anything"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestContainsOperator.test_contains_empty_string::1",
     "input": {
@@ -3543,6 +8491,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": ""
+    },
     "expected_result": true,
     "id": "test_string_operators::TestContainsOperator.test_contains_empty_string::2",
     "input": {
@@ -3555,6 +8506,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "urgent",
+        "important"
+      ]
+    },
     "expected_result": true,
     "id": "test_string_operators::TestContainsOperator.test_contains_with_list_any_satisfies::1",
     "input": {
@@ -3570,6 +8527,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "low",
+        "priority"
+      ]
+    },
     "expected_result": null,
     "id": "test_string_operators::TestContainsOperator.test_contains_with_list_any_satisfies::2",
     "input": {
@@ -3585,6 +8548,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "Hello World"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestContainsOperator.test_contains_with_lower::1",
     "input": {
@@ -3597,6 +8563,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "HELLO"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestContainsOperator.test_contains_with_lower::2",
     "input": {
@@ -3609,6 +8578,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "world"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestContainsOperator.test_contains_with_lower::3",
     "input": {
@@ -3621,6 +8593,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": null
+    },
     "expected_result": null,
     "id": "test_string_operators::TestContainsOperator.test_contains_with_none::1",
     "input": {
@@ -3633,6 +8608,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.pdf"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestEndsWithOperator.test_ends_with_alias::1",
     "input": {
@@ -3645,6 +8623,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.pdf"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_basic::1",
     "input": {
@@ -3657,6 +8638,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.txt"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_basic::2",
     "input": {
@@ -3669,6 +8653,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.PDF"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_case_sensitive::1",
     "input": {
@@ -3681,6 +8668,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.pdf"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_case_sensitive::2",
     "input": {
@@ -3693,6 +8683,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "files": [
+        "doc.pdf",
+        "img.png"
+      ]
+    },
     "expected_result": true,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_list_any_satisfies::1",
     "input": {
@@ -3708,6 +8704,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "files": [
+        "doc.txt",
+        "img.png"
+      ]
+    },
     "expected_result": null,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_list_any_satisfies::2",
     "input": {
@@ -3723,6 +8725,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.PDF"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_lower::1",
     "input": {
@@ -3735,6 +8740,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "filename": "document.Pdf"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_lower::2",
     "input": {
@@ -3747,6 +8755,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": null
+    },
     "expected_result": null,
     "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_none::1",
     "input": {
@@ -3759,6 +8770,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "code": "INV-1234"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestMatchesOperator.test_matches_basic::1",
     "input": {
@@ -3771,6 +8785,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "code": "INV-12"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestMatchesOperator.test_matches_basic::2",
     "input": {
@@ -3783,6 +8800,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "code": "ORDER-1234"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestMatchesOperator.test_matches_basic::3",
     "input": {
@@ -3795,6 +8815,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "user@example.com"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestMatchesOperator.test_matches_email_pattern::1",
     "input": {
@@ -3807,6 +8830,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "invalid-email"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestMatchesOperator.test_matches_email_pattern::2",
     "input": {
@@ -3819,6 +8845,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "anything"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestMatchesOperator.test_matches_invalid_regex::1",
     "input": {
@@ -3831,6 +8860,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "Order #123"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestMatchesOperator.test_matches_partial::1",
     "input": {
@@ -3843,6 +8875,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "No numbers"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestMatchesOperator.test_matches_partial::2",
     "input": {
@@ -3855,6 +8890,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "codes": [
+        "INV-123",
+        "ORD-456"
+      ]
+    },
     "expected_result": true,
     "id": "test_string_operators::TestMatchesOperator.test_matches_with_list_any_satisfies::1",
     "input": {
@@ -3870,6 +8911,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "codes": [
+        "ORD-123",
+        "REF-456"
+      ]
+    },
     "expected_result": null,
     "id": "test_string_operators::TestMatchesOperator.test_matches_with_list_any_satisfies::2",
     "input": {
@@ -3885,6 +8932,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": null
+    },
     "expected_result": null,
     "id": "test_string_operators::TestMatchesOperator.test_matches_with_none::1",
     "input": {
@@ -3897,6 +8947,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "hello world"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestNotContainsOperator.test_not_contains_basic::1",
     "input": {
@@ -3909,6 +8962,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": "spam message"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestNotContainsOperator.test_not_contains_basic::2",
     "input": {
@@ -3921,6 +8977,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "good",
+        "content"
+      ]
+    },
     "expected_result": true,
     "id": "test_string_operators::TestNotContainsOperator.test_not_contains_with_list::1",
     "input": {
@@ -3936,6 +8998,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "tags": [
+        "spam",
+        "bad"
+      ]
+    },
     "expected_result": null,
     "id": "test_string_operators::TestNotContainsOperator.test_not_contains_with_list::2",
     "input": {
@@ -3951,6 +9019,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "admin@example.com"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestStartsWithOperator.test_starts_with_alias::1",
     "input": {
@@ -3963,6 +9034,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "admin@example.com"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_basic::1",
     "input": {
@@ -3975,6 +9049,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "user@example.com"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_basic::2",
     "input": {
@@ -3987,6 +9064,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "Admin@example.com"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_case_sensitive::1",
     "input": {
@@ -3999,6 +9079,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "admin@example.com"
+    },
     "expected_result": null,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_case_sensitive::2",
     "input": {
@@ -4011,6 +9094,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "domains": [
+        "admin.com",
+        "user.com"
+      ]
+    },
     "expected_result": true,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_list_any_satisfies::1",
     "input": {
@@ -4026,6 +9115,12 @@
     ]
   },
   {
+    "expected_entity": {
+      "domains": [
+        "user.com",
+        "test.com"
+      ]
+    },
     "expected_result": null,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_list_any_satisfies::2",
     "input": {
@@ -4041,6 +9136,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "ADMIN@example.com"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_lower::1",
     "input": {
@@ -4053,6 +9151,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "email": "Admin@example.com"
+    },
     "expected_result": true,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_lower::2",
     "input": {
@@ -4065,6 +9166,9 @@
     ]
   },
   {
+    "expected_entity": {
+      "text": null
+    },
     "expected_result": null,
     "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_none::1",
     "input": {
