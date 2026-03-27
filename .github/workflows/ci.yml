@@ -25,6 +25,12 @@ jobs:
       - name: Install dependencies
         run: uv --directory python sync --all-extras
 
+      - name: Regenerate portable parity corpus
+        run: uv --directory python run --extra dev python tools/export_portable_cases.py
+
+      - name: Verify portable parity corpus is committed
+        run: git diff --exit-code -- spec/generated/python-portable-cases.json
+
       - name: Run tests
         run: uv --directory python run python -m pytest --cov=src --cov-report=xml --cov-report=term-missing
 

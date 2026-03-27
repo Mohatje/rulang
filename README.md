@@ -55,8 +55,20 @@ print(entity)  # {'age': 25, 'is_adult': True, 'discount': 0.1}
 
 - `grammar/`: shared ANTLR grammar source of truth
 - `spec/cases/`: language-neutral behavior spec
+- `spec/generated/python-portable-cases.json`: portable corpus extracted from Python tests and replayed in both runtimes
 - `python/`: Python package, tests, and lockfile
 - `typescript/`: TypeScript runtime
+
+## Parity Workflow
+
+The Python runtime remains the reference implementation. Cross-runtime parity is
+enforced by extracting a portable corpus from selected Python tests and replaying
+it in both Python and TypeScript.
+
+```bash
+npm run generate:portable-cases
+npm run test:parity
+```
 
 ## DSL Syntax
 

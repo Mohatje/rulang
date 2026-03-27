@@ -1,0 +1,4079 @@
+[
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_first_basic::1",
+    "input": {
+      "items": [
+        "apple",
+        "banana"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "first(entity.items) == 'apple' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_first_basic::2",
+    "input": {
+      "items": [
+        "banana",
+        "apple"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "first(entity.items) == 'apple' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_first_empty::1",
+    "input": {
+      "items": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "first(entity.items) == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_keys_basic::1",
+    "input": {
+      "data": {
+        "age": 30,
+        "name": "John"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "'name' in keys(entity.data) => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_keys_basic::2",
+    "input": {
+      "data": {
+        "age": 30
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "'name' in keys(entity.data) => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_last_basic::1",
+    "input": {
+      "items": [
+        "apple",
+        "banana"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "last(entity.items) == 'banana' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_last_basic::2",
+    "input": {
+      "items": [
+        "banana",
+        "apple"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "last(entity.items) == 'banana' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_last_empty::1",
+    "input": {
+      "items": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "last(entity.items) == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_len_dict::1",
+    "input": {
+      "meta": {
+        "a": 1,
+        "b": 2
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.meta) == 2 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_len_dict::2",
+    "input": {
+      "meta": {
+        "a": 1
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.meta) == 2 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_len_list::1",
+    "input": {
+      "items": [
+        1,
+        2,
+        3
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.items) > 0 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_len_list::2",
+    "input": {
+      "items": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.items) > 0 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_len_string::1",
+    "input": {
+      "name": "Jonathan"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.name) > 5 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_len_string::2",
+    "input": {
+      "name": "John"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.name) > 5 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_len_with_none::1",
+    "input": {
+      "items": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.items) == 0 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_values_basic::1",
+    "input": {
+      "data": {
+        "age": 30,
+        "name": "John"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "'John' in values(entity.data) => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestCollectionFunctions.test_values_basic::2",
+    "input": {
+      "data": {
+        "name": "Jane"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "'John' in values(entity.data) => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestFunctionWithOperators.test_arithmetic_with_functions::1",
+    "input": {
+      "a": [
+        1,
+        2,
+        3
+      ],
+      "b": [
+        4,
+        5,
+        6
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.a) + len(entity.b) > 5 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestFunctionWithOperators.test_arithmetic_with_functions::2",
+    "input": {
+      "a": [
+        1
+      ],
+      "b": [
+        2
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.a) + len(entity.b) > 5 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestFunctionWithOperators.test_lower_contains::1",
+    "input": {
+      "email": "User@EXAMPLE.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.email) contains '@example' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_abs_negative::1",
+    "input": {
+      "value": -10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "abs(entity.value) == 10 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_abs_positive::1",
+    "input": {
+      "value": 10
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "abs(entity.value) == 10 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_max_function::1",
+    "input": {
+      "a": 3,
+      "b": 1,
+      "c": 2
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "max(entity.a, entity.b, entity.c) == 3 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_min_function::1",
+    "input": {
+      "a": 3,
+      "b": 1,
+      "c": 2
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "min(entity.a, entity.b, entity.c) == 1 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_round_basic::1",
+    "input": {
+      "price": 99.994
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "round(entity.price, 2) == 99.99 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_round_basic::2",
+    "input": {
+      "price": 99.986
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "round(entity.price, 2) == 99.99 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_round_no_decimals::1",
+    "input": {
+      "price": 99.5
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "round(entity.price) == 100 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestMathFunctions.test_round_no_decimals::2",
+    "input": {
+      "price": 100.4
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "round(entity.price) == 100 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestNestedFunctionCalls.test_first_of_keys::1",
+    "input": {
+      "data": {
+        "name": "John"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "first(keys(entity.data)) exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestNestedFunctionCalls.test_int_of_abs::1",
+    "input": {
+      "value": -10.5
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "int(abs(entity.value)) == 10 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestNestedFunctionCalls.test_len_of_trim::1",
+    "input": {
+      "text": "  hello  "
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(trim(entity.text)) == 5 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestNestedFunctionCalls.test_lower_of_trim::1",
+    "input": {
+      "text": "  HELLO  "
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(trim(entity.text)) == 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::1",
+    "input": {
+      "name": "JOHN"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.name) == 'john' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::2",
+    "input": {
+      "name": "John"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.name) == 'john' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::3",
+    "input": {
+      "name": "john"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.name) == 'john' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_basic::4",
+    "input": {
+      "name": "Jane"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.name) == 'john' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_in_contains::1",
+    "input": {
+      "subject": "URGENT: Please review"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.subject) contains 'urgent' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_in_contains::2",
+    "input": {
+      "subject": "Urgent request"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.subject) contains 'urgent' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_in_contains::3",
+    "input": {
+      "subject": "Normal message"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.subject) contains 'urgent' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_lower_with_none::1",
+    "input": {
+      "name": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.name) == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_strip_alias::1",
+    "input": {
+      "text": "  hello  "
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "strip(entity.text) == 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_trim_basic::1",
+    "input": {
+      "text": "  hello  "
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "trim(entity.text) == 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_trim_basic::2",
+    "input": {
+      "text": "hello"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "trim(entity.text) == 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_trim_basic::3",
+    "input": {
+      "text": "\thello\n"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "trim(entity.text) == 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_upper_basic::1",
+    "input": {
+      "code": "abc"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "upper(entity.code) == 'ABC' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_upper_basic::2",
+    "input": {
+      "code": "Abc"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "upper(entity.code) == 'ABC' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestStringFunctions.test_upper_basic::3",
+    "input": {
+      "code": "ABC"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "upper(entity.code) == 'ABC' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_false::1",
+    "input": {
+      "items": "not a list"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_list(entity.items) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_false::2",
+    "input": {
+      "items": 123
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_list(entity.items) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_true::1",
+    "input": {
+      "items": [
+        1,
+        2,
+        3
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_list(entity.items) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_list_true::2",
+    "input": {
+      "items": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_list(entity.items) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_false::1",
+    "input": {
+      "value": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_none(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_false::2",
+    "input": {
+      "value": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_none(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_false::3",
+    "input": {
+      "value": false
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_none(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_none_true::1",
+    "input": {
+      "value": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_none(entity.value) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_false::1",
+    "input": {
+      "value": "123"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_number(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_false::2",
+    "input": {
+      "value": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_number(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_true::1",
+    "input": {
+      "value": 123
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_number(entity.value) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_number_true::2",
+    "input": {
+      "value": 3.14
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_number(entity.value) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_false::1",
+    "input": {
+      "value": 123
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_string(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_false::2",
+    "input": {
+      "value": [
+        1,
+        2
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_string(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_true::1",
+    "input": {
+      "name": "John"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_string(entity.name) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCheckingFunctions.test_is_string_true::2",
+    "input": {
+      "name": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "is_string(entity.name) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_falsy::1",
+    "input": {
+      "value": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "bool(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_falsy::2",
+    "input": {
+      "value": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "bool(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_falsy::3",
+    "input": {
+      "value": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "bool(entity.value) == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_truthy::1",
+    "input": {
+      "value": 1
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "bool(entity.value) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_truthy::2",
+    "input": {
+      "value": "yes"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "bool(entity.value) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_bool_truthy::3",
+    "input": {
+      "value": [
+        1,
+        2
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "bool(entity.value) == true => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_int::1",
+    "input": {
+      "value": 100
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "float(entity.value) == 100.0 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_string::1",
+    "input": {
+      "price": "99.99"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "float(entity.price) >= 99.99 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_string::2",
+    "input": {
+      "price": "100.50"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "float(entity.price) >= 99.99 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_float_from_string::3",
+    "input": {
+      "price": "50.00"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "float(entity.price) >= 99.99 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_from_float::1",
+    "input": {
+      "price": 99.99
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "int(entity.price) == 99 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_from_string::1",
+    "input": {
+      "quantity": "150"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "int(entity.quantity) > 100 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_from_string::2",
+    "input": {
+      "quantity": "50"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "int(entity.quantity) > 100 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_int_with_none::1",
+    "input": {
+      "value": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "int(entity.value) == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_builtin_functions::TestTypeCoercionFunctions.test_str_from_number::1",
+    "input": {
+      "code": 123
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "str(entity.code) == '123' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestCombinedExistenceOperators.test_exists_and_not_empty::1",
+    "input": {
+      "name": "John"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name exists and not entity.name is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestCombinedExistenceOperators.test_exists_and_not_empty::2",
+    "input": {
+      "name": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name exists and not entity.name is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestCombinedExistenceOperators.test_exists_and_not_empty::3",
+    "input": {
+      "name": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name exists and not entity.name is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestCombinedExistenceOperators.test_multiple_existence_checks::1",
+    "input": {
+      "a": 1,
+      "b": 2,
+      "c": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a exists and entity.b exists and not entity.c exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestCombinedExistenceOperators.test_multiple_existence_checks::2",
+    "input": {
+      "a": 1,
+      "b": null,
+      "c": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a exists and entity.b exists and not entity.c exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestCombinedExistenceOperators.test_multiple_existence_checks::3",
+    "input": {
+      "a": 1,
+      "b": 2,
+      "c": 3
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a exists and entity.b exists and not entity.c exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_nested_path::1",
+    "input": {
+      "user": {
+        "profile": {
+          "name": "John"
+        }
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user.profile.name exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_empty_list::1",
+    "input": {
+      "items": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.items exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_empty_string::1",
+    "input": {
+      "name": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_false::1",
+    "input": {
+      "flag": false
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.flag exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_none::1",
+    "input": {
+      "customer_id": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.customer_id exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::1",
+    "input": {
+      "customer_id": "C123"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.customer_id exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::2",
+    "input": {
+      "customer_id": 123
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.customer_id exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::3",
+    "input": {
+      "customer_id": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.customer_id exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_value::4",
+    "input": {
+      "customer_id": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.customer_id exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_exists_with_zero::1",
+    "input": {
+      "count": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.count exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestExistsOperator.test_not_exists::1",
+    "input": {
+      "customer_id": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "not entity.customer_id exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestExistsOperator.test_not_exists::2",
+    "input": {
+      "customer_id": "C123"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "not entity.customer_id exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_content::1",
+    "input": {
+      "notes": "Some content"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_content::2",
+    "input": {
+      "notes": [
+        1,
+        2,
+        3
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_content::3",
+    "input": {
+      "notes": {
+        "key": "value"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_empty_dict::1",
+    "input": {
+      "metadata": {}
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.metadata is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_empty_list::1",
+    "input": {
+      "items": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.items is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_empty_string::1",
+    "input": {
+      "notes": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_false::1",
+    "input": {
+      "flag": false
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.flag is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_none::1",
+    "input": {
+      "notes": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_whitespace_only::1",
+    "input": {
+      "notes": "   "
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_whitespace_only::2",
+    "input": {
+      "notes": "\t\n"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_is_empty_with_zero::1",
+    "input": {
+      "count": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.count is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_isempty_alias::1",
+    "input": {
+      "notes": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes isempty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_isempty_alias::2",
+    "input": {
+      "notes": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.notes isempty => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_not_is_empty::1",
+    "input": {
+      "notes": "Has content"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "not entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_not_is_empty::2",
+    "input": {
+      "notes": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "not entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_existence_operators::TestIsEmptyOperator.test_not_is_empty::3",
+    "input": {
+      "notes": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "not entity.notes is_empty => ret true"
+    ]
+  },
+  {
+    "expected_entity": {
+      "name": null
+    },
+    "expected_result": "no_name",
+    "id": "test_implicit_entity::TestEdgeCases.test_empty_entity::1",
+    "input": {
+      "name": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "name == none => ret 'no_name'"
+    ]
+  },
+  {
+    "entity_name": "customer",
+    "expected": {
+      "reads": [
+        "customer.age"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "customer.is_adult"
+      ]
+    },
+    "id": "test_implicit_entity::TestRuleAnalyzerImplicitEntity.test_custom_entity_name_normalization::1",
+    "kind": "parse",
+    "rule": "age >= 18 => is_adult = true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.age"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.is_adult"
+      ]
+    },
+    "id": "test_implicit_entity::TestRuleAnalyzerImplicitEntity.test_explicit_path_unchanged_in_reads::1",
+    "kind": "parse",
+    "rule": "entity.age >= 18 => entity.is_adult = true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.age"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.is_adult"
+      ]
+    },
+    "id": "test_implicit_entity::TestRuleAnalyzerImplicitEntity.test_implicit_path_normalized_in_reads::1",
+    "kind": "parse",
+    "rule": "age >= 18 => is_adult = true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.age",
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.discount"
+      ]
+    },
+    "id": "test_implicit_entity::TestRuleAnalyzerImplicitEntity.test_mixed_implicit_explicit_paths::1",
+    "kind": "parse",
+    "rule": "entity.age >= 18 and status == 'active' => discount = 0.1"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.user.profile.age"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.user.is_adult"
+      ]
+    },
+    "id": "test_implicit_entity::TestRuleAnalyzerImplicitEntity.test_nested_implicit_path::1",
+    "kind": "parse",
+    "rule": "user.profile.age >= 18 => user.is_adult = true"
+  },
+  {
+    "expected_entity": {
+      "value": 15
+    },
+    "expected_result": true,
+    "id": "test_implicit_entity::TestRuleEngineImplicitEntity.test_basic_implicit_rule::1",
+    "input": {
+      "value": 15
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "value > 10 => ret true"
+    ]
+  },
+  {
+    "expected_result": "high",
+    "id": "test_implicit_entity::TestRuleEngineImplicitEntity.test_implicit_multiple_rules::1",
+    "input": {
+      "value": 150
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "value > 100 => ret 'high'",
+      "value > 50 => ret 'medium'",
+      "value > 0 => ret 'low'"
+    ]
+  },
+  {
+    "expected_result": "medium",
+    "id": "test_implicit_entity::TestRuleEngineImplicitEntity.test_implicit_multiple_rules::2",
+    "input": {
+      "value": 75
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "value > 100 => ret 'high'",
+      "value > 50 => ret 'medium'",
+      "value > 0 => ret 'low'"
+    ]
+  },
+  {
+    "expected_result": "low",
+    "id": "test_implicit_entity::TestRuleEngineImplicitEntity.test_implicit_multiple_rules::3",
+    "input": {
+      "value": 25
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "value > 100 => ret 'high'",
+      "value > 50 => ret 'medium'",
+      "value > 0 => ret 'low'"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_left_list::1",
+    "input": {
+      "tags": [
+        "urgent",
+        "normal"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags == 'urgent' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_left_list::2",
+    "input": {
+      "tags": [
+        "normal",
+        "low"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags == 'urgent' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_right_list::1",
+    "input": {
+      "status": "active"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.status == ['active', 'pending'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_any_satisfies_right_list::2",
+    "input": {
+      "status": "inactive"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.status == ['active', 'pending'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_both_lists_exact_match::1",
+    "input": {
+      "tags": [
+        1,
+        2,
+        3
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags == [1, 2, 3] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_both_lists_exact_match::2",
+    "input": {
+      "tags": [
+        1,
+        2
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags == [1, 2, 3] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_equality_both_lists_exact_match::3",
+    "input": {
+      "tags": [
+        3,
+        2,
+        1
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags == [1, 2, 3] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_greater_than_with_scalar::1",
+    "input": {
+      "score": 95
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.score > 90 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_greater_than_with_scalar::2",
+    "input": {
+      "score": 85
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.score > 90 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_in_operator_any_satisfies::1",
+    "input": {
+      "tags": [
+        "urgent",
+        "normal"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags in ['urgent', 'critical'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_in_operator_any_satisfies::2",
+    "input": {
+      "tags": [
+        "normal",
+        "low"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags in ['urgent', 'critical'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_less_than_with_scalar::1",
+    "input": {
+      "score": 40
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.score < 50 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_less_than_with_scalar::2",
+    "input": {
+      "score": 60
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.score < 50 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_not_equal_any_satisfies::1",
+    "input": {
+      "tags": [
+        "good",
+        "content"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags != 'spam' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestAnySatisfiesSemantics.test_not_equal_any_satisfies::2",
+    "input": {
+      "tags": [
+        "spam",
+        "content"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags != 'spam' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestCombinedListOperators.test_any_satisfies_with_function::1",
+    "input": {
+      "tags": [
+        "URGENT",
+        "normal"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags == 'URGENT' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestCombinedListOperators.test_any_satisfies_with_function::2",
+    "input": {
+      "tags": [
+        "urgent",
+        "normal"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags == 'URGENT' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestCombinedListOperators.test_contains_any_and_contains_all::1",
+    "input": {
+      "labels": [
+        "urgent"
+      ],
+      "tags": [
+        "approved",
+        "done"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['approved'] and entity.labels contains_any ['urgent', 'high'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestCombinedListOperators.test_contains_any_and_contains_all::2",
+    "input": {
+      "labels": [
+        "low"
+      ],
+      "tags": [
+        "approved"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['approved'] and entity.labels contains_any ['urgent', 'high'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestCombinedListOperators.test_contains_any_with_len::1",
+    "input": {
+      "items": [
+        "normal",
+        "special"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.items) > 0 and entity.items contains_any ['special'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestCombinedListOperators.test_contains_any_with_len::2",
+    "input": {
+      "items": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "len(entity.items) > 0 and entity.items contains_any ['special'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_all_present::1",
+    "input": {
+      "tags": [
+        "reviewed",
+        "approved",
+        "done"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['reviewed', 'approved'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_all_present::2",
+    "input": {
+      "tags": [
+        "reviewed",
+        "approved"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['reviewed', 'approved'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_empty_list::1",
+    "input": {
+      "tags": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['urgent'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_partial_match::1",
+    "input": {
+      "tags": [
+        "reviewed"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['reviewed', 'approved'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_partial_match::2",
+    "input": {
+      "tags": [
+        "approved"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['reviewed', 'approved'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_scalar_left::1",
+    "input": {
+      "status": "active"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.status contains_all ['active'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_scalar_left::2",
+    "input": {
+      "status": "inactive"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.status contains_all ['active'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_with_none::1",
+    "input": {
+      "tags": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all ['urgent'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_with_numbers::1",
+    "input": {
+      "codes": [
+        100,
+        200,
+        300
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.codes contains_all [100, 200] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAllOperator.test_contains_all_with_numbers::2",
+    "input": {
+      "codes": [
+        100,
+        300
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.codes contains_all [100, 200] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_empty_list::1",
+    "input": {
+      "tags": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_any ['urgent'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_multiple_matches::1",
+    "input": {
+      "tags": [
+        "urgent",
+        "critical"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_any ['urgent', 'critical'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_multiple_matches::2",
+    "input": {
+      "tags": [
+        "normal"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_any ['urgent', 'critical'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_scalar_left::1",
+    "input": {
+      "status": "active"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.status contains_any ['active', 'pending'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_scalar_left::2",
+    "input": {
+      "status": "inactive"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.status contains_any ['active', 'pending'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_single_match::1",
+    "input": {
+      "recipients": [
+        "admin@co.com",
+        "user@co.com"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.recipients contains_any ['admin@co.com', 'support@co.com'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_single_match::2",
+    "input": {
+      "recipients": [
+        "user@co.com",
+        "other@co.com"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.recipients contains_any ['admin@co.com', 'support@co.com'] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_with_none::1",
+    "input": {
+      "tags": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_any ['urgent'] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_with_numbers::1",
+    "input": {
+      "codes": [
+        100,
+        400
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.codes contains_any [100, 200, 300] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestContainsAnyOperator.test_contains_any_with_numbers::2",
+    "input": {
+      "codes": [
+        400,
+        500
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.codes contains_any [100, 200, 300] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestListEdgeCases.test_contains_all_empty_check_list::1",
+    "input": {
+      "tags": [
+        "anything"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_all [] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestListEdgeCases.test_empty_check_list::1",
+    "input": {
+      "tags": [
+        "anything"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains_any [] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestListEdgeCases.test_nested_list_comparison::1",
+    "input": {
+      "matrix": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.matrix == [[1, 2], [3, 4]] => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestListEdgeCases.test_nested_list_comparison::2",
+    "input": {
+      "matrix": [
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.matrix == [[1, 2], [3, 4]] => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_list_operators::TestListEdgeCases.test_tuple_treated_as_list::1",
+    "input": {
+      "items": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.items == 'a' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_list_operators::TestListEdgeCases.test_tuple_treated_as_list::2",
+    "input": {
+      "items": [
+        "x",
+        "y",
+        "z"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.items == 'a' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_complex_null_safe_expression::1",
+    "input": {
+      "order": {
+        "shipping": 10,
+        "total": 100
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "(entity.order?.total ?? 0) + (entity.order?.shipping ?? 5) > 100 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_complex_null_safe_expression::2",
+    "input": {
+      "order": {
+        "shipping": null,
+        "total": 100
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "(entity.order?.total ?? 0) + (entity.order?.shipping ?? 5) > 100 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_complex_null_safe_expression::3",
+    "input": {
+      "order": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "(entity.order?.total ?? 0) + (entity.order?.shipping ?? 5) > 100 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::1",
+    "input": {
+      "config": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.config?.database?.timeout ?? 30 == 30 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::2",
+    "input": {
+      "config": {
+        "database": null
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.config?.database?.timeout ?? 30 == 30 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::3",
+    "input": {
+      "config": {
+        "database": {
+          "timeout": null
+        }
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.config?.database?.timeout ?? 30 == 30 => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_deep_null_safe_with_coalescing::4",
+    "input": {
+      "config": {
+        "database": {
+          "timeout": 60
+        }
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.config?.database?.timeout ?? 30 == 30 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_coalescing::1",
+    "input": {
+      "user": {
+        "name": "John"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.name ?? 'Unknown' == 'John' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_coalescing_fallback::1",
+    "input": {
+      "user": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.name ?? 'Unknown' == 'Unknown' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_coalescing_fallback::2",
+    "input": {
+      "user": {
+        "name": null
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.name ?? 'Unknown' == 'Unknown' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_function::1",
+    "input": {
+      "user": {
+        "name": "JOHN"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.user?.name ?? 'unknown') == 'john' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestCombinedNullSafeAndCoalescing.test_null_safe_with_function::2",
+    "input": {
+      "user": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.user?.name ?? 'unknown') == 'john' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain::1",
+    "input": {
+      "a": "found",
+      "b": null,
+      "c": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a ?? entity.b ?? entity.c ?? 'default' == 'found' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain::2",
+    "input": {
+      "a": null,
+      "b": "found",
+      "c": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a ?? entity.b ?? entity.c ?? 'default' == 'found' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain::3",
+    "input": {
+      "a": null,
+      "b": null,
+      "c": "found"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a ?? entity.b ?? entity.c ?? 'default' == 'found' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_chain_default::1",
+    "input": {
+      "a": null,
+      "b": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a ?? entity.b ?? 'default' == 'default' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_arithmetic::1",
+    "input": {
+      "bonus": 100,
+      "salary": 1000
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "(entity.bonus ?? 0) + entity.salary == 1100 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_arithmetic::2",
+    "input": {
+      "bonus": null,
+      "salary": 1100
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "(entity.bonus ?? 0) + entity.salary == 1100 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_empty_string::1",
+    "input": {
+      "name": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name ?? 'Unknown' == '' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_false::1",
+    "input": {
+      "flag": false
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.flag ?? true == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_none::1",
+    "input": {
+      "name": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name ?? 'Unknown' == 'Unknown' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_value::1",
+    "input": {
+      "name": "John"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.name ?? 'Unknown' == 'John' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullCoalescing.test_null_coalesce_with_zero::1",
+    "input": {
+      "count": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.count ?? 10 == 0 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain::1",
+    "input": {
+      "user": {
+        "profile": {
+          "name": "John"
+        }
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.profile?.name == 'John' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain::2",
+    "input": {
+      "user": {
+        "profile": null
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.profile?.name == 'John' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain::3",
+    "input": {
+      "user": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.profile?.name == 'John' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain_returns_none::1",
+    "input": {
+      "a": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a?.b?.c?.d == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain_returns_none::2",
+    "input": {
+      "a": {
+        "b": null
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a?.b?.c?.d == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_chain_returns_none::3",
+    "input": {
+      "a": {
+        "b": {
+          "c": null
+        }
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a?.b?.c?.d == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_in_condition::1",
+    "input": {
+      "order": {
+        "status": "shipped",
+        "tracking": "ABC123"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.order?.status == 'shipped' and entity.order?.tracking exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_in_condition::2",
+    "input": {
+      "order": {
+        "status": "shipped",
+        "tracking": null
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.order?.status == 'shipped' and entity.order?.tracking exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_in_condition::3",
+    "input": {
+      "order": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.order?.status == 'shipped' and entity.order?.tracking exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_mixed_with_regular::1",
+    "input": {
+      "config": {
+        "settings": {
+          "timeout": 30
+        }
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.config?.settings.timeout == 30 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_exists::1",
+    "input": {
+      "user": {
+        "email": "test@example.com"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.email exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_exists::2",
+    "input": {
+      "user": {
+        "email": null
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.email exists => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_exists::3",
+    "input": {
+      "user": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.email exists => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_none_parent::1",
+    "input": {
+      "user": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.name == none => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeAccess.test_null_safe_with_value::1",
+    "input": {
+      "user": {
+        "name": "John"
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.name == 'John' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_double_question_mark_is_coalesce_not_safe_safe::1",
+    "input": {
+      "a": null,
+      "b": "b_value"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a ?? entity.b == 'b_value' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::1",
+    "input": {
+      "value": 0
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value ?? 'default' == entity.value => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::2",
+    "input": {
+      "value": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value ?? 'default' == entity.value => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::3",
+    "input": {
+      "value": false
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value ?? 'default' == entity.value => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_coalesce_only_for_none::4",
+    "input": {
+      "value": []
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value ?? 'default' == entity.value => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_preserves_empty_string::1",
+    "input": {
+      "user": {
+        "name": ""
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.name == '' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_preserves_false::1",
+    "input": {
+      "user": {
+        "active": false
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.active == false => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_preserves_zero::1",
+    "input": {
+      "user": {
+        "count": 0
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.count == 0 => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_null_safe::TestNullSafeEdgeCases.test_null_safe_with_list_access::1",
+    "input": {
+      "user": {
+        "items": [
+          "first",
+          "second"
+        ]
+      }
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.user?.items[0] == 'first' => ret true"
+    ]
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser::TestActionParsing.test_compound_assignments::1",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total += entity.value"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser::TestActionParsing.test_compound_assignments::2",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total -= 10"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser::TestActionParsing.test_compound_assignments::3",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total *= 2"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.total",
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.total"
+      ]
+    },
+    "id": "test_parser::TestActionParsing.test_compound_assignments::4",
+    "kind": "parse",
+    "rule": "entity.value > 0 => entity.total /= 2"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.a",
+        "entity.b",
+        "entity.c"
+      ]
+    },
+    "id": "test_parser::TestActionParsing.test_multiple_actions::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.a = 1; entity.b = 2; entity.c = 3"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity",
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.status"
+      ]
+    },
+    "id": "test_parser::TestActionParsing.test_return_statement::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.status = 'done'; ret entity"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.status"
+      ]
+    },
+    "id": "test_parser::TestActionParsing.test_simple_assignment::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.status = 'processed'"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser::TestActionParsing.test_workflow_call::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process')"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.price",
+        "entity.quantity"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_arithmetic_in_condition::1",
+    "kind": "parse",
+    "rule": "entity.price * entity.quantity >= 100 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_logical_operators::1",
+    "kind": "parse",
+    "rule": "entity.a > 0 and entity.b < 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.a",
+        "entity.b"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_logical_operators::2",
+    "kind": "parse",
+    "rule": "entity.a > 0 or entity.b < 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.disabled"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_logical_operators::3",
+    "kind": "parse",
+    "rule": "not entity.disabled => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_membership_operators::1",
+    "kind": "parse",
+    "rule": "entity.status in ['active', 'pending'] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_membership_operators::2",
+    "kind": "parse",
+    "rule": "entity.status not in ['deleted'] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.age"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestBasicParsing.test_simple_condition_with_literal_return::1",
+    "kind": "parse",
+    "rule": "entity.age >= 18 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.active"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_boolean_false::1",
+    "kind": "parse",
+    "rule": "entity.active == false => ret false"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.active"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_boolean_true::1",
+    "kind": "parse",
+    "rule": "entity.active == true => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.active"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_boolean_true::2",
+    "kind": "parse",
+    "rule": "entity.active == True => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_float::1",
+    "kind": "parse",
+    "rule": "entity.value == 3.14 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_integer::1",
+    "kind": "parse",
+    "rule": "entity.value == 42 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.status"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_list_literal::1",
+    "kind": "parse",
+    "rule": "entity.status in [1, 2, 3] => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_negative_integer::1",
+    "kind": "parse",
+    "rule": "entity.value == -42 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_none_null::1",
+    "kind": "parse",
+    "rule": "entity.value == none => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_none_null::2",
+    "kind": "parse",
+    "rule": "entity.value == null => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_string_double_quotes::1",
+    "kind": "parse",
+    "rule": "entity.name == \"test\" => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestLiteralParsing.test_string_single_quotes::1",
+    "kind": "parse",
+    "rule": "entity.name == 'test' => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.items.[*].value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestPathParsing.test_dynamic_index::1",
+    "kind": "parse",
+    "rule": "entity.items[entity.index].value > 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.items.[*].value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestPathParsing.test_list_index::1",
+    "kind": "parse",
+    "rule": "entity.items[0].value > 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.items.[*].value"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestPathParsing.test_negative_index::1",
+    "kind": "parse",
+    "rule": "entity.items[-1].value > 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.user.profile.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestPathParsing.test_nested_path::1",
+    "kind": "parse",
+    "rule": "entity.user.profile.name == 'test' => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.name"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestPathParsing.test_simple_path::1",
+    "kind": "parse",
+    "rule": "entity.name == 'test' => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.counter",
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.counter"
+      ]
+    },
+    "id": "test_parser::TestReadWriteAnalysis.test_compound_assignment_reads_and_writes::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.counter += 1"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.user.age"
+      ],
+      "workflow_calls": [],
+      "writes": []
+    },
+    "id": "test_parser::TestReadWriteAnalysis.test_reads_from_condition::1",
+    "kind": "parse",
+    "rule": "entity.user.age >= 18 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [
+        "notify",
+        "process"
+      ],
+      "writes": []
+    },
+    "id": "test_parser::TestReadWriteAnalysis.test_workflow_calls_tracked::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => workflow('process'); workflow('notify')"
+  },
+  {
+    "entity_name": null,
+    "expected": {
+      "reads": [
+        "entity.ready"
+      ],
+      "workflow_calls": [],
+      "writes": [
+        "entity.status"
+      ]
+    },
+    "id": "test_parser::TestReadWriteAnalysis.test_writes_from_assignment::1",
+    "kind": "parse",
+    "rule": "entity.ready == true => entity.status = 'done'"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser::TestSyntaxErrors.test_invalid_operator::1",
+    "kind": "parse_error",
+    "rule": "entity.value <> 10 => ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser::TestSyntaxErrors.test_missing_action::1",
+    "kind": "parse_error",
+    "rule": "entity.value > 10 =>"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser::TestSyntaxErrors.test_missing_arrow::1",
+    "kind": "parse_error",
+    "rule": "entity.value > 10 ret true"
+  },
+  {
+    "entity_name": null,
+    "expected_error": "RuleSyntaxError",
+    "id": "test_parser::TestSyntaxErrors.test_missing_condition::1",
+    "kind": "parse_error",
+    "rule": "=> ret true"
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestCombinedStringOperators.test_contains_and_startswith::1",
+    "input": {
+      "email": "admin@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email startswith 'admin' and entity.email contains '@example' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestCombinedStringOperators.test_contains_and_startswith::2",
+    "input": {
+      "email": "admin@other.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email startswith 'admin' and entity.email contains '@example' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestCombinedStringOperators.test_contains_and_startswith::3",
+    "input": {
+      "email": "user@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email startswith 'admin' and entity.email contains '@example' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::1",
+    "input": {
+      "filename": "document.pdf"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename not contains 'temp' or entity.filename endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::2",
+    "input": {
+      "filename": "temp_file.pdf"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename not contains 'temp' or entity.filename endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::3",
+    "input": {
+      "filename": "report.txt"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename not contains 'temp' or entity.filename endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestCombinedStringOperators.test_not_contains_or_endswith::4",
+    "input": {
+      "filename": "temp_file.txt"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename not contains 'temp' or entity.filename endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestContainsOperator.test_contains_basic::1",
+    "input": {
+      "text": "hello world"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text contains 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestContainsOperator.test_contains_basic::2",
+    "input": {
+      "text": "world"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text contains 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestContainsOperator.test_contains_case_sensitive::1",
+    "input": {
+      "text": "Hello world"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text contains 'Hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestContainsOperator.test_contains_case_sensitive::2",
+    "input": {
+      "text": "hello world"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text contains 'Hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestContainsOperator.test_contains_empty_string::1",
+    "input": {
+      "text": "anything"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text contains '' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestContainsOperator.test_contains_empty_string::2",
+    "input": {
+      "text": ""
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text contains '' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestContainsOperator.test_contains_with_list_any_satisfies::1",
+    "input": {
+      "tags": [
+        "urgent",
+        "important"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains 'urg' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestContainsOperator.test_contains_with_list_any_satisfies::2",
+    "input": {
+      "tags": [
+        "low",
+        "priority"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags contains 'urg' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestContainsOperator.test_contains_with_lower::1",
+    "input": {
+      "text": "Hello World"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.text) contains 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestContainsOperator.test_contains_with_lower::2",
+    "input": {
+      "text": "HELLO"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.text) contains 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestContainsOperator.test_contains_with_lower::3",
+    "input": {
+      "text": "world"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.text) contains 'hello' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestContainsOperator.test_contains_with_none::1",
+    "input": {
+      "text": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text contains 'test' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestEndsWithOperator.test_ends_with_alias::1",
+    "input": {
+      "filename": "document.pdf"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename ends_with '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_basic::1",
+    "input": {
+      "filename": "document.pdf"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_basic::2",
+    "input": {
+      "filename": "document.txt"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_case_sensitive::1",
+    "input": {
+      "filename": "document.PDF"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename endswith '.PDF' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_case_sensitive::2",
+    "input": {
+      "filename": "document.pdf"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.filename endswith '.PDF' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_list_any_satisfies::1",
+    "input": {
+      "files": [
+        "doc.pdf",
+        "img.png"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.files endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_list_any_satisfies::2",
+    "input": {
+      "files": [
+        "doc.txt",
+        "img.png"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.files endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_lower::1",
+    "input": {
+      "filename": "document.PDF"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.filename) endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_lower::2",
+    "input": {
+      "filename": "document.Pdf"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.filename) endswith '.pdf' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestEndsWithOperator.test_endswith_with_none::1",
+    "input": {
+      "text": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text endswith 'test' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_basic::1",
+    "input": {
+      "code": "INV-1234"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.code matches 'INV-\\\\d{4}' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_basic::2",
+    "input": {
+      "code": "INV-12"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.code matches 'INV-\\\\d{4}' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_basic::3",
+    "input": {
+      "code": "ORDER-1234"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.code matches 'INV-\\\\d{4}' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_email_pattern::1",
+    "input": {
+      "email": "user@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email matches '^[a-z]+@[a-z]+\\\\.[a-z]+$' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_email_pattern::2",
+    "input": {
+      "email": "invalid-email"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email matches '^[a-z]+@[a-z]+\\\\.[a-z]+$' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_invalid_regex::1",
+    "input": {
+      "text": "anything"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text matches '[invalid' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_partial::1",
+    "input": {
+      "text": "Order #123"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text matches '\\\\d+' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_partial::2",
+    "input": {
+      "text": "No numbers"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text matches '\\\\d+' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_with_list_any_satisfies::1",
+    "input": {
+      "codes": [
+        "INV-123",
+        "ORD-456"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.codes matches 'INV-\\\\d+' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_with_list_any_satisfies::2",
+    "input": {
+      "codes": [
+        "ORD-123",
+        "REF-456"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.codes matches 'INV-\\\\d+' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestMatchesOperator.test_matches_with_none::1",
+    "input": {
+      "text": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text matches '\\\\d+' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestNotContainsOperator.test_not_contains_basic::1",
+    "input": {
+      "text": "hello world"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text not contains 'spam' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestNotContainsOperator.test_not_contains_basic::2",
+    "input": {
+      "text": "spam message"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text not contains 'spam' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestNotContainsOperator.test_not_contains_with_list::1",
+    "input": {
+      "tags": [
+        "good",
+        "content"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags not contains 'spam' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestNotContainsOperator.test_not_contains_with_list::2",
+    "input": {
+      "tags": [
+        "spam",
+        "bad"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.tags not contains 'spam' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestStartsWithOperator.test_starts_with_alias::1",
+    "input": {
+      "email": "admin@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email starts_with 'admin@' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_basic::1",
+    "input": {
+      "email": "admin@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email startswith 'admin@' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_basic::2",
+    "input": {
+      "email": "user@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email startswith 'admin@' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_case_sensitive::1",
+    "input": {
+      "email": "Admin@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email startswith 'Admin@' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_case_sensitive::2",
+    "input": {
+      "email": "admin@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.email startswith 'Admin@' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_list_any_satisfies::1",
+    "input": {
+      "domains": [
+        "admin.com",
+        "user.com"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.domains startswith 'admin' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_list_any_satisfies::2",
+    "input": {
+      "domains": [
+        "user.com",
+        "test.com"
+      ]
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.domains startswith 'admin' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_lower::1",
+    "input": {
+      "email": "ADMIN@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.email) startswith 'admin@' => ret true"
+    ]
+  },
+  {
+    "expected_result": true,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_lower::2",
+    "input": {
+      "email": "Admin@example.com"
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.email) startswith 'admin@' => ret true"
+    ]
+  },
+  {
+    "expected_result": null,
+    "id": "test_string_operators::TestStartsWithOperator.test_startswith_with_none::1",
+    "input": {
+      "text": null
+    },
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text startswith 'test' => ret true"
+    ]
+  }
+]

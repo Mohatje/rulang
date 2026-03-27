@@ -6,8 +6,12 @@
   ],
   "scripts": {
     "generate:parsers": "./scripts/generate_parsers.sh",
+    "generate:portable-cases": "uv --directory python run --extra dev python tools/export_portable_cases.py",
     "sync:python": "uv --directory python sync --all-extras",
     "test:python": "uv --directory python run --extra dev python -m pytest",
+    "test:parity:python": "uv --directory python run --extra dev python -m pytest tests/parity/test_portable_cases.py -q",
+    "test:parity:typescript": "npm --workspace typescript exec vitest run test/python-portable-parity.test.ts",
+    "test:parity": "npm run generate:portable-cases && npm run test:parity:python && npm run test:parity:typescript",
     "test:typescript": "npm --workspace typescript test",
     "build:typescript": "npm --workspace typescript run build"
   }
