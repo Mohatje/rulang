@@ -48,6 +48,7 @@ class RuleEngine:
         self._rules: list[ParsedRule] = []
         self._graph: DependencyGraph = DependencyGraph()
         self._execution_order: list[int] | None = None
+        self._execution_order_workflow_key: tuple | None = None
 
     def add_rules(self, rules: str | list[str]) -> None:
         """
@@ -68,6 +69,7 @@ class RuleEngine:
 
         # Invalidate cached execution order
         self._execution_order = None
+        self._execution_order_workflow_key = None
 
     def evaluate(
         self,
@@ -98,8 +100,7 @@ class RuleEngine:
         all_workflows = merge_workflows(workflows)
 
         # Build dependency graph if needed
-        if self._execution_order is None:
-            self._build_execution_order(all_workflows)
+        self._ensure_execution_order(all_workflows)
 
         # Execute rules in dependency order
         any_matched = False
@@ -132,6 +133,7 @@ class RuleEngine:
     def _build_execution_order(
         self,
         workflows: dict[str, Workflow | Callable] | None = None,
+        workflow_key: tuple | None = None,
     ) -> None:
         """Build the dependency graph and compute execution order."""
         self._graph = DependencyGraph()
@@ -140,6 +142,34 @@ class RuleEngine:
             self._graph.add_rule(rule, workflows)
 
         self._execution_order = self._graph.get_execution_order()
+        self._execution_order_workflow_key = workflow_key
+
+    def _get_workflow_dependency_key(
+        self,
+        workflows: dict[str, Workflow | Callable] | None,
+    ) -> tuple:
+        if not workflows:
+            return ()
+
+        entries: list[tuple] = []
+        for name, workflow in sorted(workflows.items()):
+            if callable(workflow) and not hasattr(workflow, "reads") and not hasattr(workflow, "writes"):
+                entries.append((name, None))
+                continue
+
+            reads = tuple(sorted(getattr(workflow, "reads", [])))
+            writes = tuple(sorted(getattr(workflow, "writes", [])))
+            entries.append((name, reads, writes))
+
+        return tuple(entries)
+
+    def _ensure_execution_order(
+        self,
+        workflows: dict[str, Workflow | Callable] | None = None,
+    ) -> None:
+        workflow_key = self._get_workflow_dependency_key(workflows)
+        if self._execution_order is None or self._execution_order_workflow_key != workflow_key:
+            self._build_execution_order(workflows, workflow_key)
 
     def get_dependency_graph(self) -> dict[int, set[int]]:
         """
@@ -149,8 +179,7 @@ class RuleEngine:
             Dictionary mapping rule index to set of dependent rule indices.
             An edge from A to B means rule B depends on rule A.
         """
-        if self._execution_order is None:
-            self._build_execution_order()
+        self._ensure_execution_order()
 
         return self._graph.get_graph()
 
@@ -161,8 +190,7 @@ class RuleEngine:
         Returns:
             List of rule indices in the order they will be executed.
         """
-        if self._execution_order is None:
-            self._build_execution_order()
+        self._ensure_execution_order()
 
         return self._execution_order.copy()
 
@@ -201,8 +229,8 @@ class RuleEngine:
         self._rules.clear()
         self._graph = DependencyGraph()
         self._execution_order = None
+        self._execution_order_workflow_key = None
 
     def __len__(self) -> int:
         """Return the number of rules in the engine."""
         return len(self._rules)
-
