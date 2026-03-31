@@ -2,7 +2,17 @@ import { readFileSync } from "node:fs";
 import { readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { describe, expect, test } from "vitest";
-import { RuleEngine, RuleSyntaxError, Workflow, parseRule } from "../src/index.js";
+import {
+  DependencyGraph,
+  EvaluationError,
+  PathResolutionError,
+  PathResolver,
+  RuleEngine,
+  RuleSyntaxError,
+  Workflow,
+  WorkflowNotFoundError,
+  parseRule,
+} from "../src/index.js";
 
 type WorkflowExpr =
   | { type: "literal"; value: unknown }
@@ -49,6 +59,49 @@ type PortableCase =
       kind: "parse_error";
       rule: string;
       entity_name?: string | null;
+      expected_error: string;
+      workflows?: WorkflowSpec[];
+    }
+  | {
+      id: string;
+      kind: "resolve";
+      input: Record<string, unknown>;
+      entity_name?: string | null;
+      path: Array<string | number>;
+      null_safe_indices?: number[];
+      expected:
+        | { value: unknown }
+        | { error_type: string };
+    }
+  | {
+      id: string;
+      kind: "assign";
+      input: Record<string, unknown>;
+      entity_name?: string | null;
+      path: Array<string | number>;
+      value: unknown;
+      expected:
+        | { entity: Record<string, unknown> }
+        | { error_type: string };
+    }
+  | {
+      id: string;
+      kind: "dependency_graph";
+      rules: string[];
+      entity_name?: string | null;
+      workflows?: WorkflowSpec[];
+      expected: {
+        graph?: Record<string, number[]>;
+        execution_order?: number[];
+      };
+    }
+  | {
+      id: string;
+      kind: "evaluate_error";
+      mode: "first_match" | "all_match";
+      rules: string[];
+      input: Record<string, unknown>;
+      workflows?: WorkflowSpec[];
       expected_error: string;
     };
 
@@ -98,8 +151,8 @@ function evalWorkflowExpr(expr: WorkflowExpr, entity: Record<string, unknown>, a
   throw new Error(`Unsupported workflow expression: ${JSON.stringify(expr)}`);
 }
 
-function buildWorkflows(parityCase: PortableCase): Record<string, unknown> | undefined {
-  if (parityCase.kind !== "evaluate" || !parityCase.workflows?.length) {
+function buildWorkflows(parityCase: { workflows?: WorkflowSpec[] }): Record<string, unknown> | undefined {
+  if (!parityCase.workflows?.length) {
     return undefined;
   }
 
@@ -125,6 +178,29 @@ function buildWorkflows(parityCase: PortableCase): Record<string, unknown> | und
   );
 }
 
+function normalizeGraph(graph: Record<number, Set<number>>): Record<string, number[]> {
+  return Object.fromEntries(
+    Object.entries(graph)
+      .sort(([left], [right]) => Number(left) - Number(right))
+      .map(([key, value]) => [key, [...value].sort((a, b) => a - b)]),
+  );
+}
+
+function getErrorClass(errorType: string): typeof Error {
+  const mapping = {
+    RuleSyntaxError,
+    PathResolutionError,
+    WorkflowNotFoundError,
+    EvaluationError,
+  } as const;
+
+  if (!(errorType in mapping)) {
+    throw new Error(`Unsupported error type: ${errorType}`);
+  }
+
+  return mapping[errorType as keyof typeof mapping];
+}
+
 describe("portable python parity corpus", () => {
   for (const parityCase of cases) {
     test(parityCase.id, () => {
@@ -148,7 +224,64 @@ describe("portable python parity corpus", () => {
         return;
       }
 
-      expect(() => parseRule(parityCase.rule, parityCase.entity_name ?? "entity")).toThrowError(RuleSyntaxError);
+      if (parityCase.kind === "parse_error") {
+        expect(() => parseRule(parityCase.rule, parityCase.entity_name ?? "entity")).toThrowError(RuleSyntaxError);
+        return;
+      }
+
+      if (parityCase.kind === "resolve") {
+        const resolver = new PathResolver(structuredClone(parityCase.input), parityCase.entity_name ?? "entity");
+
+        if ("error_type" in parityCase.expected) {
+          expect(() => resolver.resolve(parityCase.path, new Set(parityCase.null_safe_indices ?? []))).toThrowError(
+            getErrorClass(parityCase.expected.error_type),
+          );
+          return;
+        }
+
+        expect(resolver.resolve(parityCase.path, new Set(parityCase.null_safe_indices ?? []))).toEqual(parityCase.expected.value);
+        return;
+      }
+
+      if (parityCase.kind === "assign") {
+        const entity = structuredClone(parityCase.input);
+        const resolver = new PathResolver(entity, parityCase.entity_name ?? "entity");
+
+        if ("error_type" in parityCase.expected) {
+          expect(() => resolver.assign(parityCase.path, structuredClone(parityCase.value))).toThrowError(
+            getErrorClass(parityCase.expected.error_type),
+          );
+          return;
+        }
+
+        resolver.assign(parityCase.path, structuredClone(parityCase.value));
+        expect(entity).toEqual(parityCase.expected.entity);
+        return;
+      }
+
+      if (parityCase.kind === "dependency_graph") {
+        const graph = new DependencyGraph();
+        const workflows = buildWorkflows(parityCase);
+
+        for (const rule of parityCase.rules) {
+          graph.addRule(parseRule(rule, parityCase.entity_name ?? "entity"), workflows);
+        }
+
+        if (parityCase.expected.graph) {
+          expect(normalizeGraph(graph.getGraph())).toEqual(parityCase.expected.graph);
+        }
+        if (parityCase.expected.execution_order) {
+          expect(graph.getExecutionOrder()).toEqual(parityCase.expected.execution_order);
+        }
+        return;
+      }
+
+      const engine = new RuleEngine(parityCase.mode);
+      engine.addRules(parityCase.rules);
+      const entity = structuredClone(parityCase.input);
+      expect(() => engine.evaluate(entity, buildWorkflows(parityCase))).toThrowError(
+        getErrorClass(parityCase.expected_error),
+      );
     });
   }
 });

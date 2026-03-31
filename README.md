@@ -65,6 +65,9 @@ The Python runtime remains the reference implementation. Cross-runtime parity is
 enforced by extracting a portable corpus from selected Python tests and replaying
 it in both Python and TypeScript.
 
+The release bar and migration plan for semantic parity are documented in
+[`docs/semantic-parity-plan.md`](docs/semantic-parity-plan.md).
+
 ```bash
 npm run generate:portable-cases
 npm run test:parity

@@ -1,10 +1,13 @@
+import copy
 import json
 from pathlib import Path
 
 import pytest
 
 from rulang import RuleEngine
-from rulang.exceptions import RuleSyntaxError
+from rulang.dependency_graph import DependencyGraph
+from rulang.exceptions import EvaluationError, PathResolutionError, RuleSyntaxError, WorkflowNotFoundError
+from rulang.path_resolver import PathResolver
 from rulang.workflows import Workflow
 from rulang.visitor import parse_rule
 
@@ -93,6 +96,25 @@ def _build_workflows(case):
     return workflows or None
 
 
+def _normalize_graph(graph: dict[int, set[int]]) -> dict[str, list[int]]:
+    return {
+        str(index): sorted(dependents)
+        for index, dependents in sorted(graph.items())
+    }
+
+
+def _get_error_class(name: str):
+    mapping = {
+        "RuleSyntaxError": RuleSyntaxError,
+        "PathResolutionError": PathResolutionError,
+        "WorkflowNotFoundError": WorkflowNotFoundError,
+        "EvaluationError": EvaluationError,
+    }
+    if name not in mapping:
+        raise AssertionError(f"Unsupported error type: {name}")
+    return mapping[name]
+
+
 @pytest.mark.parametrize("case", [pytest.param(case, id=case["id"]) for case in CASES])
 def test_portable_cases(case):
     kind = case["kind"]
@@ -100,7 +122,7 @@ def test_portable_cases(case):
     if kind == "evaluate":
         engine = RuleEngine(mode=case["mode"])
         engine.add_rules(case["rules"])
-        entity = case["input"]
+        entity = copy.deepcopy(case["input"])
         result = engine.evaluate(entity, workflows=_build_workflows(case))
         assert result == case.get("expected_result")
         if "expected_entity" in case:
@@ -117,6 +139,55 @@ def test_portable_cases(case):
     if kind == "parse_error":
         with pytest.raises(RuleSyntaxError):
             parse_rule(case["rule"], entity_name=case.get("entity_name") or "entity")
+        return
+
+    if kind == "resolve":
+        resolver = PathResolver(copy.deepcopy(case["input"]), entity_name=case.get("entity_name") or "entity")
+        expected = case["expected"]
+
+        if "error_type" in expected:
+            with pytest.raises(_get_error_class(expected["error_type"])):
+                resolver.resolve(case["path"], set(case.get("null_safe_indices", [])))
+            return
+
+        assert resolver.resolve(case["path"], set(case.get("null_safe_indices", []))) == expected["value"]
+        return
+
+    if kind == "assign":
+        entity = copy.deepcopy(case["input"])
+        resolver = PathResolver(entity, entity_name=case.get("entity_name") or "entity")
+        expected = case["expected"]
+
+        if "error_type" in expected:
+            with pytest.raises(_get_error_class(expected["error_type"])):
+                resolver.assign(case["path"], copy.deepcopy(case["value"]))
+            return
+
+        resolver.assign(case["path"], copy.deepcopy(case["value"]))
+        assert entity == expected["entity"]
+        return
+
+    if kind == "dependency_graph":
+        graph = DependencyGraph()
+        workflows = _build_workflows(case)
+
+        for rule_text in case["rules"]:
+            graph.add_rule(parse_rule(rule_text, entity_name=case.get("entity_name") or "entity"), workflows)
+
+        expected = case["expected"]
+        if "graph" in expected:
+            assert _normalize_graph(graph.get_graph()) == expected["graph"]
+        if "execution_order" in expected:
+            assert graph.get_execution_order() == expected["execution_order"]
+        return
+
+    if kind == "evaluate_error":
+        engine = RuleEngine(mode=case["mode"])
+        engine.add_rules(case["rules"])
+        entity = copy.deepcopy(case["input"])
+
+        with pytest.raises(_get_error_class(case["expected_error"])):
+            engine.evaluate(entity, workflows=_build_workflows(case))
         return
 
     raise AssertionError(f"Unknown portable case kind: {kind}")
