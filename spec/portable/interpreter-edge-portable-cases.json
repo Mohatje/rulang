@@ -445,5 +445,28 @@
       "ok": false
     },
     "expected_error": "EvaluationError"
+  },
+  {
+    "id": "interpreter::workflow::exception_wrapped",
+    "kind": "evaluate_error",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => workflow('raise_error')"
+    ],
+    "input": {
+      "value": 10
+    },
+    "workflows": [
+      {
+        "name": "raise_error",
+        "steps": [
+          {
+            "type": "raise",
+            "message": "Test error"
+          }
+        ]
+      }
+    ],
+    "expected_error": "EvaluationError"
   }
 ]

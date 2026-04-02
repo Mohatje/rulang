@@ -1,0 +1,420 @@
+[
+  {
+    "id": "integration::e_commerce_order_processing",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.subtotal > 100 => workflow('apply_discount')",
+      "entity.discount > 0 => entity.subtotal = entity.subtotal - entity.discount",
+      "entity.subtotal > 0 => workflow('calculate_tax')",
+      "entity.tax > 0 => entity.total = entity.subtotal + entity.tax"
+    ],
+    "input": {
+      "subtotal": 200,
+      "discount_rate": 0.15,
+      "discount": 0,
+      "tax": 0,
+      "total": 0
+    },
+    "workflows": [
+      {
+        "name": "calculate_tax",
+        "reads": [
+          "entity.subtotal"
+        ],
+        "writes": [
+          "entity.tax"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "tax",
+            "value": {
+              "type": "binary",
+              "op": "mul",
+              "left": {
+                "type": "entity_path",
+                "path": "subtotal"
+              },
+              "right": {
+                "type": "literal",
+                "value": 0.1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "apply_discount",
+        "reads": [
+          "entity.subtotal",
+          "entity.discount_rate"
+        ],
+        "writes": [
+          "entity.discount"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "discount",
+            "value": {
+              "type": "binary",
+              "op": "mul",
+              "left": {
+                "type": "entity_path",
+                "path": "subtotal"
+              },
+              "right": {
+                "type": "entity_path",
+                "path": "discount_rate"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "subtotal": 170,
+      "discount_rate": 0.15,
+      "discount": 30,
+      "tax": 17,
+      "total": 187
+    }
+  },
+  {
+    "id": "integration::user_authentication_flow",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.age >= 18 => entity.is_adult = true",
+      "entity.is_adult == true => entity.can_vote = true",
+      "entity.age >= 21 => entity.can_drink = true",
+      "entity.is_adult == true and entity.has_license == true => entity.can_drive = true"
+    ],
+    "input": {
+      "age": 25,
+      "is_adult": false,
+      "can_vote": false,
+      "can_drink": false,
+      "has_license": true,
+      "can_drive": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "age": 25,
+      "is_adult": true,
+      "can_vote": true,
+      "can_drink": true,
+      "has_license": true,
+      "can_drive": true
+    }
+  },
+  {
+    "id": "integration::inventory_management",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.quantity > 0 => entity.in_stock = true",
+      "entity.quantity <= 0 => entity.in_stock = false",
+      "entity.in_stock == false => entity.status = 'out_of_stock'",
+      "entity.quantity < entity.reorder_level => entity.needs_reorder = true",
+      "entity.needs_reorder == true => workflow('notify_supplier')"
+    ],
+    "input": {
+      "quantity": 5,
+      "reorder_level": 10,
+      "in_stock": false,
+      "status": "active",
+      "needs_reorder": false,
+      "supplier_notified": false
+    },
+    "workflows": [
+      {
+        "name": "notify_supplier",
+        "steps": [
+          {
+            "type": "set",
+            "path": "supplier_notified",
+            "value": {
+              "type": "literal",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "quantity": 5,
+      "reorder_level": 10,
+      "in_stock": true,
+      "status": "active",
+      "needs_reorder": true,
+      "supplier_notified": true
+    }
+  },
+  {
+    "id": "integration::pricing_calculation",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.base_price > 0 => entity.price = entity.base_price",
+      "entity.is_vip == true => entity.price = entity.price * 0.9",
+      "entity.quantity >= 10 => entity.price = entity.price * 0.95",
+      "entity.price > 1000 => entity.free_shipping = true",
+      "entity.free_shipping == false => entity.total = entity.price + entity.shipping",
+      "entity.free_shipping == true => entity.total = entity.price"
+    ],
+    "input": {
+      "base_price": 1200,
+      "is_vip": true,
+      "quantity": 15,
+      "price": 0,
+      "shipping": 25,
+      "free_shipping": false,
+      "total": 0
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "base_price": 1200,
+      "is_vip": true,
+      "quantity": 15,
+      "price": 1026,
+      "shipping": 25,
+      "free_shipping": true,
+      "total": 1026
+    }
+  },
+  {
+    "id": "integration::data_validation_pipeline",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.email != '' => workflow('validate_email')",
+      "entity.phone != '' => workflow('normalize_phone')",
+      "entity.email_valid == true and entity.phone != '' => entity.validated = true"
+    ],
+    "input": {
+      "email": "test@example.com",
+      "phone": "123-456-7890",
+      "email_valid": false,
+      "validated": false
+    },
+    "workflows": [
+      {
+        "name": "validate_email",
+        "reads": [
+          "entity.email"
+        ],
+        "writes": [
+          "entity.email_valid"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "email_valid",
+            "value": {
+              "type": "literal",
+              "value": true
+            }
+          }
+        ]
+      },
+      {
+        "name": "normalize_phone",
+        "reads": [
+          "entity.phone"
+        ],
+        "writes": [
+          "entity.phone"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "phone",
+            "value": {
+              "type": "literal",
+              "value": "1234567890"
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "email": "test@example.com",
+      "phone": "1234567890",
+      "email_valid": true,
+      "validated": true
+    }
+  },
+  {
+    "id": "integration::deep_nesting_evaluation",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.level0.level1.level2.level3.level4.level5.level6.level7.level8.level9.value == 0 => entity.level0.level1.level2.level3.level4.level5.level6.level7.level8.level9.value = 1"
+    ],
+    "input": {
+      "level0": {
+        "level1": {
+          "level2": {
+            "level3": {
+              "level4": {
+                "level5": {
+                  "level6": {
+                    "level7": {
+                      "level8": {
+                        "level9": {
+                          "value": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "level0": {
+        "level1": {
+          "level2": {
+            "level3": {
+              "level4": {
+                "level5": {
+                  "level6": {
+                    "level7": {
+                      "level8": {
+                        "level9": {
+                          "value": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "integration::complex_dependency_graph",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.a > 0 => entity.b = 1",
+      "entity.b > 0 => entity.e = 1",
+      "entity.c > 0 => entity.d = 1",
+      "entity.d > 0 => entity.e = 1",
+      "entity.e > 0 => entity.f = 1"
+    ],
+    "input": {
+      "a": 10,
+      "c": 10,
+      "b": 0,
+      "d": 0,
+      "e": 0,
+      "f": 0
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "a": 10,
+      "c": 10,
+      "b": 1,
+      "d": 1,
+      "e": 1,
+      "f": 1
+    }
+  },
+  {
+    "id": "integration::loan_approval_system",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.credit_score >= 700 => entity.credit_approved = true",
+      "entity.income >= 50000 => entity.income_approved = true",
+      "entity.credit_approved == true and entity.income_approved == true => entity.loan_approved = true",
+      "entity.loan_approved == true => entity.interest_rate = 0.05",
+      "entity.credit_score < 700 => entity.interest_rate = 0.10"
+    ],
+    "input": {
+      "credit_score": 750,
+      "income": 60000,
+      "credit_approved": false,
+      "income_approved": false,
+      "loan_approved": false,
+      "interest_rate": 0
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "credit_score": 750,
+      "income": 60000,
+      "credit_approved": true,
+      "income_approved": true,
+      "loan_approved": true,
+      "interest_rate": 0.05
+    }
+  },
+  {
+    "id": "integration::shipping_cost_calculation",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.weight <= 1 => entity.base_shipping = 5.0",
+      "entity.weight > 1 and entity.weight <= 5 => entity.base_shipping = 10.0",
+      "entity.weight > 5 => entity.base_shipping = 20.0",
+      "entity.express == true => entity.shipping_multiplier = 2.0",
+      "entity.express == false => entity.shipping_multiplier = 1.0",
+      "entity.base_shipping > 0 => entity.shipping_cost = entity.base_shipping * entity.shipping_multiplier"
+    ],
+    "input": {
+      "weight": 3.5,
+      "express": true,
+      "base_shipping": 0,
+      "shipping_multiplier": 1,
+      "shipping_cost": 0
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "weight": 3.5,
+      "express": true,
+      "base_shipping": 10,
+      "shipping_multiplier": 2,
+      "shipping_cost": 20
+    }
+  },
+  {
+    "id": "integration::grade_calculation_system",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.score >= 90 => entity.grade = 'A'",
+      "entity.score >= 80 and entity.score < 90 => entity.grade = 'B'",
+      "entity.score >= 70 and entity.score < 80 => entity.grade = 'C'",
+      "entity.score >= 60 and entity.score < 70 => entity.grade = 'D'",
+      "entity.score < 60 => entity.grade = 'F'",
+      "entity.grade == 'A' or entity.grade == 'B' => entity.passed = true",
+      "entity.passed == false => entity.retake_required = true"
+    ],
+    "input": {
+      "score": 85,
+      "grade": "",
+      "passed": false,
+      "retake_required": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "score": 85,
+      "grade": "B",
+      "passed": true,
+      "retake_required": false
+    }
+  }
+]

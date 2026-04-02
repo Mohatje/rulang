@@ -23,7 +23,8 @@ type WorkflowExpr =
 
 type WorkflowStep =
   | { type: "set"; path: string; value: WorkflowExpr }
-  | { type: "return"; value: WorkflowExpr };
+  | { type: "return"; value: WorkflowExpr }
+  | { type: "raise"; message: string };
 
 type WorkflowSpec = {
   name: string;
@@ -116,6 +117,7 @@ type PortableCase =
       input: unknown;
       workflows?: WorkflowSpec[];
       expected_error: string;
+      expected_entity?: unknown;
     }
   | {
       id: string;
@@ -191,6 +193,9 @@ function buildWorkflows(parityCase: { workflows?: WorkflowSpec[] }): Record<stri
           if (step.type === "set") {
             setPath(entity as Record<string, unknown>, step.path, evalWorkflowExpr(step.value, entity as Record<string, unknown>, args));
             continue;
+          }
+          if (step.type === "raise") {
+            throw new Error(step.message);
           }
           return evalWorkflowExpr(step.value, entity as Record<string, unknown>, args);
         }
@@ -331,6 +336,9 @@ describe("portable python parity corpus", () => {
       expect(() => engine.evaluate(entity, buildWorkflows(parityCase))).toThrowError(
         getErrorClass(parityCase.expected_error),
       );
+      if ("expected_entity" in parityCase) {
+        expect(entity).toEqual(parityCase.expected_entity);
+      }
     }, 15000);
   }
 });

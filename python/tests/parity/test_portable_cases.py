@@ -82,6 +82,8 @@ def _build_workflows(case):
                     elif step["type"] == "return":
                         result = _eval_workflow_expr(step["value"], entity, args)
                         return result
+                    elif step["type"] == "raise":
+                        raise ValueError(step["message"])
                     else:
                         raise AssertionError(f"Unsupported workflow step: {step}")
                 return result
@@ -206,6 +208,8 @@ def test_portable_cases(case):
 
         with pytest.raises(_get_error_class(case["expected_error"])):
             engine.evaluate(entity, workflows=_build_workflows(case))
+        if "expected_entity" in case:
+            assert entity == case["expected_entity"]
         return
 
     if kind == "engine_sequence":

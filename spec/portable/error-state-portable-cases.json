@@ -1,0 +1,22 @@
+[
+  {
+    "id": "error_state::all_match_preserves_prior_mutation_before_path_error",
+    "kind": "evaluate_error",
+    "mode": "all_match",
+    "rules": [
+      "entity.valid > 0 => entity.processed = true",
+      "entity.invalid.path > 0 => entity.failed = true"
+    ],
+    "input": {
+      "valid": 10,
+      "processed": false,
+      "failed": false
+    },
+    "expected_error": "PathResolutionError",
+    "expected_entity": {
+      "valid": 10,
+      "processed": true,
+      "failed": false
+    }
+  }
+]

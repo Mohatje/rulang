@@ -391,6 +391,8 @@ When an intentional divergence exists, record it in a machine-readable file with
 
 There should be very few of these.
 
+The current exclusion register lives in [`semantic-parity-exclusions.json`](./semantic-parity-exclusions.json).
+
 ## Definition of Done
 
 The TypeScript runtime is ready to release as semantically equivalent when:
