@@ -180,6 +180,78 @@ function addValues(left: unknown, right: unknown): unknown {
   return Number(left) + Number(right);
 }
 
+function divideValues(left: unknown, right: unknown): number {
+  const divisor = Number(right);
+  if (divisor === 0) {
+    throw new EvaluationError("", "Division by zero");
+  }
+  return Number(left) / divisor;
+}
+
+function moduloValues(left: unknown, right: unknown): number {
+  const divisor = Number(right);
+  if (divisor === 0) {
+    throw new EvaluationError("", "Modulo by zero");
+  }
+  return Number(left) % divisor;
+}
+
+const PYTHON_FLOAT_REGEX = /^[+-]?(?:(?:\d+(?:\.\d*)?)|(?:\.\d+))(?:[eE][+-]?\d+)?$/;
+
+function parsePythonFloatString(value: string): number {
+  const text = value.trim();
+  if (text === "") {
+    throw new Error("could not convert string to float");
+  }
+
+  const normalized = text.toLowerCase();
+  if (normalized === "inf" || normalized === "+inf" || normalized === "infinity" || normalized === "+infinity") {
+    return Number.POSITIVE_INFINITY;
+  }
+  if (normalized === "-inf" || normalized === "-infinity") {
+    return Number.NEGATIVE_INFINITY;
+  }
+  if (normalized === "nan" || normalized === "+nan" || normalized === "-nan") {
+    return Number.NaN;
+  }
+
+  if (!PYTHON_FLOAT_REGEX.test(text)) {
+    throw new Error("could not convert string to float");
+  }
+
+  return Number(text);
+}
+
+function coerceToPythonFloat(value: unknown): number | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value === "boolean") {
+    return value ? 1 : 0;
+  }
+  if (typeof value === "bigint") {
+    return Number(value);
+  }
+  if (typeof value === "string") {
+    return parsePythonFloatString(value);
+  }
+  return parsePythonFloatString(String(value));
+}
+
+function coerceToPythonInt(value: unknown): number | null {
+  const numeric = coerceToPythonFloat(value);
+  if (numeric === null) {
+    return null;
+  }
+  if (!Number.isFinite(numeric)) {
+    throw new Error("cannot convert non-finite value to int");
+  }
+  return Math.trunc(numeric);
+}
+
 function unescapeString(text: string): string {
   return text
     .slice(1, -1)
@@ -195,8 +267,8 @@ const BUILTIN_FUNCTIONS: Record<string, (...args: unknown[]) => unknown> = {
   upper: (value) => (value === null || value === undefined ? null : String(value).toUpperCase()),
   trim: (value) => (value === null || value === undefined ? null : String(value).trim()),
   strip: (value) => (value === null || value === undefined ? null : String(value).trim()),
-  int: (value) => (value === null || value === undefined ? null : Math.trunc(Number.parseFloat(String(value)))),
-  float: (value) => (value === null || value === undefined ? null : Number.parseFloat(String(value))),
+  int: (value) => coerceToPythonInt(value),
+  float: (value) => coerceToPythonFloat(value),
   str: (value) => (value === null || value === undefined ? null : String(value)),
   bool: (value) => pythonTruthiness(value),
   len: (value) => {
@@ -725,9 +797,9 @@ export class RuleInterpreter extends BaseRuleVisitor<unknown> {
       if (operator?.type === BusinessRulesParser.STAR) {
         result = Number(result) * operand;
       } else if (operator?.type === BusinessRulesParser.SLASH) {
-        result = Number(result) / operand;
+        result = divideValues(result, operand);
       } else {
-        result = Number(result) % operand;
+        result = moduloValues(result, operand);
       }
     }
 
@@ -848,7 +920,7 @@ export class RuleInterpreter extends BaseRuleVisitor<unknown> {
     } else if (assignOp.STAR_ASSIGN()) {
       newValue = Number(current) * Number(value);
     } else if (assignOp.SLASH_ASSIGN()) {
-      newValue = Number(current) / Number(value);
+      newValue = divideValues(current, value);
     }
 
     this.resolver.assign(pathParts, newValue);

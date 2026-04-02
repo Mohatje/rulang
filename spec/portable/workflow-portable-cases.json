@@ -244,5 +244,48 @@
       "x": 10,
       "a": 100
     }
+  },
+  {
+    "id": "workflow::runtime_compat::wrapper_and_list_compound_assignment",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.email is_empty => entity.errors += ['Email is required']",
+      "entity.errors contains 'Email is required' => workflow('mark_invalid')"
+    ],
+    "input": {
+      "email": "",
+      "errors": [],
+      "valid": true
+    },
+    "workflows": [
+      {
+        "name": "mark_invalid",
+        "reads": [
+          "entity.errors"
+        ],
+        "writes": [
+          "entity.valid"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "valid",
+            "value": {
+              "type": "literal",
+              "value": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "email": "",
+      "errors": [
+        "Email is required"
+      ],
+      "valid": false
+    }
   }
 ]

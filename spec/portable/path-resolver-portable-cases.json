@@ -1,0 +1,409 @@
+[
+  {
+    "id": "resolve::dict_simple_path",
+    "kind": "resolve",
+    "input": {
+      "name": "test"
+    },
+    "path": ["entity", "name"],
+    "expected": {
+      "value": "test"
+    }
+  },
+  {
+    "id": "resolve::dict_nested_path",
+    "kind": "resolve",
+    "input": {
+      "user": {
+        "profile": {
+          "name": "John"
+        }
+      }
+    },
+    "path": ["entity", "user", "profile", "name"],
+    "expected": {
+      "value": "John"
+    }
+  },
+  {
+    "id": "resolve::deep_nesting",
+    "kind": "resolve",
+    "input": {
+      "a": {
+        "b": {
+          "c": {
+            "d": {
+              "e": {
+                "f": {
+                  "g": {
+                    "h": {
+                      "i": {
+                        "j": "deep"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "path": ["entity", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+    "expected": {
+      "value": "deep"
+    }
+  },
+  {
+    "id": "resolve::list_index_positive",
+    "kind": "resolve",
+    "input": {
+      "items": [
+        {
+          "value": 10
+        },
+        {
+          "value": 20
+        },
+        {
+          "value": 30
+        }
+      ]
+    },
+    "path": ["entity", "items", 1, "value"],
+    "expected": {
+      "value": 20
+    }
+  },
+  {
+    "id": "resolve::list_index_negative",
+    "kind": "resolve",
+    "input": {
+      "items": [
+        {
+          "value": 10
+        },
+        {
+          "value": 20
+        },
+        {
+          "value": 30
+        }
+      ]
+    },
+    "path": ["entity", "items", -2, "value"],
+    "expected": {
+      "value": 20
+    }
+  },
+  {
+    "id": "resolve::mixed_dict_list_path",
+    "kind": "resolve",
+    "input": {
+      "users": [
+        {
+          "name": "Alice",
+          "scores": [10, 20, 30]
+        },
+        {
+          "name": "Bob",
+          "scores": [15, 25, 35]
+        }
+      ]
+    },
+    "path": ["entity", "users", -1, "scores", -1],
+    "expected": {
+      "value": 35
+    }
+  },
+  {
+    "id": "resolve::dict_with_none_value",
+    "kind": "resolve",
+    "input": {
+      "value": null,
+      "nested": {
+        "value": null
+      }
+    },
+    "path": ["entity", "nested", "value"],
+    "expected": {
+      "value": null
+    }
+  },
+  {
+    "id": "resolve::dict_with_empty_string_key",
+    "kind": "resolve",
+    "input": {
+      "": "empty_key",
+      "normal": "normal_key"
+    },
+    "path": ["entity", ""],
+    "expected": {
+      "value": "empty_key"
+    }
+  },
+  {
+    "id": "resolve::dict_numeric_key_as_string_fails",
+    "kind": "resolve",
+    "input": {
+      "1": "string_numeric_key",
+      "string": "value"
+    },
+    "path": ["entity", 1],
+    "expected": {
+      "error_type": "PathResolutionError"
+    }
+  },
+  {
+    "id": "resolve::list_root_with_custom_entity_name",
+    "kind": "resolve",
+    "input": [10, 20, 30],
+    "entity_name": "list",
+    "path": ["list", -1],
+    "expected": {
+      "value": 30
+    }
+  },
+  {
+    "id": "resolve::path_must_start_with_identifier",
+    "kind": "resolve",
+    "input": {
+      "value": 10
+    },
+    "path": [0, "value"],
+    "expected": {
+      "error_type": "PathResolutionError"
+    }
+  },
+  {
+    "id": "resolve::unknown_root_identifier",
+    "kind": "resolve",
+    "input": {
+      "value": 10
+    },
+    "path": ["unknown", "value"],
+    "expected": {
+      "error_type": "PathResolutionError"
+    }
+  },
+  {
+    "id": "resolve::non_integer_index_fails",
+    "kind": "resolve",
+    "input": {
+      "items": [10, 20]
+    },
+    "path": ["entity", "items", "0"],
+    "expected": {
+      "error_type": "PathResolutionError"
+    }
+  },
+  {
+    "id": "resolve::null_safe_missing_key_returns_null",
+    "kind": "resolve",
+    "input": {
+      "user": {}
+    },
+    "path": ["entity", "user", "name"],
+    "null_safe_indices": [2],
+    "expected": {
+      "value": null
+    }
+  },
+  {
+    "id": "resolve::nested_list_in_list",
+    "kind": "resolve",
+    "input": {
+      "matrix": [[1, 2], [3, 4]]
+    },
+    "path": ["entity", "matrix", 0, 1],
+    "expected": {
+      "value": 2
+    }
+  },
+  {
+    "id": "resolve::list_in_dict",
+    "kind": "resolve",
+    "input": {
+      "data": {
+        "items": [10, 20, 30]
+      }
+    },
+    "path": ["entity", "data", "items", 1],
+    "expected": {
+      "value": 20
+    }
+  },
+  {
+    "id": "assign::simple_assignment",
+    "kind": "assign",
+    "input": {
+      "value": 10
+    },
+    "path": ["entity", "value"],
+    "value": 20,
+    "expected": {
+      "entity": {
+        "value": 20
+      }
+    }
+  },
+  {
+    "id": "assign::create_new_key",
+    "kind": "assign",
+    "input": {},
+    "path": ["entity", "new_key"],
+    "value": "new_value",
+    "expected": {
+      "entity": {
+        "new_key": "new_value"
+      }
+    }
+  },
+  {
+    "id": "assign::nested_assignment",
+    "kind": "assign",
+    "input": {
+      "user": {
+        "profile": {}
+      }
+    },
+    "path": ["entity", "user", "profile", "name"],
+    "value": "John",
+    "expected": {
+      "entity": {
+        "user": {
+          "profile": {
+            "name": "John"
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "assign::list_index_assignment",
+    "kind": "assign",
+    "input": {
+      "items": [
+        {
+          "value": 10
+        },
+        {
+          "value": 20
+        }
+      ]
+    },
+    "path": ["entity", "items", 0, "value"],
+    "value": 100,
+    "expected": {
+      "entity": {
+        "items": [
+          {
+            "value": 100
+          },
+          {
+            "value": 20
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "assign::list_root_assignment",
+    "kind": "assign",
+    "input": [10, 20, 30],
+    "entity_name": "list",
+    "path": ["list", 1],
+    "value": 100,
+    "expected": {
+      "entity": [10, 100, 30]
+    }
+  },
+  {
+    "id": "assign::assign_none_to_dict_value",
+    "kind": "assign",
+    "input": {
+      "value": 10
+    },
+    "path": ["entity", "value"],
+    "value": null,
+    "expected": {
+      "entity": {
+        "value": null
+      }
+    }
+  },
+  {
+    "id": "assign::assign_false_to_list_element",
+    "kind": "assign",
+    "input": {
+      "items": [true, true]
+    },
+    "path": ["entity", "items", 0],
+    "value": false,
+    "expected": {
+      "entity": {
+        "items": [false, true]
+      }
+    }
+  },
+  {
+    "id": "assign::assign_negative_index",
+    "kind": "assign",
+    "input": {
+      "items": [10, 20, 30]
+    },
+    "path": ["entity", "items", -1],
+    "value": 100,
+    "expected": {
+      "entity": {
+        "items": [10, 20, 100]
+      }
+    }
+  },
+  {
+    "id": "assign::assign_empty_list",
+    "kind": "assign",
+    "input": {
+      "value": [1, 2, 3]
+    },
+    "path": ["entity", "value"],
+    "value": [],
+    "expected": {
+      "entity": {
+        "value": []
+      }
+    }
+  },
+  {
+    "id": "assign::nested_list_in_list",
+    "kind": "assign",
+    "input": {
+      "matrix": [[1, 2], [3, 4]]
+    },
+    "path": ["entity", "matrix", 0, 1],
+    "value": 99,
+    "expected": {
+      "entity": {
+        "matrix": [[1, 99], [3, 4]]
+      }
+    }
+  },
+  {
+    "id": "assign::list_in_dict",
+    "kind": "assign",
+    "input": {
+      "data": {
+        "items": [10, 20, 30]
+      }
+    },
+    "path": ["entity", "data", "items", 1],
+    "value": 99,
+    "expected": {
+      "entity": {
+        "data": {
+          "items": [10, 99, 30]
+        }
+      }
+    }
+  }
+]

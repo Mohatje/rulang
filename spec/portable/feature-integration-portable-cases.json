@@ -1,0 +1,440 @@
+[
+  {
+    "id": "feature_integration::dependency::string_operator_chain",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.email contains '@admin' => entity.is_admin = true",
+      "entity.is_admin == true => entity.access = 'full'"
+    ],
+    "input": {
+      "email": "user@admin.com",
+      "is_admin": false,
+      "access": null
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "email": "user@admin.com",
+      "is_admin": true,
+      "access": "full"
+    }
+  },
+  {
+    "id": "feature_integration::dependency::function_chain",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "len(entity.items) > 0 => entity.has_items = true",
+      "entity.has_items == true => entity.status = 'ready'"
+    ],
+    "input": {
+      "items": [
+        1,
+        2,
+        3
+      ],
+      "has_items": false,
+      "status": null
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "items": [
+        1,
+        2,
+        3
+      ],
+      "has_items": true,
+      "status": "ready"
+    }
+  },
+  {
+    "id": "feature_integration::dependency::complex_resolution",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.user?.email exists => entity.has_user = true",
+      "entity.has_user == true and lower(entity.user.email) endswith '@company.com' => entity.is_internal = true",
+      "entity.is_internal == true and entity.user?.roles contains_any ['admin', 'manager'] => entity.has_access = true"
+    ],
+    "input": {
+      "user": {
+        "email": "John@COMPANY.COM",
+        "roles": [
+          "admin",
+          "viewer"
+        ]
+      },
+      "has_user": false,
+      "is_internal": false,
+      "has_access": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "user": {
+        "email": "John@COMPANY.COM",
+        "roles": [
+          "admin",
+          "viewer"
+        ]
+      },
+      "has_user": true,
+      "is_internal": true,
+      "has_access": true
+    }
+  },
+  {
+    "id": "feature_integration::workflow::string_operator_trigger",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.subject contains 'invoice' => workflow('process')"
+    ],
+    "input": {
+      "subject": "Your invoice #123",
+      "processed": false
+    },
+    "workflows": [
+      {
+        "name": "process",
+        "writes": [
+          "entity.processed"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "processed",
+            "value": {
+              "type": "literal",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "subject": "Your invoice #123",
+      "processed": true
+    }
+  },
+  {
+    "id": "feature_integration::workflow::null_safe_condition_true",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.user?.active ?? false == true => workflow('notify')"
+    ],
+    "input": {
+      "user": {
+        "active": true
+      },
+      "notified": false
+    },
+    "workflows": [
+      {
+        "name": "notify",
+        "writes": [
+          "entity.notified"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "notified",
+            "value": {
+              "type": "literal",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "user": {
+        "active": true
+      },
+      "notified": true
+    }
+  },
+  {
+    "id": "feature_integration::workflow::null_safe_condition_null_user",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.user?.active ?? false == true => workflow('notify')"
+    ],
+    "input": {
+      "user": null,
+      "notified": false
+    },
+    "workflows": [
+      {
+        "name": "notify",
+        "writes": [
+          "entity.notified"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "notified",
+            "value": {
+              "type": "literal",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": null,
+    "expected_entity": {
+      "user": null,
+      "notified": false
+    }
+  },
+  {
+    "id": "feature_integration::workflow::dependency_with_string_trigger",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.data contains 'trigger' => workflow('step1')",
+      "entity.step1_done == true => workflow('step2')"
+    ],
+    "input": {
+      "data": "trigger event",
+      "step1_done": false,
+      "step2_done": false
+    },
+    "workflows": [
+      {
+        "name": "step1",
+        "writes": [
+          "entity.step1_done"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "step1_done",
+            "value": {
+              "type": "literal",
+              "value": true
+            }
+          }
+        ]
+      },
+      {
+        "name": "step2",
+        "reads": [
+          "entity.step1_done"
+        ],
+        "writes": [
+          "entity.step2_done"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "step2_done",
+            "value": {
+              "type": "literal",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "data": "trigger event",
+      "step1_done": true,
+      "step2_done": true
+    }
+  },
+  {
+    "id": "feature_integration::scenario::email_high_priority",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.subject) contains 'urgent' and entity.from_domain in ['company.com', 'partner.com'] => ret 'high'",
+      "entity.subject matches 'INV-\\d+' => ret 'invoice'",
+      "entity.attachments exists and entity.attachments endswith '.pdf' => ret 'invoice'",
+      "entity.from_domain not in ['company.com'] and lower(entity.subject) contains 'winner' => ret 'spam'",
+      "true => ret 'normal'"
+    ],
+    "input": {
+      "subject": "URGENT: Please review",
+      "from_domain": "company.com",
+      "attachments": []
+    },
+    "expected_result": "high",
+    "expected_entity": {
+      "subject": "URGENT: Please review",
+      "from_domain": "company.com",
+      "attachments": []
+    }
+  },
+  {
+    "id": "feature_integration::scenario::email_invoice_by_attachment",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.subject) contains 'urgent' and entity.from_domain in ['company.com', 'partner.com'] => ret 'high'",
+      "entity.subject matches 'INV-\\d+' => ret 'invoice'",
+      "entity.attachments exists and entity.attachments endswith '.pdf' => ret 'invoice'",
+      "entity.from_domain not in ['company.com'] and lower(entity.subject) contains 'winner' => ret 'spam'",
+      "true => ret 'normal'"
+    ],
+    "input": {
+      "subject": "Document for you",
+      "from_domain": "vendor.com",
+      "attachments": [
+        "report.pdf"
+      ]
+    },
+    "expected_result": "invoice",
+    "expected_entity": {
+      "subject": "Document for you",
+      "from_domain": "vendor.com",
+      "attachments": [
+        "report.pdf"
+      ]
+    }
+  },
+  {
+    "id": "feature_integration::scenario::order_processing_vip",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.customer?.membership exists and entity.customer.membership != 'none' => entity.discount = 0.1",
+      "entity.subtotal >= 100 => entity.shipping = 0",
+      "true => entity.total = (entity.subtotal * (1 - (entity.discount ?? 0))) + (entity.shipping ?? 5.99)",
+      "entity.total > 500 => entity.needs_review = true"
+    ],
+    "input": {
+      "customer": {
+        "membership": "gold"
+      },
+      "subtotal": 600,
+      "discount": 0,
+      "shipping": 5.99,
+      "total": 0,
+      "needs_review": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "customer": {
+        "membership": "gold"
+      },
+      "subtotal": 600,
+      "discount": 0.1,
+      "shipping": 0,
+      "total": 540,
+      "needs_review": true
+    }
+  },
+  {
+    "id": "feature_integration::scenario::data_validation_missing_fields",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.email is_empty => entity.errors += ['Email is required']",
+      "entity.name is_empty => entity.errors += ['Name is required']",
+      "not entity.email is_empty and not entity.email matches '^[^@]+@[^@]+\\.[^@]+$' => entity.errors += ['Invalid email']",
+      "len(entity.name ?? '') > 50 => entity.errors += ['Name too long']",
+      "len(entity.errors) == 0 => entity.is_valid = true"
+    ],
+    "input": {
+      "email": "",
+      "name": null,
+      "errors": [],
+      "is_valid": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "email": "",
+      "name": null,
+      "errors": [
+        "Email is required",
+        "Name is required"
+      ],
+      "is_valid": false
+    }
+  },
+  {
+    "id": "feature_integration::combined::lower_null_safe_contains",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.user?.email ?? '') contains '@admin' => ret 'admin'"
+    ],
+    "input": {
+      "user": {
+        "email": "User@ADMIN.com"
+      }
+    },
+    "expected_result": "admin",
+    "expected_entity": {
+      "user": {
+        "email": "User@ADMIN.com"
+      }
+    }
+  },
+  {
+    "id": "feature_integration::combined::nested_null_safe_vip",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "len(entity.order?.items ?? []) > 0 => entity.has_items = true",
+      "entity.has_items == true and entity.order?.customer?.vip ?? false == true => entity.priority = 'vip'",
+      "entity.has_items == true and entity.priority != 'vip' => entity.priority = 'normal'"
+    ],
+    "input": {
+      "order": {
+        "items": [
+          1,
+          2,
+          3
+        ],
+        "customer": {
+          "vip": true
+        }
+      },
+      "has_items": false,
+      "priority": null
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "order": {
+        "items": [
+          1,
+          2,
+          3
+        ],
+        "customer": {
+          "vip": true
+        }
+      },
+      "has_items": true,
+      "priority": "vip"
+    }
+  },
+  {
+    "id": "feature_integration::combined::nested_null_safe_no_order",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "len(entity.order?.items ?? []) > 0 => entity.has_items = true",
+      "entity.has_items == true and entity.order?.customer?.vip ?? false == true => entity.priority = 'vip'",
+      "entity.has_items == true and entity.priority != 'vip' => entity.priority = 'normal'"
+    ],
+    "input": {
+      "order": null,
+      "has_items": false,
+      "priority": null
+    },
+    "expected_result": null,
+    "expected_entity": {
+      "order": null,
+      "has_items": false,
+      "priority": null
+    }
+  }
+]

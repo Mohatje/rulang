@@ -22,6 +22,10 @@ function hasOwnOrInheritedProperty(value: object, key: string): boolean {
   return key in value;
 }
 
+function isIntegerLikeKey(key: string): boolean {
+  return /^-?\d+$/.test(key);
+}
+
 function getAttribute(obj: unknown, key: string): unknown {
   if (obj instanceof Map) {
     if (!obj.has(key)) {
@@ -31,6 +35,10 @@ function getAttribute(obj: unknown, key: string): unknown {
   }
 
   if (obj === null || obj === undefined || (typeof obj !== "object" && typeof obj !== "function")) {
+    throw new Error(`'${entityTypeName(obj)}' has no attribute '${key}'`);
+  }
+
+  if (Array.isArray(obj) && isIntegerLikeKey(key)) {
     throw new Error(`'${entityTypeName(obj)}' has no attribute '${key}'`);
   }
 
@@ -63,10 +71,6 @@ function getIndex(obj: unknown, index: number): unknown {
       throw new Error(`Index ${index} out of range`);
     }
     return obj.get(index);
-  }
-
-  if (typeof obj === "object" && index in (obj as { [n: number]: unknown })) {
-    return (obj as { [n: number]: unknown })[index];
   }
 
   throw new Error(`'${entityTypeName(obj)}' does not support indexing`);

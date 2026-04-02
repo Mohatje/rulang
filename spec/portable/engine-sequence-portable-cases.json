@@ -1,0 +1,51 @@
+[
+  {
+    "id": "engine_sequence::rebuilds_order_when_workflow_metadata_arrives_after_inspection",
+    "kind": "engine_sequence",
+    "mode": "all_match",
+    "rules": [
+      "entity.ready == true => ret entity.value",
+      "true => workflow('mark_ready')"
+    ],
+    "steps": [
+      {
+        "op": "get_execution_order",
+        "expected": [0, 1]
+      },
+      {
+        "op": "evaluate",
+        "input": {
+          "ready": false,
+          "value": 7
+        },
+        "workflows": [
+          {
+            "name": "mark_ready",
+            "writes": [
+              "entity.ready"
+            ],
+            "steps": [
+              {
+                "type": "set",
+                "path": "ready",
+                "value": {
+                  "type": "literal",
+                  "value": true
+                }
+              }
+            ]
+          }
+        ],
+        "expected_result": 7,
+        "expected_entity": {
+          "ready": true,
+          "value": 7
+        }
+      },
+      {
+        "op": "get_execution_order",
+        "expected": [0, 1]
+      }
+    ]
+  }
+]

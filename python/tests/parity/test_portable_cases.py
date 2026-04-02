@@ -115,6 +115,24 @@ def _get_error_class(name: str):
     return mapping[name]
 
 
+def _run_engine_step(engine: RuleEngine, step: dict):
+    op = step["op"]
+
+    if op == "get_execution_order":
+        assert engine.get_execution_order() == step["expected"]
+        return
+
+    if op == "evaluate":
+        entity = copy.deepcopy(step["input"])
+        result = engine.evaluate(entity, workflows=_build_workflows(step))
+        assert result == step.get("expected_result")
+        if "expected_entity" in step:
+            assert entity == step["expected_entity"]
+        return
+
+    raise AssertionError(f"Unsupported engine step: {op}")
+
+
 @pytest.mark.parametrize("case", [pytest.param(case, id=case["id"]) for case in CASES])
 def test_portable_cases(case):
     kind = case["kind"]
@@ -188,6 +206,13 @@ def test_portable_cases(case):
 
         with pytest.raises(_get_error_class(case["expected_error"])):
             engine.evaluate(entity, workflows=_build_workflows(case))
+        return
+
+    if kind == "engine_sequence":
+        engine = RuleEngine(mode=case["mode"])
+        engine.add_rules(case["rules"])
+        for step in case["steps"]:
+            _run_engine_step(engine, step)
         return
 
     raise AssertionError(f"Unknown portable case kind: {kind}")

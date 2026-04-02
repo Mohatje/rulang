@@ -32,15 +32,28 @@ type WorkflowSpec = {
   steps: WorkflowStep[];
 };
 
+type EngineSequenceStep =
+  | {
+      op: "get_execution_order";
+      expected: number[];
+    }
+  | {
+      op: "evaluate";
+      input: unknown;
+      workflows?: WorkflowSpec[];
+      expected_result: unknown;
+      expected_entity?: unknown;
+    };
+
 type PortableCase =
   | {
       id: string;
       kind: "evaluate";
       mode: "first_match" | "all_match";
       rules: string[];
-      input: Record<string, unknown>;
+      input: unknown;
       expected_result: unknown;
-      expected_entity?: Record<string, unknown>;
+      expected_entity?: unknown;
       workflows?: WorkflowSpec[];
     }
   | {
@@ -65,7 +78,7 @@ type PortableCase =
   | {
       id: string;
       kind: "resolve";
-      input: Record<string, unknown>;
+      input: unknown;
       entity_name?: string | null;
       path: Array<string | number>;
       null_safe_indices?: number[];
@@ -76,12 +89,12 @@ type PortableCase =
   | {
       id: string;
       kind: "assign";
-      input: Record<string, unknown>;
+      input: unknown;
       entity_name?: string | null;
       path: Array<string | number>;
       value: unknown;
       expected:
-        | { entity: Record<string, unknown> }
+        | { entity: unknown }
         | { error_type: string };
     }
   | {
@@ -100,9 +113,16 @@ type PortableCase =
       kind: "evaluate_error";
       mode: "first_match" | "all_match";
       rules: string[];
-      input: Record<string, unknown>;
+      input: unknown;
       workflows?: WorkflowSpec[];
       expected_error: string;
+    }
+  | {
+      id: string;
+      kind: "engine_sequence";
+      mode: "first_match" | "all_match";
+      rules: string[];
+      steps: EngineSequenceStep[];
     };
 
 const casesPath = resolve(process.cwd(), "..", "spec", "generated", "python-portable-cases.json");
@@ -142,7 +162,15 @@ function evalWorkflowExpr(expr: WorkflowExpr, entity: Record<string, unknown>, a
     if (expr.op === "add") return (left as never) + (right as never);
     if (expr.op === "sub") return (left as never) - (right as never);
     if (expr.op === "mul") return (left as never) * (right as never);
-    if (expr.op === "div") return (left as never) / (right as never);
+    if (expr.op === "div") {
+      if (Number(right) === 0) {
+        throw new EvaluationError("", "Division by zero");
+      }
+      return (left as never) / (right as never);
+    }
+    if (Number(right) === 0) {
+      throw new EvaluationError("", "Modulo by zero");
+    }
     return (left as never) % (right as never);
   }
   if (expr.fn === "upper") {
@@ -199,6 +227,20 @@ function getErrorClass(errorType: string): typeof Error {
   }
 
   return mapping[errorType as keyof typeof mapping];
+}
+
+function runEngineStep(engine: RuleEngine, step: EngineSequenceStep): void {
+  if (step.op === "get_execution_order") {
+    expect(engine.getExecutionOrder()).toEqual(step.expected);
+    return;
+  }
+
+  const entity = structuredClone(step.input);
+  const result = engine.evaluate(entity, buildWorkflows(step));
+  expect(result).toEqual(step.expected_result);
+  if (step.expected_entity !== undefined) {
+    expect(entity).toEqual(step.expected_entity);
+  }
 }
 
 describe("portable python parity corpus", () => {
@@ -276,12 +318,19 @@ describe("portable python parity corpus", () => {
         return;
       }
 
+      if (parityCase.kind === "engine_sequence") {
+        const engine = new RuleEngine(parityCase.mode);
+        engine.addRules(parityCase.rules);
+        parityCase.steps.forEach((step) => runEngineStep(engine, step));
+        return;
+      }
+
       const engine = new RuleEngine(parityCase.mode);
       engine.addRules(parityCase.rules);
       const entity = structuredClone(parityCase.input);
       expect(() => engine.evaluate(entity, buildWorkflows(parityCase))).toThrowError(
         getErrorClass(parityCase.expected_error),
       );
-    });
+    }, 15000);
   }
 });
