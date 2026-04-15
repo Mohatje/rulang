@@ -1,5 +1,5 @@
 {
-  "name": "rulang",
+  "name": "@mohatje/rulang",
   "version": "0.1.0",
   "description": "TypeScript runtime for the Rulang business rules DSL",
   "license": "MIT",
