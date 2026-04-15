@@ -1,0 +1,17 @@
+{
+  "id": "null-safe-and-coalesce",
+  "description": "Null-safe access combines with null coalescing in expressions",
+  "mode": "first_match",
+  "rules": [
+    "entity.user?.name ?? 'Unknown' == 'Unknown' => ret true"
+  ],
+  "input": {
+    "user": null
+  },
+  "expected": {
+    "result": true,
+    "entity": {
+      "user": null
+    }
+  }
+}

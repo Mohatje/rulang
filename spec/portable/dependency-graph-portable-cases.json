@@ -1,0 +1,183 @@
+[
+  {
+    "id": "dependency_graph::no_dependencies",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.b = 1",
+      "entity.c > 0 => entity.d = 1"
+    ],
+    "expected": {
+      "graph": {},
+      "execution_order": [0, 1]
+    }
+  },
+  {
+    "id": "dependency_graph::simple_dependency",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.b = 1",
+      "entity.b > 0 => entity.c = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [1]
+      },
+      "execution_order": [0, 1]
+    }
+  },
+  {
+    "id": "dependency_graph::chain_dependency",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.b = 1",
+      "entity.b > 0 => entity.c = 1",
+      "entity.c > 0 => entity.d = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [1],
+        "1": [2]
+      },
+      "execution_order": [0, 1, 2]
+    }
+  },
+  {
+    "id": "dependency_graph::multiple_dependencies",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.x > 0 => entity.a = 1",
+      "entity.y > 0 => entity.b = 1",
+      "entity.a > 0 and entity.b > 0 => entity.c = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [2],
+        "1": [2]
+      },
+      "execution_order": [0, 1, 2]
+    }
+  },
+  {
+    "id": "dependency_graph::workflow_reads_merged",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.x > 0 => entity.input = 1",
+      "entity.ready == true => workflow('process')"
+    ],
+    "workflows": [
+      {
+        "name": "process",
+        "reads": [
+          "entity.input"
+        ],
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "literal",
+              "value": null
+            }
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "graph": {
+        "0": [1]
+      },
+      "execution_order": [0, 1]
+    }
+  },
+  {
+    "id": "dependency_graph::prefix_path_match",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.user = none",
+      "entity.user.name == 'test' => entity.b = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [1]
+      },
+      "execution_order": [0, 1]
+    }
+  },
+  {
+    "id": "dependency_graph::wildcard_index_match",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.items[0].value = 1",
+      "entity.items[1].value > 0 => entity.b = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [1]
+      },
+      "execution_order": [0, 1]
+    }
+  },
+  {
+    "id": "dependency_graph::reverse_dependency_order",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.c > 0 => entity.d = 1",
+      "entity.b > 0 => entity.c = 1",
+      "entity.a > 0 => entity.b = 1"
+    ],
+    "expected": {
+      "graph": {
+        "1": [0],
+        "2": [1]
+      },
+      "execution_order": [2, 1, 0]
+    }
+  },
+  {
+    "id": "dependency_graph::multiple_roots",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.b = 1",
+      "entity.c > 0 => entity.d = 1",
+      "entity.b > 0 and entity.d > 0 => entity.e = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [2],
+        "1": [2]
+      },
+      "execution_order": [0, 1, 2]
+    }
+  },
+  {
+    "id": "dependency_graph::two_rule_cycle_breaks_deterministically",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.b = 1",
+      "entity.b > 0 => entity.a = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [1],
+        "1": [0]
+      },
+      "execution_order": [0, 1]
+    }
+  },
+  {
+    "id": "dependency_graph::three_rule_cycle_breaks_deterministically",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.a > 0 => entity.b = 1",
+      "entity.b > 0 => entity.c = 1",
+      "entity.c > 0 => entity.a = 1"
+    ],
+    "expected": {
+      "graph": {
+        "0": [1],
+        "1": [2],
+        "2": [0]
+      },
+      "execution_order": [0, 1, 2]
+    }
+  }
+]

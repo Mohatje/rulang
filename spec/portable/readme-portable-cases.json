@@ -1,0 +1,78 @@
+[
+  {
+    "id": "readme::quick_start_rule_chaining",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.age >= 18 => entity.is_adult = true",
+      "entity.is_adult == true => entity.discount += 0.1"
+    ],
+    "input": {
+      "age": 25,
+      "is_adult": false,
+      "discount": 0.0
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "age": 25,
+      "is_adult": true,
+      "discount": 0.1
+    }
+  },
+  {
+    "id": "readme::email_classification_invoice_by_attachment_or_precedence",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(entity.subject) contains 'urgent' and entity.from_domain in ['company.com', 'partner.com'] => ret 'high'",
+      "entity.subject matches 'INV-\\d+' or entity.has_attachments and entity.attachments endswith '.pdf' => ret 'invoice'",
+      "entity.from_domain not in ['company.com'] and lower(entity.subject) contains 'winner' => ret 'spam'",
+      "true => ret 'normal'"
+    ],
+    "input": {
+      "subject": "Document for you",
+      "from_domain": "vendor.com",
+      "has_attachments": true,
+      "attachments": [
+        "report.pdf"
+      ]
+    },
+    "expected_result": "invoice",
+    "expected_entity": {
+      "subject": "Document for you",
+      "from_domain": "vendor.com",
+      "has_attachments": true,
+      "attachments": [
+        "report.pdf"
+      ]
+    }
+  },
+  {
+    "id": "readme::order_processing_guest_small_order",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.customer?.membership exists and entity.customer.membership != 'none' => entity.discount = 0.1",
+      "entity.subtotal >= 100 => entity.shipping = 0",
+      "true => entity.total = (entity.subtotal * (1 - (entity.discount ?? 0))) + (entity.shipping ?? 5.99)",
+      "entity.total > 500 => entity.needs_review = true"
+    ],
+    "input": {
+      "customer": null,
+      "subtotal": 50,
+      "discount": 0,
+      "shipping": 5.99,
+      "total": 0,
+      "needs_review": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "customer": null,
+      "subtotal": 50,
+      "discount": 0,
+      "shipping": 5.99,
+      "total": 55.99,
+      "needs_review": false
+    }
+  }
+]

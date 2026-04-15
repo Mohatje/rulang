@@ -1,0 +1,54 @@
+[
+  {
+    "id": "engine_audit::custom_entity_name",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "entity_name": "obj",
+    "rules": [
+      "obj.value > 0 => obj.processed = true"
+    ],
+    "input": {
+      "value": 10,
+      "processed": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "value": 10,
+      "processed": true
+    }
+  },
+  {
+    "id": "engine_audit::multiple_evaluations_same_engine",
+    "kind": "engine_sequence",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => entity.processed = true"
+    ],
+    "steps": [
+      {
+        "op": "evaluate",
+        "input": {
+          "value": 10,
+          "processed": false
+        },
+        "expected_result": true,
+        "expected_entity": {
+          "value": 10,
+          "processed": true
+        }
+      },
+      {
+        "op": "evaluate",
+        "input": {
+          "value": 20,
+          "processed": false
+        },
+        "expected_result": true,
+        "expected_entity": {
+          "value": 20,
+          "processed": true
+        }
+      }
+    ]
+  }
+]

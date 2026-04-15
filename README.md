@@ -2,6 +2,9 @@
 
 A lightweight DSL for business rules in Python, built with ANTLR4.
 
+This repository now also contains a TypeScript runtime that targets the same
+DSL grammar and a shared cross-runtime spec suite.
+
 ## Features
 
 - **Expressive DSL**: Define business rules with a clean, readable syntax
@@ -18,6 +21,13 @@ A lightweight DSL for business rules in Python, built with ANTLR4.
 
 ```bash
 uv add rulang
+```
+
+For the TypeScript runtime in this repository:
+
+```bash
+npm install
+npm run build:typescript
 ```
 
 ## Quick Start
@@ -39,6 +49,27 @@ entity = {"age": 25, "is_adult": False, "discount": 0.0}
 engine.evaluate(entity)
 
 print(entity)  # {'age': 25, 'is_adult': True, 'discount': 0.1}
+```
+
+## Repository Layout
+
+- `grammar/`: shared ANTLR grammar source of truth
+- `spec/cases/`: language-neutral behavior spec
+- `spec/generated/python-portable-cases.json`: portable corpus extracted from Python tests and replayed in both runtimes
+- `python/`: Python package, tests, and lockfile
+- `typescript/`: TypeScript runtime
+
+## Parity Workflow
+
+The Python runtime remains the reference implementation. Cross-runtime parity is
+enforced by replaying both generated and hand-maintained shared corpora in
+Python and TypeScript, with the current release contract documented in
+[`docs/semantic-parity-plan.md`](docs/semantic-parity-plan.md) and the test-file
+classification recorded in [`docs/semantic-parity-audit.md`](docs/semantic-parity-audit.md).
+
+```bash
+npm run generate:portable-cases
+npm run test:parity
 ```
 
 ## DSL Syntax
@@ -441,13 +472,17 @@ except WorkflowNotFoundError as e:
 
 ```bash
 # Install dev dependencies
-uv sync --all-extras
+npm install
+uv --directory python sync --all-extras
 
-# Run tests
-uv run pytest tests/ -v
+# Run Python tests
+uv --directory python run python -m pytest tests/ -v
+
+# Run TypeScript tests
+npm run test:typescript
 
 # Regenerate parser (after grammar changes)
-uv run antlr4 -Dlanguage=Python3 -visitor -o src/rule_interpreter/grammar/generated src/rule_interpreter/grammar/BusinessRules.g4
+npm run generate:parsers
 ```
 
 ## License

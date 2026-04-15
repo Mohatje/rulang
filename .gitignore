@@ -8,6 +8,14 @@ wheels/
 
 # Virtual environments
 .venv
+python/.venv
 
 # Coverage
 .coverage
+python/.coverage
+python/htmlcov/
+python/.pytest_cache/
+
+# Node
+node_modules/
+typescript/dist/

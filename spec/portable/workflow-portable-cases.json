@@ -1,0 +1,291 @@
+[
+  {
+    "id": "workflow::engine::dict_mutation",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => workflow('double')"
+    ],
+    "input": {
+      "value": 10
+    },
+    "workflows": [
+      {
+        "name": "double",
+        "steps": [
+          {
+            "type": "set",
+            "path": "value",
+            "value": {
+              "type": "binary",
+              "op": "mul",
+              "left": {
+                "type": "entity_path",
+                "path": "value"
+              },
+              "right": {
+                "type": "literal",
+                "value": 2
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "value": 20
+    }
+  },
+  {
+    "id": "workflow::engine::wrapper_dependency_order",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.ready == true => workflow('calculate')",
+      "entity.result > 0 => entity.status = 'done'"
+    ],
+    "input": {
+      "ready": true,
+      "value": 10,
+      "result": 0,
+      "status": "pending"
+    },
+    "workflows": [
+      {
+        "name": "calculate",
+        "reads": [
+          "entity.value"
+        ],
+        "writes": [
+          "entity.result"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "result",
+            "value": {
+              "type": "binary",
+              "op": "mul",
+              "left": {
+                "type": "entity_path",
+                "path": "value"
+              },
+              "right": {
+                "type": "literal",
+                "value": 2
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "ready": true,
+      "value": 10,
+      "result": 20,
+      "status": "done"
+    }
+  },
+  {
+    "id": "workflow::engine::decorator_registration_style",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.input != '' => workflow('process')"
+    ],
+    "input": {
+      "input": "hello",
+      "output": ""
+    },
+    "workflows": [
+      {
+        "name": "process",
+        "reads": [
+          "entity.input"
+        ],
+        "writes": [
+          "entity.output"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "output",
+            "value": {
+              "type": "call",
+              "fn": "upper",
+              "arg": {
+                "type": "entity_path",
+                "path": "input"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "input": "hello",
+      "output": "HELLO"
+    }
+  },
+  {
+    "id": "workflow::engine_edge::return_value",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret workflow('test_workflow')"
+    ],
+    "input": {
+      "value": 10
+    },
+    "workflows": [
+      {
+        "name": "test_workflow",
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "literal",
+              "value": "worked"
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": "worked",
+    "expected_entity": {
+      "value": 10
+    }
+  },
+  {
+    "id": "workflow::engine_edge::nested_workflow_call",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret workflow('wf2', workflow('wf1'))"
+    ],
+    "input": {
+      "value": 10
+    },
+    "workflows": [
+      {
+        "name": "wf1",
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "literal",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "name": "wf2",
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "binary",
+              "op": "mul",
+              "left": {
+                "type": "arg",
+                "index": 0
+              },
+              "right": {
+                "type": "literal",
+                "value": 2
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": 2,
+    "expected_entity": {
+      "value": 10
+    }
+  },
+  {
+    "id": "workflow::engine_edge::dependency_metadata",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.x > 0 => workflow('modify_a')",
+      "entity.a > 50 => ret true"
+    ],
+    "input": {
+      "x": 10,
+      "a": 0
+    },
+    "workflows": [
+      {
+        "name": "modify_a",
+        "reads": [],
+        "writes": [
+          "a"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "a",
+            "value": {
+              "type": "literal",
+              "value": 100
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "x": 10,
+      "a": 100
+    }
+  },
+  {
+    "id": "workflow::runtime_compat::wrapper_and_list_compound_assignment",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "entity.email is_empty => entity.errors += ['Email is required']",
+      "entity.errors contains 'Email is required' => workflow('mark_invalid')"
+    ],
+    "input": {
+      "email": "",
+      "errors": [],
+      "valid": true
+    },
+    "workflows": [
+      {
+        "name": "mark_invalid",
+        "reads": [
+          "entity.errors"
+        ],
+        "writes": [
+          "entity.valid"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "valid",
+            "value": {
+              "type": "literal",
+              "value": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "email": "",
+      "errors": [
+        "Email is required"
+      ],
+      "valid": false
+    }
+  }
+]

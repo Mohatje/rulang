@@ -1,0 +1,113 @@
+[
+  {
+    "id": "resolve::null_safe_nested_parent_returns_null",
+    "kind": "resolve",
+    "input": {
+      "user": null
+    },
+    "path": ["entity", "user", "profile"],
+    "null_safe_indices": [2],
+    "expected": {
+      "value": null
+    }
+  },
+  {
+    "id": "resolve::missing_path_raises",
+    "kind": "resolve",
+    "input": {},
+    "path": ["entity", "missing"],
+    "expected": {
+      "error_type": "PathResolutionError"
+    }
+  },
+  {
+    "id": "assign::negative_index_nested_write",
+    "kind": "assign",
+    "input": {
+      "items": [
+        {
+          "value": 10
+        },
+        {
+          "value": 20
+        }
+      ]
+    },
+    "path": ["entity", "items", -1, "value"],
+    "value": 99,
+    "expected": {
+      "entity": {
+        "items": [
+          {
+            "value": 10
+          },
+          {
+            "value": 99
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "assign::missing_parent_raises",
+    "kind": "assign",
+    "input": {},
+    "path": ["entity", "missing", "nested"],
+    "value": "value",
+    "expected": {
+      "error_type": "PathResolutionError"
+    }
+  },
+  {
+    "id": "dependency_graph::workflow_write_creates_ordering",
+    "kind": "dependency_graph",
+    "rules": [
+      "entity.ready == true => workflow('calculate')",
+      "entity.result > 0 => entity.done = true"
+    ],
+    "workflows": [
+      {
+        "name": "calculate",
+        "writes": [
+          "entity.result"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "result",
+            "value": {
+              "type": "literal",
+              "value": 10
+            }
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "graph": {
+        "0": [1]
+      },
+      "execution_order": [0, 1]
+    }
+  },
+  {
+    "id": "evaluate_error::missing_path_raises",
+    "kind": "evaluate_error",
+    "mode": "first_match",
+    "rules": [
+      "entity.missing > 0 => ret true"
+    ],
+    "input": {},
+    "expected_error": "PathResolutionError"
+  },
+  {
+    "id": "evaluate_error::missing_workflow_raises",
+    "kind": "evaluate_error",
+    "mode": "first_match",
+    "rules": [
+      "true => workflow('missing')"
+    ],
+    "input": {},
+    "expected_error": "WorkflowNotFoundError"
+  }
+]

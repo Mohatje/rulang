@@ -1,0 +1,208 @@
+[
+  {
+    "id": "backend::shipment::nested_stop_copy_city",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "shipment.parameters.city is_empty and shipment.stops[0].country_code != \"BE\" and shipment.stops[1].country_code == \"BE\" => shipment.parameters.city = shipment.stops[0].city"
+    ],
+    "input": {
+      "shipment": {
+        "parameters": {
+          "city": null
+        },
+        "stops": [
+          {
+            "city": "Paris",
+            "country_code": "FR"
+          },
+          {
+            "city": "Brussels",
+            "country_code": "BE"
+          }
+        ]
+      }
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "shipment": {
+        "parameters": {
+          "city": "Paris"
+        },
+        "stops": [
+          {
+            "city": "Paris",
+            "country_code": "FR"
+          },
+          {
+            "city": "Brussels",
+            "country_code": "BE"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "backend::shipment::lower_and_multi_assign",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "lower(shipment.parameters.transport_type) == \"other\" => shipment.weight = shipment.parameters.colli_amount * 100; shipment.weight_unit = \"lb\"; shipment.parameters.article_code = \"1111\""
+    ],
+    "input": {
+      "shipment": {
+        "weight": null,
+        "weight_unit": null,
+        "parameters": {
+          "transport_type": "OTHER",
+          "colli_amount": 2.5,
+          "article_code": null
+        }
+      }
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "shipment": {
+        "weight": 250,
+        "weight_unit": "lb",
+        "parameters": {
+          "transport_type": "OTHER",
+          "colli_amount": 2.5,
+          "article_code": "1111"
+        }
+      }
+    }
+  },
+  {
+    "id": "backend::shipment::date_slice_from_datetime_string",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "shipment.parameters.date is_empty and not (shipment.stops[0].start_datetime is_empty) => shipment.parameters.date = str(shipment.stops[0].start_datetime); shipment.parameters.date = shipment.parameters.date[0] + shipment.parameters.date[1] + shipment.parameters.date[2] + shipment.parameters.date[3] + shipment.parameters.date[4] + shipment.parameters.date[5] + shipment.parameters.date[6] + shipment.parameters.date[7] + shipment.parameters.date[8] + shipment.parameters.date[9]"
+    ],
+    "input": {
+      "shipment": {
+        "parameters": {
+          "date": null
+        },
+        "stops": [
+          {
+            "start_datetime": "2026-03-27T12:34:56Z"
+          }
+        ]
+      }
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "shipment": {
+        "parameters": {
+          "date": "2026-03-27"
+        },
+        "stops": [
+          {
+            "start_datetime": "2026-03-27T12:34:56Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "backend::stop::notes_parameters_multi_write",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "stop.notes.parameters.extras is_empty and stop.notes.parameters.duration is_empty => stop.notes.parameters.extras = \"Geen\"; stop.notes.parameters.duration = \"01:00\""
+    ],
+    "input": {
+      "stop": {
+        "notes": {
+          "parameters": {
+            "extras": "",
+            "duration": "",
+            "time_window": ""
+          }
+        }
+      }
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "stop": {
+        "notes": {
+          "parameters": {
+            "extras": "Geen",
+            "duration": "01:00",
+            "time_window": ""
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "backend::goods_line::workflow_then_dependent_rule",
+    "kind": "evaluate",
+    "mode": "all_match",
+    "rules": [
+      "parameters.ll_check > 1 => parameters.transport_class = \"FTL\"",
+      "not (parameters.item_count is_empty) => workflow(\"transuniverse_ll_calculation\")"
+    ],
+    "input": {
+      "parameters": {
+        "item_count": 3,
+        "item_length": 130,
+        "item_width": 110,
+        "item_height": 100,
+        "item_weight": 24000,
+        "stackable": true
+      }
+    },
+    "workflows": [
+      {
+        "name": "transuniverse_ll_calculation",
+        "reads": [
+          "entity.parameters.item_count",
+          "entity.parameters.item_length",
+          "entity.parameters.item_width",
+          "entity.parameters.item_height",
+          "entity.parameters.item_weight",
+          "entity.parameters.stackable"
+        ],
+        "writes": [
+          "entity.parameters.ll_check",
+          "entity.parameters.ll_icl"
+        ],
+        "steps": [
+          {
+            "type": "set",
+            "path": "parameters.ll_check",
+            "value": {
+              "type": "literal",
+              "value": 1.3
+            }
+          },
+          {
+            "type": "set",
+            "path": "parameters.ll_icl",
+            "value": {
+              "type": "literal",
+              "value": 13.71
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": true,
+    "expected_entity": {
+      "parameters": {
+        "item_count": 3,
+        "item_length": 130,
+        "item_width": 110,
+        "item_height": 100,
+        "item_weight": 24000,
+        "stackable": true,
+        "ll_check": 1.3,
+        "ll_icl": 13.71,
+        "transport_class": "FTL"
+      }
+    }
+  }
+]

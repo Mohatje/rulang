@@ -1,0 +1,204 @@
+[
+  {
+    "id": "interpreter::actions::return_stops_subsequent_assignment",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.x > 0 => ret 'early'; entity.y = 100"
+    ],
+    "input": {
+      "x": 5,
+      "y": 0
+    },
+    "expected_result": "early",
+    "expected_entity": {
+      "x": 5,
+      "y": 0
+    }
+  },
+  {
+    "id": "interpreter::actions::return_in_middle_preserves_prior_mutations",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a > 0 => entity.b = 1; ret 'done'; entity.c = 1"
+    ],
+    "input": {
+      "a": 5,
+      "b": 0,
+      "c": 0
+    },
+    "expected_result": "done",
+    "expected_entity": {
+      "a": 5,
+      "b": 1,
+      "c": 0
+    }
+  },
+  {
+    "id": "interpreter::workflow::multiple_arguments",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a > 0 => ret workflow('multiply', entity.a, entity.b, entity.c)"
+    ],
+    "input": {
+      "a": 2,
+      "b": 3,
+      "c": 4
+    },
+    "workflows": [
+      {
+        "name": "multiply",
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "binary",
+              "op": "mul",
+              "left": {
+                "type": "arg",
+                "index": 0
+              },
+              "right": {
+                "type": "binary",
+                "op": "mul",
+                "left": {
+                  "type": "arg",
+                  "index": 1
+                },
+                "right": {
+                  "type": "arg",
+                  "index": 2
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": 24,
+    "expected_entity": {
+      "a": 2,
+      "b": 3,
+      "c": 4
+    }
+  },
+  {
+    "id": "interpreter::workflow::expression_arguments",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "true => ret workflow('add', entity.x + 5, entity.y * 2)"
+    ],
+    "input": {
+      "x": 5,
+      "y": 3
+    },
+    "workflows": [
+      {
+        "name": "add",
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "binary",
+              "op": "add",
+              "left": {
+                "type": "arg",
+                "index": 0
+              },
+              "right": {
+                "type": "arg",
+                "index": 1
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": 16,
+    "expected_entity": {
+      "x": 5,
+      "y": 3
+    }
+  },
+  {
+    "id": "interpreter::workflow::none_return",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret workflow('return_none')"
+    ],
+    "input": {
+      "value": 10
+    },
+    "workflows": [
+      {
+        "name": "return_none",
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "literal",
+              "value": null
+            }
+          }
+        ]
+      }
+    ],
+    "expected_result": null,
+    "expected_entity": {
+      "value": 10
+    }
+  },
+  {
+    "id": "interpreter::dynamic_path_index::string_key_lookup",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.data[entity.key] > 0 => entity.found = true"
+    ],
+    "input": {
+      "data": {
+        "mykey": 42
+      },
+      "key": "mykey",
+      "found": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "data": {
+        "mykey": 42
+      },
+      "key": "mykey",
+      "found": true
+    }
+  },
+  {
+    "id": "interpreter::evaluate_error::division_by_zero",
+    "kind": "evaluate_error",
+    "mode": "first_match",
+    "rules": [
+      "entity.a / entity.b >= 0 => ret true"
+    ],
+    "input": {
+      "a": 10,
+      "b": 0
+    },
+    "expected_error": "EvaluationError"
+  },
+  {
+    "id": "interpreter::evaluate_error::modulo_by_zero",
+    "kind": "evaluate_error",
+    "mode": "first_match",
+    "rules": [
+      "entity.a % entity.b >= 0 => ret true"
+    ],
+    "input": {
+      "a": 10,
+      "b": 0
+    },
+    "expected_error": "EvaluationError"
+  }
+]

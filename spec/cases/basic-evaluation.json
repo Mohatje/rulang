@@ -1,0 +1,22 @@
+{
+  "id": "basic-evaluation",
+  "description": "Simple mutation chain in all-match mode",
+  "mode": "all_match",
+  "rules": [
+    "entity.age >= 18 => entity.is_adult = true",
+    "entity.is_adult == true => entity.discount += 0.1"
+  ],
+  "input": {
+    "age": 25,
+    "is_adult": false,
+    "discount": 0.0
+  },
+  "expected": {
+    "result": true,
+    "entity": {
+      "age": 25,
+      "is_adult": true,
+      "discount": 0.1
+    }
+  }
+}

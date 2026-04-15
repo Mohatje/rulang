@@ -1,0 +1,36 @@
+{
+  "id": "list-semantics",
+  "description": "List any-satisfies semantics apply to equality and string operators",
+  "mode": "all_match",
+  "rules": [
+    "entity.tags == 'urgent' => entity.priority = 'high'",
+    "entity.domains startswith 'admin' => entity.has_admin_domain = true"
+  ],
+  "input": {
+    "tags": [
+      "urgent",
+      "finance"
+    ],
+    "domains": [
+      "admin.example.com",
+      "user.example.com"
+    ],
+    "priority": "normal",
+    "has_admin_domain": false
+  },
+  "expected": {
+    "result": true,
+    "entity": {
+      "tags": [
+        "urgent",
+        "finance"
+      ],
+      "domains": [
+        "admin.example.com",
+        "user.example.com"
+      ],
+      "priority": "high",
+      "has_admin_domain": true
+    }
+  }
+}

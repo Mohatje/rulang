@@ -6,8 +6,32 @@ on:
   pull_request:
     branches: [master]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
+  python-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: uv --directory python sync --all-extras
+
+      - name: Lint Python runtime
+        run: uv --directory python run --extra dev ruff check src/rulang
+
+  python-tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -22,17 +46,90 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
-        run: uv sync --all-extras
+      - name: Install Python dependencies
+        run: uv --directory python sync --all-extras
 
-      - name: Run tests
-        run: uv run pytest --cov=src --cov-report=xml --cov-report=term-missing
+      - name: Run Python tests
+        run: uv --directory python run --extra dev python -m pytest --cov=src --cov-report=xml --cov-report=term-missing --cov-report=html:htmlcov
 
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.12'
         uses: codecov/codecov-action@v5
         with:
-          files: ./coverage.xml
+          files: ./python/coverage.xml
           fail_ci_if_error: false
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  parity-corpus:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: uv --directory python sync --all-extras
+
+      - name: Regenerate portable parity corpus
+        run: |
+          uv --directory python run --extra dev python tools/export_portable_cases.py
+          git diff --exit-code -- spec/generated/python-portable-cases.json
+
+  typescript-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint TypeScript package
+        run: npm run lint:typescript
+
+  typescript-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check TypeScript package
+        run: npm run check:typescript
+
+  typescript-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run TypeScript tests
+        run: npm run test:typescript
