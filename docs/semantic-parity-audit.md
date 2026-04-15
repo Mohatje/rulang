@@ -48,7 +48,6 @@ Statuses:
 - Host-language callable arity behavior
 - Non-JSON host values such as sets, tuples, and similar collection semantics
 - Performance and scale-only scenarios
-- Partial-state assertions that do not yet define a tighter cross-runtime contract than the current shared error-state cases
 
 ## Release Readiness Interpretation
 

@@ -18,5 +18,40 @@
       "processed": true,
       "failed": false
     }
+  },
+  {
+    "id": "error_state::same_rule_preserves_earlier_action_before_path_error",
+    "kind": "evaluate_error",
+    "mode": "all_match",
+    "rules": [
+      "entity.ok == true => entity.step1 = true; entity.missing.path = 1"
+    ],
+    "input": {
+      "ok": true,
+      "step1": false
+    },
+    "expected_error": "PathResolutionError",
+    "expected_entity": {
+      "ok": true,
+      "step1": true
+    }
+  },
+  {
+    "id": "error_state::all_match_preserves_prior_mutation_before_workflow_error",
+    "kind": "evaluate_error",
+    "mode": "all_match",
+    "rules": [
+      "entity.valid > 0 => entity.processed = true",
+      "entity.valid > 0 => workflow('missing')"
+    ],
+    "input": {
+      "valid": 10,
+      "processed": false
+    },
+    "expected_error": "WorkflowNotFoundError",
+    "expected_entity": {
+      "valid": 10,
+      "processed": true
+    }
   }
 ]

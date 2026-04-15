@@ -44,17 +44,6 @@
     "review_by_release": true
   },
   {
-    "id": "partial-state-after-error",
-    "area": "error_semantics",
-    "behavior": "Assertions about which earlier mutations have happened when a later rule errors during all-match evaluation.",
-    "python_behavior": "Some Python tests intentionally allow order-dependent partial state as long as the error propagates.",
-    "typescript_behavior": "TypeScript now matches execution ordering and error categories, but partial-state assertions remain tied to evaluation-order details.",
-    "reason": "These tests do not yet define a tighter cross-runtime semantic contract beyond error propagation.",
-    "risk": "Medium because partial mutations after failure can matter operationally if callers depend on rollback-like guarantees.",
-    "owner": "ts-migration",
-    "review_by_release": true
-  },
-  {
     "id": "non-json-collections-and-host-values",
     "area": "value_semantics",
     "behavior": "Python-only behaviors for sets, tuples, and other host-language collection or object types outside JSON-like payloads.",

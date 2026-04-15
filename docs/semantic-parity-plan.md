@@ -54,6 +54,7 @@ Do not release the TypeScript runtime as semantically equivalent unless all of t
   - return value
   - final entity mutation
   - error category
+  - preserved prior mutations for shared post-error cases
 - There are no known semantic divergences that are not documented.
 - The exclusion register is intentionally short and reviewed before release.
 
@@ -88,7 +89,7 @@ Implemented shared portable corpora now cover:
 - interpreter semantics including return flow, compound assignment, arithmetic, truthiness, null coalescing, and workflow invocation
 - feature-integration and end-to-end integration scenarios for JSON-like entities
 - selected README examples that add semantic coverage rather than duplicate existing cases
-- deterministic error-state assertions, including post-error mutation state
+- deterministic error-state assertions, including preserved prior mutations after failure
 
 The harness now supports and exercises these case kinds in both runtimes:
 
@@ -235,6 +236,7 @@ The parity program must cover all of the following.
 - path resolution errors
 - missing workflow errors
 - evaluation errors from unsupported operations
+- preserved prior mutations before failure in ordered shared cases
 
 ## Python Test Inventory and Required Action
 
