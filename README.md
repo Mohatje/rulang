@@ -62,11 +62,10 @@ print(entity)  # {'age': 25, 'is_adult': True, 'discount': 0.1}
 ## Parity Workflow
 
 The Python runtime remains the reference implementation. Cross-runtime parity is
-enforced by extracting a portable corpus from selected Python tests and replaying
-it in both Python and TypeScript.
-
-The release bar and migration plan for semantic parity are documented in
-[`docs/semantic-parity-plan.md`](docs/semantic-parity-plan.md).
+enforced by replaying both generated and hand-maintained shared corpora in
+Python and TypeScript, with the current release contract documented in
+[`docs/semantic-parity-plan.md`](docs/semantic-parity-plan.md) and the test-file
+classification recorded in [`docs/semantic-parity-audit.md`](docs/semantic-parity-audit.md).
 
 ```bash
 npm run generate:portable-cases

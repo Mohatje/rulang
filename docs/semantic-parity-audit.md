@@ -56,4 +56,4 @@ For the JSON-like parity domain, the remaining work is no longer broad semantic 
 
 - verify the exclusion register remains intentionally short
 - verify no new runtime divergence appears as shared cases are added
-- optionally commit the current closure batch
+- decide whether any excluded behavior must be promoted before release

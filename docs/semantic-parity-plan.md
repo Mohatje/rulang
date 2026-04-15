@@ -101,11 +101,14 @@ The harness now supports and exercises these case kinds in both runtimes:
 - `evaluate_error`
 - `engine_sequence`
 
-Remaining work is now primarily an audit and closure exercise:
+The file-by-file audit is complete and recorded in
+[`semantic-parity-audit.md`](./semantic-parity-audit.md).
 
-- finish classifying the remaining Python semantic tests against shared coverage or exclusions
-- promote any still-missing JSON-like visitor/workflow semantics that are not yet represented
-- keep the exclusion register intentionally short
+Remaining work is now release review rather than semantic migration:
+
+- keep the exclusion register intentionally short and explicit
+- verify new shared cases do not introduce undocumented divergence
+- decide whether any excluded behavior must be promoted before release
 
 ## Entire Semantic Surface
 
@@ -284,7 +287,8 @@ These gaps are closed. The portable harness now supports:
 - `evaluate_error`
 - `engine_sequence`
 
-The remaining gap is not harness capability; it is complete audit coverage.
+The harness and audit coverage are in place. The remaining gap is release
+decision-making around the explicit exclusions.
 
 ## Conversion Strategy
 
@@ -304,32 +308,29 @@ Use this order.
 
 ### Phase 3. Promote Path and Graph Semantics
 
-- substantially completed
-- shared corpora now cover portable path resolution, assignment, dependency graphs, ordering, cycle handling, and cache invalidation after prior inspection
+- completed for the JSON-like parity domain
+- shared corpora cover portable path resolution, assignment, dependency graphs, ordering, cycle handling, and cache invalidation after prior inspection
 
 This phase closes the highest leverage gap for mutation correctness because order and path semantics directly change writes.
 
 ### Phase 4. Promote Interpreter and Workflow Semantics
 
-- in progress
-- shared corpora now cover a large portion of interpreter semantics, return flow, workflow invocation, truthiness, null coalescing, and failure behavior
-- remaining work is audit-oriented: identify any still-missing JSON-like semantics and classify workflow API-shape tests as local
+- completed for the JSON-like parity domain
+- shared corpora cover interpreter semantics, return flow, workflow invocation, truthiness, null coalescing, failure behavior, and closure cases
+- workflow registry and package-shape tests remain intentionally local and are tracked in the exclusion register
 
 ### Phase 5. Promote Integration Scenarios
 
-- substantially completed
+- completed for the JSON-like parity domain
 - JSON-like cases from feature integration, integration, and README examples have been promoted where they add semantic value
 
 Keep example formatting and documentation checks local if they do not add semantic value.
 
 ### Phase 6. Close the Remaining Gaps
 
-- audit every Python test file line by line
-- mark each test as:
-  - already portable
-  - newly portable
-  - intentionally local
-- fail the release if any semantic test remains unclassified
+- completed
+- every Python semantic test file is now classified in the audit as shared, excluded, or infrastructure
+- any future semantic test added on the Python side should be treated as a release blocker until it is either shared or explicitly excluded
 
 ## Test Conversion Rules
 
