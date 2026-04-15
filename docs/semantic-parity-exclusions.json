@@ -53,5 +53,16 @@
     "risk": "Medium because partial mutations after failure can matter operationally if callers depend on rollback-like guarantees.",
     "owner": "ts-migration",
     "review_by_release": true
+  },
+  {
+    "id": "non-json-collections-and-host-values",
+    "area": "value_semantics",
+    "behavior": "Python-only behaviors for sets, tuples, and other host-language collection or object types outside JSON-like payloads.",
+    "python_behavior": "Python tests include cases such as set emptiness and host-object-backed collection semantics.",
+    "typescript_behavior": "TypeScript runtime may support some host values, but they are not part of the parity release domain.",
+    "reason": "The supported parity domain is JSON-like objects, arrays, strings, numbers, booleans, and null.",
+    "risk": "Low for JSON payloads, medium if callers pass non-JSON host values into rules.",
+    "owner": "ts-migration",
+    "review_by_release": true
   }
 ]

@@ -126,7 +126,11 @@ def _run_engine_step(engine: RuleEngine, step: dict):
 
     if op == "evaluate":
         entity = copy.deepcopy(step["input"])
-        result = engine.evaluate(entity, workflows=_build_workflows(step))
+        result = engine.evaluate(
+            entity,
+            workflows=_build_workflows(step),
+            entity_name=step.get("entity_name", "entity"),
+        )
         assert result == step.get("expected_result")
         if "expected_entity" in step:
             assert entity == step["expected_entity"]
@@ -143,7 +147,11 @@ def test_portable_cases(case):
         engine = RuleEngine(mode=case["mode"])
         engine.add_rules(case["rules"])
         entity = copy.deepcopy(case["input"])
-        result = engine.evaluate(entity, workflows=_build_workflows(case))
+        result = engine.evaluate(
+            entity,
+            workflows=_build_workflows(case),
+            entity_name=case.get("entity_name", "entity"),
+        )
         assert result == case.get("expected_result")
         if "expected_entity" in case:
             assert entity == case["expected_entity"]
@@ -207,7 +215,11 @@ def test_portable_cases(case):
         entity = copy.deepcopy(case["input"])
 
         with pytest.raises(_get_error_class(case["expected_error"])):
-            engine.evaluate(entity, workflows=_build_workflows(case))
+            engine.evaluate(
+                entity,
+                workflows=_build_workflows(case),
+                entity_name=case.get("entity_name", "entity"),
+            )
         if "expected_entity" in case:
             assert entity == case["expected_entity"]
         return

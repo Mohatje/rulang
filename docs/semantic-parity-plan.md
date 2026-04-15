@@ -75,6 +75,38 @@ The current portable export in [`python/tools/export_portable_cases.py`](../pyth
 
 That is a strong start, but it is not the full semantic surface. The remaining Python-only files still contain behavior that can change rule matching, execution order, or mutations.
 
+## Current Status Snapshot
+
+The parity program has moved beyond the original exported subset.
+
+Implemented shared portable corpora now cover:
+
+- parser and syntax behavior from the generated Python export
+- path resolution and assignment behavior for JSON-like entities
+- dependency graph construction, deterministic ordering, and cycle cases
+- workflow-driven ordering and cache invalidation after prior inspection
+- interpreter semantics including return flow, compound assignment, arithmetic, truthiness, null coalescing, and workflow invocation
+- feature-integration and end-to-end integration scenarios for JSON-like entities
+- selected README examples that add semantic coverage rather than duplicate existing cases
+- deterministic error-state assertions, including post-error mutation state
+
+The harness now supports and exercises these case kinds in both runtimes:
+
+- `evaluate`
+- `parse`
+- `parse_error`
+- `resolve`
+- `assign`
+- `dependency_graph`
+- `evaluate_error`
+- `engine_sequence`
+
+Remaining work is now primarily an audit and closure exercise:
+
+- finish classifying the remaining Python semantic tests against shared coverage or exclusions
+- promote any still-missing JSON-like visitor/workflow semantics that are not yet represented
+- keep the exclusion register intentionally short
+
 ## Entire Semantic Surface
 
 The parity program must cover all of the following.
@@ -209,6 +241,8 @@ Every Python test file should land in one of three buckets:
 - `Promote`: convert to shared parity cases
 - `Keep local with reason`: runtime-local behavior that is intentionally out of scope
 
+The current file-by-file audit lives in [`semantic-parity-audit.md`](./semantic-parity-audit.md).
+
 ### Already Portable
 
 - `test_builtin_functions.py`
@@ -223,44 +257,11 @@ Every Python test file should land in one of three buckets:
 - `test_parser_expanded.py`
 - `test_string_operators.py`
 
-### Promote Next
+### Audit Outcome
 
-- `test_dependency_graph.py`
-  - promote dependency edge construction
-  - promote execution order
-  - promote cycle detection and cycle breaking
-  - promote workflow-driven dependency edges
-- `test_dependency_graph_expanded.py`
-  - promote deterministic ordering
-  - promote wildcard path overlap behavior
-  - promote larger cycle and dependency scenarios
-- `test_engine_expanded.py`
-  - promote expanded engine behaviors not already covered by exported cases
-  - promote multi-step mutation and return scenarios
-  - promote workflow ordering scenarios
-- `test_engine_runtime_compat.py`
-  - promote workflow dependency cache invalidation after prior inspection
-- `test_feature_integration.py`
-  - promote combined-feature mutation flows
-  - promote mixed operator interactions that affect writes
-- `test_integration.py`
-  - promote end-to-end business scenarios that are purely JSON-like
-- `test_path_resolver.py`
-  - promote path resolution and assignment behavior for portable inputs
-- `test_path_resolver_edge_cases.py`
-  - promote path resolution edge cases for portable inputs
-  - split out Python object-specific cases into runtime-local coverage if needed
-- `test_visitor.py`
-  - promote interpreter-level semantics not already covered through `RuleEngine`
-- `test_visitor_edge_cases.py`
-  - promote edge cases for operators, functions, and failure behavior
-- `test_visitor_expanded.py`
-  - promote expanded interpreter semantics that affect return values or writes
-- `test_workflows.py`
-  - promote workflow semantics
-  - promote registry and wrapper semantics where portable
-- `test_workflows_expanded.py`
-  - promote expanded workflow argument and metadata behavior
+- The original “Promote Next” files have now been audited.
+- JSON-like semantics from those files are either represented in shared parity cases or explicitly covered by the exclusion register.
+- Remaining non-shared items are primarily host-language API behavior, non-JSON host values, or performance-only checks.
 
 ### Keep Local With Reason
 
@@ -275,39 +276,15 @@ If any of these influence real user rule outcomes on supported payloads, remove 
 
 ## Harness Gaps To Close
 
-The current portable harness primarily supports three case kinds:
-
-- `evaluate`
-- `parse`
-- `parse_error`
-
-That is not enough to cover the whole semantic surface. Add these portable case kinds:
+These gaps are closed. The portable harness now supports:
 
 - `resolve`
-  - input entity
-  - `entity_name`
-  - path parts
-  - null-safe indices
-  - expected value or error category
 - `assign`
-  - input entity
-  - `entity_name`
-  - path parts
-  - assigned value
-  - expected final entity or error category
 - `dependency_graph`
-  - rules
-  - optional workflows with metadata
-  - expected graph edges
-  - expected execution order
-  - expected cycles if relevant
 - `evaluate_error`
-  - rules
-  - input entity
-  - optional workflows
-  - expected error category
+- `engine_sequence`
 
-Without these case kinds, parity will remain weaker than the Python semantic surface.
+The remaining gap is not harness capability; it is complete audit coverage.
 
 ## Conversion Strategy
 
@@ -321,34 +298,27 @@ Use this order.
 
 ### Phase 2. Expand the Harness
 
-- extend the JSON parity schema to support `resolve`, `assign`, `dependency_graph`, and `evaluate_error`
-- add Python and TypeScript runners for each new case kind
-- make the parity suite print the exact failing dimension: parse, analysis, order, return, mutation, or error
+- completed
+- the JSON parity schema and both runtime runners support `resolve`, `assign`, `dependency_graph`, `evaluate_error`, and `engine_sequence`
+- the suite now distinguishes parse, analysis, ordering, return-value, mutation, and error failures
 
 ### Phase 3. Promote Path and Graph Semantics
 
-- convert `test_path_resolver.py`
-- convert portable parts of `test_path_resolver_edge_cases.py`
-- convert `test_dependency_graph.py`
-- convert `test_dependency_graph_expanded.py`
-- convert `test_engine_runtime_compat.py`
+- substantially completed
+- shared corpora now cover portable path resolution, assignment, dependency graphs, ordering, cycle handling, and cache invalidation after prior inspection
 
 This phase closes the highest leverage gap for mutation correctness because order and path semantics directly change writes.
 
 ### Phase 4. Promote Interpreter and Workflow Semantics
 
-- convert `test_visitor.py`
-- convert `test_visitor_edge_cases.py`
-- convert `test_visitor_expanded.py`
-- convert `test_workflows.py`
-- convert `test_workflows_expanded.py`
-- convert remaining portable cases from `test_engine_expanded.py`
+- in progress
+- shared corpora now cover a large portion of interpreter semantics, return flow, workflow invocation, truthiness, null coalescing, and failure behavior
+- remaining work is audit-oriented: identify any still-missing JSON-like semantics and classify workflow API-shape tests as local
 
 ### Phase 5. Promote Integration Scenarios
 
-- convert JSON-like cases from `test_feature_integration.py`
-- convert JSON-like cases from `test_integration.py`
-- convert portable examples from `test_readme_examples.py`
+- substantially completed
+- JSON-like cases from feature integration, integration, and README examples have been promoted where they add semantic value
 
 Keep example formatting and documentation checks local if they do not add semantic value.
 

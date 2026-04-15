@@ -41,6 +41,7 @@ type EngineSequenceStep =
   | {
       op: "evaluate";
       input: unknown;
+      entity_name?: string | null;
       workflows?: WorkflowSpec[];
       expected_result: unknown;
       expected_entity?: unknown;
@@ -53,6 +54,7 @@ type PortableCase =
       mode: "first_match" | "all_match";
       rules: string[];
       input: unknown;
+      entity_name?: string | null;
       expected_result: unknown;
       expected_entity?: unknown;
       workflows?: WorkflowSpec[];
@@ -115,6 +117,7 @@ type PortableCase =
       mode: "first_match" | "all_match";
       rules: string[];
       input: unknown;
+      entity_name?: string | null;
       workflows?: WorkflowSpec[];
       expected_error: string;
       expected_entity?: unknown;
@@ -241,7 +244,7 @@ function runEngineStep(engine: RuleEngine, step: EngineSequenceStep): void {
   }
 
   const entity = structuredClone(step.input);
-  const result = engine.evaluate(entity, buildWorkflows(step));
+  const result = engine.evaluate(entity, buildWorkflows(step), step.entity_name ?? "entity");
   expect(result).toEqual(step.expected_result);
   if (step.expected_entity !== undefined) {
     expect(entity).toEqual(step.expected_entity);
@@ -255,7 +258,7 @@ describe("portable python parity corpus", () => {
         const engine = new RuleEngine(parityCase.mode);
         engine.addRules(parityCase.rules);
         const entity = structuredClone(parityCase.input);
-        const result = engine.evaluate(entity, buildWorkflows(parityCase));
+        const result = engine.evaluate(entity, buildWorkflows(parityCase), parityCase.entity_name ?? "entity");
         expect(result).toEqual(parityCase.expected_result);
         if (parityCase.expected_entity) {
           expect(entity).toEqual(parityCase.expected_entity);
@@ -333,7 +336,7 @@ describe("portable python parity corpus", () => {
       const engine = new RuleEngine(parityCase.mode);
       engine.addRules(parityCase.rules);
       const entity = structuredClone(parityCase.input);
-      expect(() => engine.evaluate(entity, buildWorkflows(parityCase))).toThrowError(
+      expect(() => engine.evaluate(entity, buildWorkflows(parityCase), parityCase.entity_name ?? "entity")).toThrowError(
         getErrorClass(parityCase.expected_error),
       );
       if ("expected_entity" in parityCase) {

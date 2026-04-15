@@ -1,0 +1,220 @@
+[
+  {
+    "id": "visitor_closure::comparison::different_types_not_equal",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == '10' => ret true"
+    ],
+    "input": {
+      "value": 10
+    },
+    "expected_result": null,
+    "expected_entity": {
+      "value": 10
+    }
+  },
+  {
+    "id": "visitor_closure::comparison::dict_path_equality",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value == entity.other => ret true"
+    ],
+    "input": {
+      "value": {
+        "a": 1
+      },
+      "other": {
+        "a": 1
+      }
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "value": {
+        "a": 1
+      },
+      "other": {
+        "a": 1
+      }
+    }
+  },
+  {
+    "id": "visitor_closure::membership::none_in_list",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value in [none, 1, 2] => ret true"
+    ],
+    "input": {
+      "value": null
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "value": null
+    }
+  },
+  {
+    "id": "visitor_closure::arithmetic::boolean_addition",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a + entity.b >= entity.result => entity.result = entity.a + entity.b; ret entity.result"
+    ],
+    "input": {
+      "a": true,
+      "b": false,
+      "result": 0
+    },
+    "expected_result": 1,
+    "expected_entity": {
+      "a": true,
+      "b": false,
+      "result": 1
+    }
+  },
+  {
+    "id": "visitor_closure::list_ops::contains_any_scalar_collection",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value contains_any [1, 2, 3] => entity.found = true"
+    ],
+    "input": {
+      "value": 2,
+      "found": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "value": 2,
+      "found": true
+    }
+  },
+  {
+    "id": "visitor_closure::list_ops::contains_all_scalar_collection",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value contains_all [5] => entity.exact = true"
+    ],
+    "input": {
+      "value": 5,
+      "exact": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "value": 5,
+      "exact": true
+    }
+  },
+  {
+    "id": "visitor_closure::null_coalesce::returns_first_non_none",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.x > 0 => entity.result = entity.a ?? entity.b ?? entity.c"
+    ],
+    "input": {
+      "x": 1,
+      "a": null,
+      "b": null,
+      "c": "fallback",
+      "result": ""
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "x": 1,
+      "a": null,
+      "b": null,
+      "c": "fallback",
+      "result": "fallback"
+    }
+  },
+  {
+    "id": "visitor_closure::null_coalesce::returns_first_value",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.x > 0 => entity.result = entity.a ?? entity.b ?? 'default'"
+    ],
+    "input": {
+      "x": 1,
+      "a": "first",
+      "b": "second",
+      "result": ""
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "x": 1,
+      "a": "first",
+      "b": "second",
+      "result": "first"
+    }
+  },
+  {
+    "id": "visitor_closure::regex::invalid_pattern_returns_no_match",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.text matches '[invalid' => entity.matched = true"
+    ],
+    "input": {
+      "text": "anything",
+      "matched": false
+    },
+    "expected_result": null,
+    "expected_entity": {
+      "text": "anything",
+      "matched": false
+    }
+  },
+  {
+    "id": "visitor_closure::short_circuit::or_avoids_missing_path",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a > 0 or entity.missing.path > 0 => entity.result = true"
+    ],
+    "input": {
+      "a": 5,
+      "result": false
+    },
+    "expected_result": true,
+    "expected_entity": {
+      "a": 5,
+      "result": true
+    }
+  },
+  {
+    "id": "visitor_closure::short_circuit::and_avoids_missing_path",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.a < 0 and entity.missing.path > 0 => entity.result = true"
+    ],
+    "input": {
+      "a": 5,
+      "result": false
+    },
+    "expected_result": null,
+    "expected_entity": {
+      "a": 5,
+      "result": false
+    }
+  },
+  {
+    "id": "visitor_closure::actions::first_return_wins",
+    "kind": "evaluate",
+    "mode": "first_match",
+    "rules": [
+      "entity.value > 0 => ret 1; ret 2"
+    ],
+    "input": {
+      "value": 10
+    },
+    "expected_result": 1,
+    "expected_entity": {
+      "value": 10
+    }
+  }
+]

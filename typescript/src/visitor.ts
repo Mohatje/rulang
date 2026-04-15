@@ -954,6 +954,8 @@ export function parseRule(ruleText: string, entityName = "entity"): ParsedRule {
   const parser = new BusinessRulesParser(tokenStream as never);
   const errorListener = new RuleSyntaxErrorListener(ruleText);
 
+  (lexer as unknown as { removeErrorListeners(): void }).removeErrorListeners();
+  (lexer as unknown as { addErrorListener(listener: object): void }).addErrorListener(errorListener);
   (parser as unknown as { removeErrorListeners(): void }).removeErrorListeners();
   (parser as unknown as { addErrorListener(listener: object): void }).addErrorListener(errorListener);
 
