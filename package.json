@@ -7,6 +7,10 @@
   "scripts": {
     "generate:parsers": "./scripts/generate_parsers.sh",
     "generate:portable-cases": "uv --directory python run --extra dev python tools/export_portable_cases.py",
+    "check:portable-cases": "npm run generate:portable-cases && git diff --exit-code -- spec/generated/python-portable-cases.json",
+    "check:typescript": "npm --workspace typescript run check",
+    "lint:python": "uv --directory python run --extra dev ruff check src/rulang",
+    "lint:typescript": "npm --workspace typescript run lint",
     "sync:python": "uv --directory python sync --all-extras",
     "test:python": "uv --directory python run --extra dev python -m pytest",
     "test:parity:python": "uv --directory python run --extra dev python -m pytest tests/parity/test_portable_cases.py -q",

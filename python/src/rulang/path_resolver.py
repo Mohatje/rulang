@@ -9,7 +9,6 @@ Supports:
 - Null-safe access (?.)
 """
 
-from dataclasses import fields, is_dataclass
 from typing import Any, Optional
 
 from rulang.exceptions import PathResolutionError
@@ -245,4 +244,3 @@ class PathResolver:
             else:
                 result += f".{part}"
         return result
-

@@ -2,9 +2,22 @@
   "name": "@rulang/core",
   "version": "0.1.0",
   "description": "TypeScript runtime for the Rulang business rules DSL",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohatje/rulang.git",
+    "directory": "typescript"
+  },
+  "homepage": "https://github.com/Mohatje/rulang#readme",
+  "bugs": {
+    "url": "https://github.com/Mohatje/rulang/issues"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -16,6 +29,8 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src test --max-warnings=0",
     "test": "npm run build && vitest run && npm run test:esm-import",
     "test:esm-import": "node --input-type=module -e \"import('./dist/index.js').catch((error) => { console.error(error); process.exit(1); })\""
   },
@@ -23,8 +38,12 @@
     "antlr4": "^4.13.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.36.0",
     "@types/node": "^24.6.1",
+    "eslint": "^9.36.0",
+    "globals": "^16.4.0",
     "typescript": "^5.8.3",
+    "typescript-eslint": "^8.44.1",
     "vitest": "^3.2.4"
   }
 }

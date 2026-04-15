@@ -33,6 +33,7 @@ dev = [
     "bump-my-version>=0.28.0",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
+    "ruff>=0.11.13",
 ]
 
 [build-system]
@@ -63,6 +64,11 @@ exclude_lines = [
     "pragma: no cover",
     "if TYPE_CHECKING:",
     "raise NotImplementedError",
+]
+
+[tool.ruff]
+exclude = [
+    "src/rulang/grammar/generated",
 ]
 
 [tool.bumpversion]
