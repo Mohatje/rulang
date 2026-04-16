@@ -6,14 +6,14 @@ Forward-looking design proposals for capabilities rulang should own. Motivated b
 
 | # | Proposal | Status |
 |---|---|---|
-| 1 | [Public AST + extractor APIs](01-public-ast.md) | Draft |
-| 2 | [Builder-support primitives](02-builder-primitives.md) | Draft |
-| 3 | [Canonical pretty-printer](03-canonical-formatter.md) | Draft |
-| 4 | [Generic validation framework](04-validation-framework.md) | Draft — design agreed |
-| 5 | [Conflict detection](05-conflict-detection.md) | Draft |
+| 1 | [Public AST + extractor APIs](01-public-ast.md) | Shipped |
+| 2 | [Builder-support primitives](02-builder-primitives.md) | Shipped |
+| 3 | [Canonical pretty-printer](03-canonical-formatter.md) | Shipped |
+| 4 | [Generic validation framework](04-validation-framework.md) | Shipped |
+| 5 | [Conflict detection](05-conflict-detection.md) | Shipped |
 | 6 | [Scope / path resolution](06-scope-resolution-deferred.md) | Deferred |
-| 7 | [Grammar reference / rulang skill](07-grammar-reference.md) | Draft |
-| 8 | [Dry-run diff API](08-dry-run-diff.md) | Draft |
+| 7 | [Grammar reference / rulang skill](07-grammar-reference.md) | Shipped |
+| 8 | [Dry-run diff API](08-dry-run-diff.md) | Shipped |
 
 ## Suggested build order
 
