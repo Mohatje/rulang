@@ -21,6 +21,15 @@ from rulang.exceptions import (
 from rulang.formatter import format, format_ast
 from rulang.reference import grammar_reference
 from rulang.conflicts import Conflict, detect_conflicts
+from rulang.validation import (
+    BaseResolver,
+    Diagnostic,
+    OK,
+    PathInfo,
+    Resolver,
+    UNKNOWN,
+    validate,
+)
 from rulang import builders
 from rulang.ast import (
     parse,
@@ -71,6 +80,13 @@ __all__ = [
     "grammar_reference",
     "Conflict",
     "detect_conflicts",
+    "validate",
+    "BaseResolver",
+    "Resolver",
+    "Diagnostic",
+    "PathInfo",
+    "OK",
+    "UNKNOWN",
     "builders",
     "Span",
     "Rule",

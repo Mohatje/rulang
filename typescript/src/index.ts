@@ -16,6 +16,17 @@ export { grammarReference } from "./reference.js";
 export { detectConflicts, type Conflict, type ConflictKind } from "./conflicts.js";
 export * as builders from "./builders.js";
 export {
+  validate,
+  BaseResolver,
+  OK,
+  UNKNOWN,
+  DIAGNOSTIC_CODES,
+  type Resolver,
+  type Diagnostic,
+  type PathInfo,
+  type Severity,
+} from "./validation.js";
+export {
   diffEntities,
   type DryRunResult,
   type MatchedRule,
