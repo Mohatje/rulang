@@ -11,6 +11,7 @@ export {
 export { parseRule, RuleAnalyzer, RuleInterpreter } from "./visitor.js";
 export { DependencyGraph } from "./dependencyGraph.js";
 export { PathResolver } from "./pathResolver.js";
+export { format, formatAst } from "./formatter.js";
 export {
   parse,
   walk,

@@ -12,6 +12,7 @@ from rulang.exceptions import (
     WorkflowNotFoundError,
     EvaluationError,
 )
+from rulang.formatter import format, format_ast
 from rulang.ast import (
     parse,
     walk,
@@ -52,6 +53,8 @@ __all__ = [
     # AST
     "parse",
     "walk",
+    "format",
+    "format_ast",
     "Span",
     "Rule",
     "Path",
