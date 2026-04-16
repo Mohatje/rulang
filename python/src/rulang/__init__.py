@@ -20,6 +20,7 @@ from rulang.exceptions import (
 )
 from rulang.formatter import format, format_ast
 from rulang.reference import grammar_reference
+from rulang.conflicts import Conflict, detect_conflicts
 from rulang.ast import (
     parse,
     walk,
@@ -67,6 +68,8 @@ __all__ = [
     "format",
     "format_ast",
     "grammar_reference",
+    "Conflict",
+    "detect_conflicts",
     "Span",
     "Rule",
     "Path",
