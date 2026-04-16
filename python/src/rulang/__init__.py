@@ -3,6 +3,12 @@ Rulang - A lightweight DSL for business rules.
 """
 
 from rulang.engine import RuleEngine
+from rulang.dry_run import (
+    ActionChange,
+    DryRunResult,
+    ExecutedAction,
+    MatchedRule,
+)
 from rulang.workflows import Workflow, workflow
 from rulang.exceptions import (
     RuleInterpreterError,
@@ -43,6 +49,10 @@ from rulang.ast import (
 
 __all__ = [
     "RuleEngine",
+    "DryRunResult",
+    "MatchedRule",
+    "ExecutedAction",
+    "ActionChange",
     "Workflow",
     "workflow",
     "RuleInterpreterError",

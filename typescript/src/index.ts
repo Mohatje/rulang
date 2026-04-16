@@ -14,6 +14,14 @@ export { PathResolver } from "./pathResolver.js";
 export { format, formatAst } from "./formatter.js";
 export { grammarReference } from "./reference.js";
 export {
+  diffEntities,
+  type DryRunResult,
+  type MatchedRule,
+  type ExecutedAction,
+  type ActionChange,
+  type ActionKind,
+} from "./dryRun.js";
+export {
   parse,
   walk,
   pathToString,

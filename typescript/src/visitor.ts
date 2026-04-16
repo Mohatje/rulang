@@ -325,7 +325,7 @@ export interface ParsedRule {
   workflowCalls: Set<string>;
 }
 
-class ReturnValue extends Error {
+export class ReturnValue extends Error {
   public constructor(public readonly value: unknown) {
     super("ReturnValue");
   }
