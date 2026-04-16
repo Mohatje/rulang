@@ -1,6 +1,6 @@
 {
   "name": "@mohatje/rulang",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeScript runtime for the Rulang business rules DSL",
   "license": "MIT",
   "type": "module",
@@ -31,7 +31,7 @@
     "build": "tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src test --max-warnings=0",
-    "test": "npm run build && vitest run && npm run test:esm-import",
+    "test": "npm run lint && npm run build && vitest run && npm run test:esm-import",
     "test:esm-import": "node --input-type=module -e \"import('./dist/index.js').catch((error) => { console.error(error); process.exit(1); })\""
   },
   "dependencies": {

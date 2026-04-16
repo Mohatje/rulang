@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { RuleEngine, type DryRunResult } from "../src/index.js";
+import { RuleEngine } from "../src/index.js";
 
 describe("dry_run: return shape", () => {
   test("returns a DryRunResult", () => {

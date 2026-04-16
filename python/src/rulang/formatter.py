@@ -80,6 +80,26 @@ def format_ast(rule: Rule) -> str:
     return _format_rule(rule)
 
 
+def format_condition(condition: "Condition") -> str:
+    """Format a condition subtree to canonical string form (no surrounding rule)."""
+    return _format_condition(condition, _P_OR)
+
+
+def format_action(action: "Action") -> str:
+    """Format a single action to canonical string form."""
+    return _format_action(action)
+
+
+def format_path(path: "Path") -> str:
+    """Format a path in canonical form (no entity-prefix normalization)."""
+    return _format_path(path)
+
+
+def format_expr(expr: "Expr") -> str:
+    """Format an expression to canonical string form."""
+    return _format_expr(expr, _P_OR)
+
+
 def _format_rule(rule: Rule) -> str:
     cond = _format_condition(rule.condition, _P_OR)
     actions = "; ".join(_format_action(a) for a in rule.actions)

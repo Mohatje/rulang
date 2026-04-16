@@ -180,7 +180,7 @@ export class RuleEngine {
     } = {},
   ): DryRunResult {
     const { workflows, entityName = "entity", deepCopy: shouldCopy = true } = options;
-    let current = shouldCopy ? deepCopy(entity) : entity;
+    const current = shouldCopy ? deepCopy(entity) : entity;
 
     const allWorkflows = mergeWorkflows(workflows);
     this.ensureExecutionOrder(allWorkflows);

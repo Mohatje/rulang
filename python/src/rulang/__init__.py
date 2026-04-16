@@ -18,7 +18,14 @@ from rulang.exceptions import (
     WorkflowNotFoundError,
     EvaluationError,
 )
-from rulang.formatter import format, format_ast
+from rulang.formatter import (
+    format,
+    format_action,
+    format_ast,
+    format_condition,
+    format_expr,
+    format_path,
+)
 from rulang.reference import grammar_reference
 from rulang.conflicts import Conflict, detect_conflicts
 from rulang.validation import (
@@ -77,6 +84,10 @@ __all__ = [
     "walk",
     "format",
     "format_ast",
+    "format_condition",
+    "format_action",
+    "format_path",
+    "format_expr",
     "grammar_reference",
     "Conflict",
     "detect_conflicts",
@@ -112,5 +123,5 @@ __all__ = [
     "Return",
 ]
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 

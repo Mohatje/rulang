@@ -9,7 +9,6 @@ import {
   type Not,
   type Or,
   type PathRef,
-  type Rule,
   type SetAction,
   type Compound,
 } from "../src/index.js";
@@ -91,6 +90,30 @@ describe("lit", () => {
     expect(items[0].literalType).toBe("int");
     expect(items[1].literalType).toBe("string");
     expect(items[2].literalType).toBe("bool");
+  });
+});
+
+describe("raw string rejection in expr position", () => {
+  test("eq with raw LHS string throws", () => {
+    expect(() => eq("entity.x", 1)).toThrow(/ambiguous/);
+  });
+  test("eq with raw RHS string throws", () => {
+    expect(() => eq(pathref("entity.x"), "active")).toThrow(/ambiguous/);
+  });
+  test("eq accepts unambiguous non-string primitives", () => {
+    const c = eq(pathref("entity.age"), 18);
+    expect((c.right as Literal).value).toBe(18);
+  });
+});
+
+describe("explicit literal helpers for parity", () => {
+  test("floatLit typed as float", () => {
+    const l = builders.floatLit(3);
+    expect(l.literalType).toBe("float");
+  });
+  test("intLit typed as int", () => {
+    const l = builders.intLit(3);
+    expect(l.literalType).toBe("int");
   });
 });
 
@@ -190,7 +213,10 @@ describe("action builders", () => {
     expect(w.name).toBe("notify");
   });
   test("ret", () => {
-    expect(ret("done").type).toBe("return");
+    expect(ret(lit("done")).type).toBe("return");
+  });
+  test("ret rejects raw string", () => {
+    expect(() => ret("done")).toThrow(/ambiguous/);
   });
 });
 
@@ -201,7 +227,7 @@ describe("rule builder", () => {
   });
   test("populates reads and writes", () => {
     const r = rule(
-      and(gte(pathref("entity.age"), 18), eq(pathref("entity.status"), "active")),
+      and(gte(pathref("entity.age"), 18), eq(pathref("entity.status"), lit("active"))),
       [set_("entity.adult", true)],
     );
     expect(r.reads.has("entity.age")).toBe(true);

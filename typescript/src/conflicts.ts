@@ -1,19 +1,18 @@
 /**
  * Conflict detection (proposal #5).
  *
- * Built on the public AST and canonical formatter. Detects duplicates,
- * contradictions, and shadowing (first_match) between rules.
+ * Mirrors `rulang/conflicts.py`. Uses the public `format*` helpers so
+ * canonical-form comparison is exact; no string-splitting on format() output.
  */
 
 import {
   parse,
   type Rule,
-  type Action,
   type SetAction,
   type Compound,
   type Literal,
 } from "./ast.js";
-import { format } from "./formatter.js";
+import { formatAction, formatCondition, formatPath } from "./formatter.js";
 
 export type ConflictKind = "duplicate" | "contradiction" | "shadowing";
 
@@ -108,28 +107,14 @@ interface RuleMeta {
 }
 
 function analyze(rule: Rule): RuleMeta {
-  // Reuse format() for condition + individual actions. We format a version
-  // of the rule with each action isolated to get per-action canonical strings.
-  const conditionCanon = format({
-    ...rule,
-    actions: [{ type: "return", value: { type: "literal", value: 0, literalType: "int" } }],
-  }).split(" => ")[0];
-
-  const actionsCanon = new Set<string>(
-    rule.actions.map((action) =>
-      format({
-        ...rule,
-        condition: { type: "comparison", left: { type: "literal", value: 0, literalType: "int" }, op: "==", right: { type: "literal", value: 0, literalType: "int" } },
-        actions: [action],
-      }).split(" => ")[1],
-    ),
-  );
+  const conditionCanon = formatCondition(rule.condition);
+  const actionsCanon = new Set<string>(rule.actions.map(formatAction));
 
   const writePaths = new Set<string>();
   const literalWrites = new Map<string, [string, unknown]>();
   for (const action of rule.actions) {
     if (action.type === "set" || action.type === "compound") {
-      const path = pathToCanonicalString(action as SetAction | Compound);
+      const path = formatPath((action as SetAction | Compound).path);
       writePaths.add(path);
       if (action.type === "set" && (action as SetAction).value.type === "literal") {
         const lit = (action as SetAction).value as Literal;
@@ -139,25 +124,6 @@ function analyze(rule: Rule): RuleMeta {
   }
 
   return { conditionCanon, actionsCanon, writePaths, literalWrites };
-}
-
-function pathToCanonicalString(action: SetAction | Compound): string {
-  // Use format() on a trivial rule that just contains this action so the
-  // formatter renders the canonical path. Then strip the RHS.
-  const formatted = format({
-    type: "rule",
-    condition: { type: "comparison", left: { type: "literal", value: 0, literalType: "int" }, op: "==", right: { type: "literal", value: 0, literalType: "int" } },
-    actions: [action],
-    source: "",
-    entityName: "entity",
-    reads: new Set(),
-    writes: new Set(),
-    workflowCalls: new Set(),
-  });
-  const rhs = formatted.split(" => ")[1];
-  // rhs looks like "entity.a = ..." or "entity.a += ..."
-  const eqIdx = rhs.indexOf(" =");
-  return rhs.slice(0, eqIdx);
 }
 
 function setEquals<T>(a: Set<T>, b: Set<T>): boolean {

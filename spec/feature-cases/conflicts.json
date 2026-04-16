@@ -1,0 +1,115 @@
+{
+  "kind": "conflicts",
+  "description": "detect_conflicts() must surface the same conflicts in Python and TypeScript for each case.",
+  "cases": [
+    {
+      "id": "conflict-duplicate-identical",
+      "mode": "all_match",
+      "rules": [
+        "entity.x == 1 => entity.y = 2",
+        "entity.x == 1 => entity.y = 2"
+      ],
+      "expected": [
+        {"kind": "duplicate", "rule_indices": [0, 1]}
+      ]
+    },
+    {
+      "id": "conflict-duplicate-whitespace-variant",
+      "mode": "all_match",
+      "rules": [
+        "entity.x == 1 => entity.y = 2",
+        "entity.x==1=>entity.y=2"
+      ],
+      "expected": [
+        {"kind": "duplicate", "rule_indices": [0, 1]}
+      ]
+    },
+    {
+      "id": "conflict-duplicate-quote-variant",
+      "mode": "all_match",
+      "rules": [
+        "entity.status == 'active' => entity.ok = true",
+        "entity.status == \"active\" => entity.ok = true"
+      ],
+      "expected": [
+        {"kind": "duplicate", "rule_indices": [0, 1]}
+      ]
+    },
+    {
+      "id": "conflict-duplicate-alias-operator",
+      "mode": "all_match",
+      "rules": [
+        "entity.name starts_with 'A' => entity.y = 1",
+        "entity.name startswith 'A' => entity.y = 1"
+      ],
+      "expected": [
+        {"kind": "duplicate", "rule_indices": [0, 1]}
+      ]
+    },
+    {
+      "id": "conflict-no-conflict-different-conditions",
+      "mode": "all_match",
+      "rules": [
+        "entity.x == 1 => entity.y = 2",
+        "entity.x == 2 => entity.y = 3"
+      ],
+      "expected": []
+    },
+    {
+      "id": "conflict-contradiction",
+      "mode": "all_match",
+      "rules": [
+        "entity.x == 1 => entity.y = 'a'",
+        "entity.x == 1 => entity.y = 'b'"
+      ],
+      "expected": [
+        {"kind": "contradiction", "rule_indices": [0, 1], "fields": ["entity.y"]}
+      ]
+    },
+    {
+      "id": "conflict-shadowing-first-match",
+      "mode": "first_match",
+      "rules": [
+        "entity.x == 1 => entity.a = 1",
+        "entity.x == 1 => entity.b = 2"
+      ],
+      "expected": [
+        {"kind": "shadowing", "rule_indices": [0, 1]}
+      ]
+    },
+    {
+      "id": "conflict-no-shadowing-all-match",
+      "mode": "all_match",
+      "rules": [
+        "entity.x == 1 => entity.a = 1",
+        "entity.x == 1 => entity.b = 2"
+      ],
+      "expected": []
+    },
+    {
+      "id": "conflict-duplicate-supersedes-shadowing",
+      "mode": "first_match",
+      "rules": [
+        "entity.x == 1 => entity.y = 2",
+        "entity.x == 1 => entity.y = 2"
+      ],
+      "expected": [
+        {"kind": "duplicate", "rule_indices": [0, 1]}
+      ]
+    },
+    {
+      "id": "conflict-triple-duplicates",
+      "mode": "all_match",
+      "rules": [
+        "entity.x == 1 => entity.y = 2",
+        "entity.x == 1 => entity.y = 2",
+        "entity.x == 1 => entity.y = 2"
+      ],
+      "expected": [
+        {"kind": "duplicate", "rule_indices": [0, 1]},
+        {"kind": "duplicate", "rule_indices": [0, 2]},
+        {"kind": "duplicate", "rule_indices": [1, 2]}
+      ]
+    }
+  ]
+}

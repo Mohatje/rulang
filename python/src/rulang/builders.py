@@ -144,11 +144,28 @@ def _parse_dotted(text: str) -> Path:
 # --- Literals / expressions --------------------------------------------
 
 
+def float_lit(value: float) -> Literal_:
+    """Explicit float literal. Use when you want a float representation regardless
+    of whether the input value is a whole number.
+
+    TypeScript can't distinguish `3.0` from `3` at runtime; Python can. Use
+    `float_lit(3)` when you want float semantics and need cross-runtime parity.
+    """
+    return Literal_(value=float(value), type="float", span=None)
+
+
+def int_lit(value: int) -> Literal_:
+    """Explicit int literal."""
+    return Literal_(value=int(value), type="int", span=None)
+
+
 def lit(value: Any) -> Literal_:
     """
     Build a `Literal_` with the type inferred from the Python value.
 
     Supports None, bool, int, float, str, and list (of literals or Exprs).
+    Use `float_lit()` / `int_lit()` for explicit control when the Python
+    value is ambiguous or when you need strict cross-runtime type parity.
     """
     if value is None:
         return Literal_(value=None, type="none", span=None)
@@ -161,17 +178,33 @@ def lit(value: Any) -> Literal_:
     if isinstance(value, str):
         return Literal_(value=value, type="string", span=None)
     if isinstance(value, (list, tuple)):
-        items = tuple(_as_expr(v) for v in value)
+        # Inside a list literal, context is unambiguous (all elements are
+        # literals), so strings can be auto-wrapped. AST nodes pass through.
+        items = tuple(
+            v if isinstance(v, (Literal_, PathRef, FunctionCall, Binary, NullCoalesce, Unary, WorkflowCallExpr)) else lit(v)
+            for v in value
+        )
         return Literal_(value=items, type="list", span=None)
     raise TypeError(f"lit() does not accept values of type {type(value).__name__}")
 
 
 def _as_expr(value: Any) -> Expr:
-    """Coerce raw Python values to an Expr via `lit()`; pass through AST nodes."""
+    """Coerce raw Python values to an Expr via `lit()`; pass through AST nodes.
+
+    Raw strings are rejected because they're ambiguous: the caller might mean
+    either a string literal or a path. Use `lit('hello')` for literals and
+    `pathref('entity.name')` for paths.
+    """
     if isinstance(value, (Literal_, PathRef, FunctionCall, Binary, NullCoalesce, Unary, WorkflowCallExpr)):
         return value
     if isinstance(value, Path):
         return PathRef(path=value, span=None)
+    if isinstance(value, str):
+        raise TypeError(
+            "Raw strings in expression position are ambiguous — they could "
+            "mean a path or a string literal. Use lit(%r) for a string "
+            "literal or pathref(%r) for a path." % (value, value)
+        )
     return lit(value)
 
 

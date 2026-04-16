@@ -115,7 +115,20 @@ def test_lit_infers_type(value, expected_type):
     assert lit(value).type == expected_type
 
 
-def test_lit_list():
+def test_float_lit_explicit():
+    from rulang.builders import float_lit
+    assert float_lit(3).type == "float"
+    assert float_lit(3).value == 3.0
+
+
+def test_int_lit_explicit():
+    from rulang.builders import int_lit
+    assert int_lit(3.9).type == "int"
+    assert int_lit(3.9).value == 3
+
+
+def test_lit_list_auto_wraps_strings():
+    # Inside a list literal, context is unambiguous — strings become string literals.
     result = lit([1, "two", True])
     assert result.type == "list"
     assert len(result.value) == 3
@@ -193,10 +206,22 @@ def test_comparison_builders(fn_, expected_op):
     assert c.op == expected_op
 
 
-def test_comparison_coerces_raw_values():
-    c = eq("entity.x", 1)  # raw string + raw int
-    # "entity.x" becomes a string literal (not a path) because lit() is applied
-    assert isinstance(c.left, Literal_)
+def test_comparison_rejects_raw_strings_with_guidance():
+    # Raw strings are ambiguous — could be a path or a literal. Require explicit intent.
+    with pytest.raises(TypeError, match="ambiguous"):
+        eq("entity.x", 1)
+    with pytest.raises(TypeError, match="pathref"):
+        eq(pathref("entity.x"), "active")  # RHS is a bare string
+
+
+def test_comparison_accepts_unambiguous_raw_values():
+    # Ints, floats, bools, None are unambiguous — literal conversion is fine.
+    c = eq(pathref("entity.age"), 18)
+    assert isinstance(c.right, Literal_)
+    assert c.right.type == "int"
+
+    c2 = eq(pathref("entity.flag"), True)
+    assert c2.right.type == "bool"
 
 
 def test_comparison_with_pathref_shortcut():
@@ -284,8 +309,13 @@ def test_workflow_call_action():
 
 
 def test_ret_action():
-    r = ret("done")
+    r = ret(lit("done"))
     assert isinstance(r, Return)
+
+
+def test_ret_rejects_raw_string():
+    with pytest.raises(TypeError, match="ambiguous"):
+        ret("done")
 
 
 # --- Rule builder -----------------------------------------------------
@@ -305,7 +335,7 @@ def test_rule_builder_populates_reads_writes():
     r = rule(
         condition=and_(
             gte(pathref("entity.age"), 18),
-            eq(pathref("entity.status"), "active"),
+            eq(pathref("entity.status"), lit("active")),
         ),
         actions=[set_("entity.adult", True)],
     )
@@ -329,7 +359,7 @@ def test_format_of_built_rule_parses_back():
     r = rule(
         condition=and_(
             gte(pathref("entity.age"), 18),
-            eq(pathref("entity.status"), "active"),
+            eq(pathref("entity.status"), lit("active")),
         ),
         actions=[set_("entity.adult", True)],
     )

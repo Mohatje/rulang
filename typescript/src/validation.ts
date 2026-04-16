@@ -12,7 +12,6 @@ import {
   type ComparisonOp,
   type Condition,
   type Expr,
-  type Literal,
   type Path,
   type Rule,
   type Span,

@@ -1,0 +1,111 @@
+{
+  "kind": "format",
+  "description": "Cross-runtime canonical form: parse(input) → format should equal `expected` in both runtimes.",
+  "cases": [
+    {
+      "id": "format-whitespace",
+      "input": "entity.x==1=>entity.y=2",
+      "expected": "entity.x == 1 => entity.y = 2"
+    },
+    {
+      "id": "format-excess-whitespace",
+      "input": "entity.x   ==   1  =>  entity.y   =  2",
+      "expected": "entity.x == 1 => entity.y = 2"
+    },
+    {
+      "id": "format-double-quotes-become-single",
+      "input": "entity.x == \"hi\" => entity.y = 1",
+      "expected": "entity.x == 'hi' => entity.y = 1"
+    },
+    {
+      "id": "format-bool-none-lowercase",
+      "input": "entity.x == True => entity.y = False",
+      "expected": "entity.x == true => entity.y = false"
+    },
+    {
+      "id": "format-null-alias-to-none",
+      "input": "entity.x == null => entity.y = None",
+      "expected": "entity.x == none => entity.y = none"
+    },
+    {
+      "id": "format-starts-with-alias",
+      "input": "entity.x starts_with 'a' => entity.y = 1",
+      "expected": "entity.x startswith 'a' => entity.y = 1"
+    },
+    {
+      "id": "format-ends-with-alias",
+      "input": "entity.x ends_with 'a' => entity.y = 1",
+      "expected": "entity.x endswith 'a' => entity.y = 1"
+    },
+    {
+      "id": "format-and-precedence",
+      "input": "entity.a or entity.b and entity.c => entity.r = 1",
+      "expected": "entity.a == true or entity.b == true and entity.c == true => entity.r = 1"
+    },
+    {
+      "id": "format-or-parens-preserved-under-and",
+      "input": "(entity.a or entity.b) and entity.c => entity.r = 1",
+      "expected": "(entity.a == true or entity.b == true) and entity.c == true => entity.r = 1"
+    },
+    {
+      "id": "format-not-wraps-and",
+      "input": "not (entity.a and entity.b) => entity.r = 1",
+      "expected": "not (entity.a == true and entity.b == true) => entity.r = 1"
+    },
+    {
+      "id": "format-mul-binds-tighter-than-add",
+      "input": "entity.x == entity.a + entity.b * 2 => entity.y = 1",
+      "expected": "entity.x == entity.a + entity.b * 2 => entity.y = 1"
+    },
+    {
+      "id": "format-add-parens-under-mul",
+      "input": "entity.x == (entity.a + entity.b) * 2 => entity.y = 1",
+      "expected": "entity.x == (entity.a + entity.b) * 2 => entity.y = 1"
+    },
+    {
+      "id": "format-null-coalesce",
+      "input": "entity.x ?? 'default' == 'default' => entity.y = 1",
+      "expected": "entity.x ?? 'default' == 'default' => entity.y = 1"
+    },
+    {
+      "id": "format-null-safe-path",
+      "input": "entity.a?.b?.c exists => entity.r = 1",
+      "expected": "entity.a?.b?.c exists => entity.r = 1"
+    },
+    {
+      "id": "format-list-literal",
+      "input": "entity.x in [1, 2, 3] => entity.y = 1",
+      "expected": "entity.x in [1, 2, 3] => entity.y = 1"
+    },
+    {
+      "id": "format-function-call",
+      "input": "lower(entity.name) == 'bob' => entity.y = 1",
+      "expected": "lower(entity.name) == 'bob' => entity.y = 1"
+    },
+    {
+      "id": "format-compound-assignment",
+      "input": "entity.x == 1 => entity.count += 1",
+      "expected": "entity.x == 1 => entity.count += 1"
+    },
+    {
+      "id": "format-multiple-actions",
+      "input": "entity.x == 1 => entity.a=1;entity.b=2;ret 'done'",
+      "expected": "entity.x == 1 => entity.a = 1; entity.b = 2; ret 'done'"
+    },
+    {
+      "id": "format-workflow-call",
+      "input": "entity.x == 1 => workflow(\"log\", entity.id)",
+      "expected": "entity.x == 1 => workflow('log', entity.id)"
+    },
+    {
+      "id": "format-negative-index",
+      "input": "entity.items[-1].price == 20 => ret true",
+      "expected": "entity.items[-1].price == 20 => ret true"
+    },
+    {
+      "id": "format-idempotent-double-apply",
+      "input": "entity.age >= 18 => entity.adult = true",
+      "expected": "entity.age >= 18 => entity.adult = true"
+    }
+  ]
+}

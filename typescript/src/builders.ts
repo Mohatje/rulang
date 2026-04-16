@@ -121,14 +121,36 @@ export function lit(value: unknown): Literal {
   }
   if (typeof value === "string") return { type: "literal", value, literalType: "string" };
   if (Array.isArray(value)) {
-    return { type: "literal", value: value.map(asExpr), literalType: "list" };
+    // Inside a list literal, context is unambiguous — strings are literals.
+    return {
+      type: "literal",
+      value: value.map((v) => (isAstExpr(v) ? (v as Expr) : lit(v))),
+      literalType: "list",
+    };
   }
   throw new TypeError(`lit() does not accept values of type ${typeof value}`);
+}
+
+/** Explicit-float helper: `floatLit(3.0)` produces a float literal even when the value is an integer. */
+export function floatLit(value: number): Literal {
+  return { type: "literal", value, literalType: "float" };
+}
+
+/** Explicit-int helper: `intLit(3)` produces an int literal. */
+export function intLit(value: number): Literal {
+  return { type: "literal", value: Math.trunc(value), literalType: "int" };
 }
 
 function asExpr(value: unknown): Expr {
   if (isAstExpr(value)) return value as Expr;
   if (isPath(value)) return { type: "pathRef", path: value as Path } satisfies PathRef;
+  if (typeof value === "string") {
+    throw new TypeError(
+      `Raw strings in expression position are ambiguous — they could mean a ` +
+        `path or a string literal. Use lit(${JSON.stringify(value)}) for a ` +
+        `string literal or pathref(${JSON.stringify(value)}) for a path.`,
+    );
+  }
   return lit(value);
 }
 

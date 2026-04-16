@@ -8,7 +8,6 @@ import {
   type Comparison,
   type Existence,
   type And,
-  type Or,
   type Not,
   type PathRef,
   type Literal,

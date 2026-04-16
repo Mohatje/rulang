@@ -29,12 +29,7 @@ from rulang.ast import (
     Set_,
     parse,
 )
-from rulang.formatter import (
-    _P_OR,
-    _format_action,
-    _format_condition,
-    _format_path,
-)
+from rulang.formatter import format_action, format_condition, format_path
 
 ConflictKind = Literal["duplicate", "contradiction", "shadowing"]
 
@@ -157,13 +152,13 @@ class _RuleMeta:
 
 def _analyze(rule: Rule) -> _RuleMeta:
     """Compute comparison-ready canonical strings and literal-write map."""
-    condition_canon = _format_condition(rule.condition, _P_OR)
-    actions_canon = frozenset(_format_action(a) for a in rule.actions)
+    condition_canon = format_condition(rule.condition)
+    actions_canon = frozenset(format_action(a) for a in rule.actions)
     write_paths: set[str] = set()
     literal_writes: dict[str, Any] = {}
     for action in rule.actions:
         if isinstance(action, (Set_, Compound)):
-            path_str = _format_path(action.path)
+            path_str = format_path(action.path)
             write_paths.add(path_str)
             if isinstance(action, Set_) and isinstance(action.value, Literal_):
                 literal_writes[path_str] = (action.value.type, action.value.value)

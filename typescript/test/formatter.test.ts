@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { format, formatAst, parse, RuleSyntaxError, type Rule } from "../src/index.js";
+import { format, formatAst, parse, RuleSyntaxError } from "../src/index.js";
 
 describe("canonical formatter", () => {
   const cases: Array<[string, string]> = [
