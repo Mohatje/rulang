@@ -13,6 +13,7 @@ from rulang.exceptions import (
     EvaluationError,
 )
 from rulang.formatter import format, format_ast
+from rulang.reference import grammar_reference
 from rulang.ast import (
     parse,
     walk,
@@ -55,6 +56,7 @@ __all__ = [
     "walk",
     "format",
     "format_ast",
+    "grammar_reference",
     "Span",
     "Rule",
     "Path",
