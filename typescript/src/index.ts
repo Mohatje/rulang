@@ -14,6 +14,7 @@ export { PathResolver } from "./pathResolver.js";
 export { format, formatAst } from "./formatter.js";
 export { grammarReference } from "./reference.js";
 export { detectConflicts, type Conflict, type ConflictKind } from "./conflicts.js";
+export * as builders from "./builders.js";
 export {
   diffEntities,
   type DryRunResult,
