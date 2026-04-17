@@ -18,16 +18,22 @@ jobs:
 
       - name: Determine version bump type
         id: bump-type
+        # Pass the commit message through an env var — never interpolate
+        # `${{ github.event.* }}` directly into a shell script. Commit messages
+        # are attacker-controllable, and expression interpolation happens
+        # *before* bash parses the script, so backticks, $(...) and similar
+        # become active command substitution.
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
           if echo "$COMMIT_MSG" | grep -qi "#major"; then
-            echo "type=major" >> $GITHUB_OUTPUT
+            echo "type=major" >> "$GITHUB_OUTPUT"
           elif echo "$COMMIT_MSG" | grep -qi "#minor"; then
-            echo "type=minor" >> $GITHUB_OUTPUT
+            echo "type=minor" >> "$GITHUB_OUTPUT"
           elif echo "$COMMIT_MSG" | grep -qi "#patch"; then
-            echo "type=patch" >> $GITHUB_OUTPUT
+            echo "type=patch" >> "$GITHUB_OUTPUT"
           else
-            echo "type=skip" >> $GITHUB_OUTPUT
+            echo "type=skip" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Skip if no version tag
