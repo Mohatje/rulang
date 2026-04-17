@@ -1,6 +1,6 @@
 [project]
 name = "rulang"
-version = "1.0.0"
+version = "1.1.0"
 description = "A lightweight DSL for business rules with dependency analysis"
 readme = "README.md"
 license = "MIT"
@@ -43,6 +43,9 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/rulang"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"src/rulang/docs/grammar-reference.md" = "rulang/docs/grammar-reference.md"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
@@ -72,7 +75,7 @@ exclude = [
 ]
 
 [tool.bumpversion]
-current_version = "1.0.0"
+current_version = "1.1.0"
 commit = false
 tag = false
 

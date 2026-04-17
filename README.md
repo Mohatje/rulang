@@ -16,6 +16,7 @@ DSL grammar and a shared cross-runtime spec suite.
 - **String Operations**: Contains, startswith, endswith, regex matching
 - **Null-Safe Access**: Optional chaining (`?.`) and null coalescing (`??`)
 - **Built-in Functions**: String manipulation, type coercion, collection utilities
+- **Public AST + tooling APIs**: parse to a stable, span-carrying AST, format to canonical text, detect conflicts across rule sets, dry-run rules with a structured diff, validate rules against your domain schema, and build rules programmatically — all cross-runtime with Python/TypeScript parity. See [Tooling API](#tooling-api).
 
 ## Installation
 
@@ -63,9 +64,7 @@ print(entity)  # {'age': 25, 'is_adult': True, 'discount': 0.1}
 
 The Python runtime remains the reference implementation. Cross-runtime parity is
 enforced by replaying both generated and hand-maintained shared corpora in
-Python and TypeScript, with the current release contract documented in
-[`docs/semantic-parity-plan.md`](docs/semantic-parity-plan.md) and the test-file
-classification recorded in [`docs/semantic-parity-audit.md`](docs/semantic-parity-audit.md).
+Python and TypeScript.
 
 ```bash
 npm run generate:portable-cases
@@ -468,6 +467,181 @@ except WorkflowNotFoundError as e:
     print(f"Workflow error: {e}")
 ```
 
+## Tooling API
+
+Beyond the `RuleEngine`, rulang ships a set of tooling APIs intended for
+consumers that build rule editors, linters, or LLM agents around the DSL.
+All of the APIs below have a matching TypeScript counterpart and are enforced
+across runtimes by shared spec fixtures in `spec/feature-cases/`.
+
+### Public AST
+
+`rulang.parse(text)` returns a frozen-dataclass AST. Every node carries a
+`Span` into the source so downstream diagnostics can point back at the
+original text.
+
+```python
+from rulang import parse, walk
+
+rule = parse("entity.age >= 18 => entity.adult = true")
+rule.reads           # frozenset({'entity.age'})
+rule.writes          # frozenset({'entity.adult'})
+rule.condition       # Comparison(...)
+rule.actions         # (Set_(...),)
+
+# Visit every node
+walk(rule, lambda n: print(type(n).__name__))
+```
+
+### Canonical formatter
+
+`rulang.format(rule)` produces one canonical string form — stable whitespace,
+single-quoted strings, normalized booleans, canonical operator spellings.
+`format(parse(text))` is idempotent and round-trips through the parser.
+
+```python
+from rulang import format
+format("entity.x==1=>entity.y=2")  # "entity.x == 1 => entity.y = 2"
+```
+
+Companion helpers: `format_condition`, `format_action`, `format_path`,
+`format_expr`.
+
+### Conflict detection
+
+`detect_conflicts` returns structured findings for duplicate, contradictory,
+and shadowing rules. Built on top of the AST + formatter, so whitespace,
+quote style, and operator aliases normalize away.
+
+```python
+from rulang import detect_conflicts
+detect_conflicts([
+    "entity.x == 1 => entity.y = 'a'",
+    "entity.x == 1 => entity.y = 'b'",
+])
+# [Conflict(kind='contradiction', rule_indices=(0, 1),
+#           fields=('entity.y',), diff={'entity.y': (('string', 'a'), ('string', 'b'))}, ...)]
+```
+
+### Dry-run with diff
+
+`engine.dry_run(entity)` evaluates rules without mutating the original
+entity and returns a full trace: which rules matched, which executed, the
+per-action before/after, an aggregated path-level diff, and the return
+value.
+
+```python
+engine = RuleEngine("all_match")
+engine.add_rules([
+    "entity.a == 0 => entity.a = 1",
+    "entity.a == 1 => entity.b = 2",
+])
+result = engine.dry_run({"a": 0, "b": 0})
+result.diff               # {'a': (0, 1), 'b': (0, 2)}
+result.final_entity       # {'a': 1, 'b': 2}
+result.matched_rules      # per-rule condition + executed flags
+```
+
+### Generic validation
+
+`validate(rule, resolver)` walks the AST and calls semantic hooks on a
+user-supplied `Resolver`; findings accumulate into a `list[Diagnostic]`.
+Parse errors appear as `rulang.syntax_error` diagnostics — `validate` never
+throws.
+
+```python
+from rulang import BaseResolver, PathInfo, validate
+
+class Schema(BaseResolver):
+    KNOWN = {"entity.age", "entity.adult"}
+    def check_path(self, path):
+        p = path.to_string(normalize_entity="entity", include_indices=False)
+        return PathInfo(exists=p in self.KNOWN)
+
+validate("entity.missing >= 18 => entity.adult = true", Schema())
+# [Diagnostic(code='rulang.unknown_path', ...)]
+```
+
+Consumers can also override `check_assignment`, `check_comparison`, and
+`check_workflow_call` to emit their own namespaced diagnostics
+(`myapp.no_high`, etc.). Severities are per-code and can be overridden at
+call time.
+
+#### Diagnostic codes
+
+Rulang owns every code starting with `rulang.`. Anything else is consumer-owned — use a reverse-domain or project prefix (e.g., `myapp.no_high`).
+
+| Code | Default severity | Emitted when |
+|------|-----------------|--------------|
+| `rulang.syntax_error`           | `error` | parsing the rule text failed |
+| `rulang.unknown_path`           | `error` | `Resolver.check_path` returned `PathInfo(exists=False)` |
+| `rulang.path_not_writable`      | `error` | `check_path` returned `PathInfo(writable=False)` for an assignment target |
+| `rulang.type_mismatch`          | `error` | consumer resolver flagged an assignment/comparison |
+| `rulang.unknown_workflow`       | `error` | consumer resolver flagged a workflow call |
+| `rulang.workflow_arg_mismatch`  | `error` | consumer resolver flagged workflow arg shape |
+| `rulang.invalid_literal`        | `error` | consumer resolver flagged a literal |
+
+The full list is exported as `rulang.validation.DIAGNOSTIC_CODES`. Adjust severities per call with `severity_overrides={"rulang.unknown_path": "warning"}`. Overrides apply to consumer-owned codes too.
+
+Resolver hooks return either the `OK` sentinel (no finding), the `UNKNOWN` sentinel (opt out — rulang emits nothing), or a list of `Diagnostic` objects. Defaults on `BaseResolver` are no-ops, so consumers override only what they care about.
+
+### Programmatic rule building
+
+`rulang.builders` provides ergonomic constructors so consumers (visual
+rule builders, LLM agents, code-generators) can assemble rules without
+regex-splitting strings.
+
+```python
+from rulang.builders import rule, eq, and_, pathref, lit, set_
+from rulang import format
+
+r = rule(
+    condition=and_(
+        eq(pathref("entity.status"), lit("active")),
+        eq(pathref("entity.verified"), True),
+    ),
+    actions=[set_("entity.can_order", True)],
+)
+format(r)
+# "entity.status == 'active' and entity.verified == true => entity.can_order = true"
+```
+
+Raw strings in expression position are rejected as ambiguous (they could
+mean a path or a literal); use `pathref("entity.x")` or `lit("x")`.
+
+### Grammar reference
+
+`grammar_reference()` returns the canonical, LLM-ready grammar cheatsheet
+as markdown. Ships as package data, so it's versioned alongside the runtime
+and can't drift.
+
+```python
+import rulang
+prompt_fragment = rulang.grammar_reference()
+```
+
+The source of truth is [`docs/grammar-reference.md`](docs/grammar-reference.md). Edit that file and run `node scripts/generate_grammar_reference.mjs` to sync both runtimes.
+
+## Python ↔ TypeScript naming
+
+The runtimes are identical semantically but adapt to each language's idioms. Quick cheat sheet:
+
+| Python                                                         | TypeScript                                                    |
+|----------------------------------------------------------------|---------------------------------------------------------------|
+| `engine.add_rules`, `engine.get_rules`, `engine.evaluate`      | `engine.addRules`, `engine.getRules`, `engine.evaluate`       |
+| `engine.dry_run(entity, deep_copy=True)`                       | `engine.dryRun(entity, { deepCopy: true })`                   |
+| `detect_conflicts(rules, mode="all_match")`                    | `detectConflicts(rules, { mode: "all_match" })`               |
+| `validate(rule, resolver, severity_overrides=…)`               | `validate(rule, resolver, { severityOverrides: … })`          |
+| `format_ast`, `format_condition`, `format_action`, `format_path`, `format_expr` | `formatAst`, `formatCondition`, `formatAction`, `formatPath`, `formatExpr` |
+| `builders.and_`, `builders.or_`, `builders.not_`               | `builders.and`, `builders.or`, `builders.not`                 |
+| `builders.in_`, `builders.not_in`                              | `builders.inOp`, `builders.notIn`                             |
+| `builders.float_lit`, `builders.int_lit`                       | `builders.floatLit`, `builders.intLit`                        |
+| `BaseResolver.check_path`, `check_assignment`, `check_comparison`, `check_workflow_call` | `BaseResolver.checkPath`, `checkAssignment`, `checkComparison`, `checkWorkflowCall` |
+| `DryRunResult.matched_rules`, `.executed_actions`, `.final_entity` | `DryRunResult.matchedRules`, `.executedActions`, `.finalEntity` |
+| `grammar_reference()`                                           | `grammarReference()`                                         |
+
+**Parity notes.** Python distinguishes `int` from `float` at runtime; TypeScript has only `number`, so `lit(3)` and `lit(3.0)` both yield `literalType: "int"` in TS. Use `builders.float_lit(n)` / `builders.floatLit(n)` when you need float semantics with cross-runtime parity.
+
 ## Development
 
 ```bash
@@ -478,11 +652,14 @@ uv --directory python sync --all-extras
 # Run Python tests
 uv --directory python run python -m pytest tests/ -v
 
-# Run TypeScript tests
+# Run TypeScript tests (lint + build + vitest + ESM import smoke)
 npm run test:typescript
 
 # Regenerate parser (after grammar changes)
 npm run generate:parsers
+
+# Sync the grammar reference into both runtimes (after editing docs/grammar-reference.md)
+node scripts/generate_grammar_reference.mjs
 ```
 
 ## License

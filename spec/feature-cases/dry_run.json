@@ -1,0 +1,144 @@
+{
+  "kind": "dry_run",
+  "description": "engine.dry_run() result must match in Python and TypeScript.",
+  "cases": [
+    {
+      "id": "dry-run-simple-set",
+      "mode": "first_match",
+      "rules": ["entity.x == 1 => entity.y = 2"],
+      "input": {"x": 1, "y": 0},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true}
+        ],
+        "diff": {"y": [0, 2]},
+        "final_entity": {"x": 1, "y": 2},
+        "returned": true
+      }
+    },
+    {
+      "id": "dry-run-no-match-returns-null",
+      "mode": "first_match",
+      "rules": ["entity.x == 99 => entity.y = 1"],
+      "input": {"x": 1, "y": 0},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": false, "executed": false}
+        ],
+        "diff": {},
+        "final_entity": {"x": 1, "y": 0},
+        "returned": null
+      }
+    },
+    {
+      "id": "dry-run-all-match-chains",
+      "mode": "all_match",
+      "rules": [
+        "entity.a == 0 => entity.a = 1",
+        "entity.a == 1 => entity.b = 2"
+      ],
+      "input": {"a": 0, "b": 0},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true},
+          {"index": 1, "condition_result": true, "executed": true}
+        ],
+        "diff": {"a": [0, 1], "b": [0, 2]},
+        "final_entity": {"a": 1, "b": 2},
+        "returned": true
+      }
+    },
+    {
+      "id": "dry-run-first-match-shadowing",
+      "mode": "first_match",
+      "rules": [
+        "entity.x > 0 => entity.a = 1",
+        "entity.x > 0 => entity.b = 1"
+      ],
+      "input": {"x": 1, "a": 0, "b": 0},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true},
+          {"index": 1, "condition_result": false, "executed": false}
+        ],
+        "diff": {"a": [0, 1]},
+        "final_entity": {"x": 1, "a": 1, "b": 0},
+        "returned": true
+      }
+    },
+    {
+      "id": "dry-run-ret-value",
+      "mode": "first_match",
+      "rules": ["entity.x == 1 => ret 'matched'"],
+      "input": {"x": 1},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true}
+        ],
+        "diff": {},
+        "final_entity": {"x": 1},
+        "returned": "matched"
+      }
+    },
+    {
+      "id": "dry-run-compound",
+      "mode": "first_match",
+      "rules": ["entity.x == 1 => entity.count += 5"],
+      "input": {"x": 1, "count": 10},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true}
+        ],
+        "diff": {"count": [10, 15]},
+        "final_entity": {"x": 1, "count": 15},
+        "returned": true
+      }
+    },
+    {
+      "id": "dry-run-nested-path",
+      "mode": "first_match",
+      "rules": ["entity.user.name == 'alice' => entity.user.role = 'admin'"],
+      "input": {"user": {"name": "alice", "role": "guest"}},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true}
+        ],
+        "diff": {"user.role": ["guest", "admin"]},
+        "final_entity": {"user": {"name": "alice", "role": "admin"}},
+        "returned": true
+      }
+    },
+    {
+      "id": "dry-run-list-index-write",
+      "mode": "first_match",
+      "rules": ["entity.items[0].price == 10 => entity.items[0].price = 15"],
+      "input": {"items": [{"price": 10}, {"price": 20}]},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true}
+        ],
+        "diff": {"items[0].price": [10, 15]},
+        "final_entity": {"items": [{"price": 15}, {"price": 20}]},
+        "returned": true
+      }
+    },
+    {
+      "id": "dry-run-cancelled-change-drops",
+      "mode": "all_match",
+      "rules": [
+        "entity.x == 1 => entity.a = 10",
+        "entity.a == 10 => entity.a = 0"
+      ],
+      "input": {"x": 1, "a": 0},
+      "expected": {
+        "matched": [
+          {"index": 0, "condition_result": true, "executed": true},
+          {"index": 1, "condition_result": true, "executed": true}
+        ],
+        "diff": {},
+        "final_entity": {"x": 1, "a": 0},
+        "returned": true
+      }
+    }
+  ]
+}

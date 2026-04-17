@@ -4,15 +4,24 @@ RuleEngine - Main entry point for the business rules DSL.
 Provides a clean API for:
 - Adding rules (single or list)
 - Evaluating rules against entities
+- Dry-running rules (with per-path diff)
 - Dependency graph introspection
 - Workflow registration
 """
 
+import copy as _copy
 from typing import Any, Callable, Literal
 
 from rulang.dependency_graph import DependencyGraph
+from rulang.dry_run import (
+    ActionChange,
+    DryRunResult,
+    ExecutedAction,
+    MatchedRule,
+    _diff_entities,
+)
 from rulang.exceptions import EvaluationError, PathResolutionError, WorkflowNotFoundError
-from rulang.visitor import ParsedRule, RuleInterpreter, parse_rule
+from rulang.visitor import ParsedRule, ReturnValue, RuleInterpreter, parse_rule
 from rulang.workflows import Workflow, merge_workflows, workflow as workflow_decorator
 
 
@@ -130,6 +139,175 @@ class RuleEngine:
 
         return None
 
+    def dry_run(
+        self,
+        entity: Any,
+        workflows: dict[str, Callable | Workflow] | None = None,
+        entity_name: str = "entity",
+        *,
+        deep_copy: bool = True,
+    ) -> DryRunResult:
+        """
+        Evaluate rules against an entity and return a structured trace.
+
+        Unlike `evaluate`, this collects:
+        - every rule's condition result (matched vs. not) in the order they
+          were evaluated,
+        - which rules actually executed (in first_match mode, later matching
+          rules appear with `executed=False` so UIs can surface them),
+        - per-action before/after values at every path that changed,
+        - an aggregated diff across the whole run,
+        - the final entity and the value `evaluate()` would have returned.
+
+        Args:
+            entity: the entity to evaluate against.
+            workflows: optional mapping of workflow name → callable / Workflow.
+            entity_name: identifier that rules use for the entity (default "entity").
+            deep_copy: when True (default), the entity is deep-copied before
+                evaluation so this call is non-mutating.
+
+        Returns:
+            A `DryRunResult`.
+        """
+        if deep_copy:
+            entity = _copy.deepcopy(entity)
+
+        all_workflows = merge_workflows(workflows)
+        self._ensure_execution_order(all_workflows)
+
+        matched_rules: list[MatchedRule] = []
+        executed_actions: list[ExecutedAction] = []
+        aggregate_diff: dict[str, tuple[Any, Any]] = {}
+        last_return_value: Any = None
+        any_executed = False
+        first_match_executed = False
+        returned: Any = None
+        stop_after_return = False
+
+        for rule_index in self._execution_order:
+            if stop_after_return:
+                # Still trace remaining rules as not-executed (in first_match after ret)
+                parsed = self._rules[rule_index]
+                matched_rules.append(
+                    MatchedRule(
+                        index=rule_index,
+                        rule_text=parsed.rule_text,
+                        condition_result=False,
+                        executed=False,
+                    )
+                )
+                continue
+
+            parsed = self._rules[rule_index]
+            interpreter = RuleInterpreter(entity, all_workflows, entity_name)
+
+            try:
+                condition_value = interpreter.visit(parsed.tree.condition())
+            except (EvaluationError, PathResolutionError, WorkflowNotFoundError):
+                raise
+            except Exception as e:  # noqa: BLE001
+                raise EvaluationError(parsed.rule_text, str(e)) from e
+
+            matched = bool(condition_value)
+            execute_this = False
+            if matched:
+                if self.mode == "all_match":
+                    execute_this = True
+                elif not first_match_executed:
+                    execute_this = True
+                    first_match_executed = True
+
+            if execute_this:
+                any_executed = True
+                rule_returned = self._execute_actions_traced(
+                    parsed,
+                    rule_index,
+                    interpreter,
+                    entity,
+                    executed_actions,
+                    aggregate_diff,
+                )
+                if rule_returned is not _NO_RETURN:
+                    last_return_value = rule_returned
+                    # In first_match mode, a ret ends evaluation entirely.
+                    if self.mode == "first_match":
+                        stop_after_return = True
+                else:
+                    # No explicit ret: matched rule returns True by engine convention.
+                    if last_return_value is None:
+                        last_return_value = True
+
+            matched_rules.append(
+                MatchedRule(
+                    index=rule_index,
+                    rule_text=parsed.rule_text,
+                    condition_result=matched,
+                    executed=execute_this,
+                )
+            )
+
+            # first_match semantics: stop after the first executing rule.
+            if execute_this and self.mode == "first_match" and not stop_after_return:
+                stop_after_return = True
+
+        if any_executed:
+            returned = last_return_value
+
+        return DryRunResult(
+            matched_rules=tuple(matched_rules),
+            executed_actions=tuple(executed_actions),
+            diff=aggregate_diff,
+            final_entity=entity,
+            returned=returned,
+        )
+
+    def _execute_actions_traced(
+        self,
+        parsed: ParsedRule,
+        rule_index: int,
+        interpreter: RuleInterpreter,
+        entity: Any,
+        executed_actions: list[ExecutedAction],
+        aggregate_diff: dict[str, tuple[Any, Any]],
+    ) -> Any:
+        """Execute a rule's actions, recording per-action diffs.
+
+        Returns the explicit return value if `ret` was hit, else `_NO_RETURN`.
+        """
+        actions_ctx = parsed.tree.actions()
+        for action_ctx in actions_ctx.action():
+            before_snapshot = _copy.deepcopy(entity)
+            try:
+                interpreter.visit(action_ctx)
+            except ReturnValue as rv:
+                changes = _to_changes(_diff_entities(before_snapshot, entity))
+                for path, (b, a) in _diff_entities(before_snapshot, entity).items():
+                    _merge_into_diff(aggregate_diff, path, b, a)
+                executed_actions.append(
+                    ExecutedAction(
+                        rule_index=rule_index,
+                        action_kind="return",
+                        changes=changes,
+                        returned=rv.value,
+                    )
+                )
+                return rv.value
+
+            # No ret: record what changed and classify the action kind.
+            kind = _action_kind(action_ctx)
+            diff_map = _diff_entities(before_snapshot, entity)
+            for path, (b, a) in diff_map.items():
+                _merge_into_diff(aggregate_diff, path, b, a)
+            executed_actions.append(
+                ExecutedAction(
+                    rule_index=rule_index,
+                    action_kind=kind,
+                    changes=_to_changes(diff_map),
+                )
+            )
+
+        return _NO_RETURN
+
     def _build_execution_order(
         self,
         workflows: dict[str, Workflow | Callable] | None = None,
@@ -234,3 +412,49 @@ class RuleEngine:
     def __len__(self) -> int:
         """Return the number of rules in the engine."""
         return len(self._rules)
+
+
+# --- Helpers for dry_run ------------------------------------------------
+
+
+_NO_RETURN = object()
+
+
+def _to_changes(diff_map: dict[str, tuple[Any, Any]]) -> tuple[ActionChange, ...]:
+    return tuple(
+        ActionChange(path=p, before=b, after=a) for p, (b, a) in sorted(diff_map.items())
+    )
+
+
+def _merge_into_diff(
+    aggregate: dict[str, tuple[Any, Any]],
+    path: str,
+    before: Any,
+    after: Any,
+) -> None:
+    """Merge a single action's change into the aggregate diff.
+
+    First writer keeps the `before`; latest writer supplies the `after`. If the
+    aggregated change net-out to the initial value, drop the entry.
+    """
+    if path in aggregate:
+        original_before, _ = aggregate[path]
+        if original_before == after:
+            del aggregate[path]
+        else:
+            aggregate[path] = (original_before, after)
+    else:
+        aggregate[path] = (before, after)
+
+
+def _action_kind(action_ctx: Any) -> str:
+    if action_ctx.returnStmt():
+        return "return"
+    if action_ctx.assignment():
+        assign_op = action_ctx.assignment().assignOp()
+        if assign_op.ASSIGN():
+            return "set"
+        return "compound"
+    if action_ctx.workflowCall():
+        return "workflow"
+    return "set"
