@@ -64,9 +64,7 @@ print(entity)  # {'age': 25, 'is_adult': True, 'discount': 0.1}
 
 The Python runtime remains the reference implementation. Cross-runtime parity is
 enforced by replaying both generated and hand-maintained shared corpora in
-Python and TypeScript, with the current release contract documented in
-[`docs/semantic-parity-plan.md`](docs/semantic-parity-plan.md) and the test-file
-classification recorded in [`docs/semantic-parity-audit.md`](docs/semantic-parity-audit.md).
+Python and TypeScript.
 
 ```bash
 npm run generate:portable-cases
@@ -663,21 +661,6 @@ npm run generate:parsers
 # Sync the grammar reference into both runtimes (after editing docs/grammar-reference.md)
 node scripts/generate_grammar_reference.mjs
 ```
-
-### Design proposals
-
-Forward-looking designs for each tooling capability are collected under [`docs/proposals/`](docs/proposals/):
-
-- [01 Public AST + extractors](docs/proposals/01-public-ast.md)
-- [02 Builder primitives](docs/proposals/02-builder-primitives.md)
-- [03 Canonical pretty-printer](docs/proposals/03-canonical-formatter.md)
-- [04 Generic validation framework](docs/proposals/04-validation-framework.md)
-- [05 Conflict detection](docs/proposals/05-conflict-detection.md)
-- [06 Scope / path resolution (deferred)](docs/proposals/06-scope-resolution-deferred.md)
-- [07 Grammar reference / rulang skill](docs/proposals/07-grammar-reference.md)
-- [08 Dry-run diff API](docs/proposals/08-dry-run-diff.md)
-
-These describe the *why* and *design choices*; the READMEs above describe the *how*.
 
 ## License
 
