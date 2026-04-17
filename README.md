@@ -569,6 +569,24 @@ Consumers can also override `check_assignment`, `check_comparison`, and
 (`myapp.no_high`, etc.). Severities are per-code and can be overridden at
 call time.
 
+#### Diagnostic codes
+
+Rulang owns every code starting with `rulang.`. Anything else is consumer-owned — use a reverse-domain or project prefix (e.g., `myapp.no_high`).
+
+| Code | Default severity | Emitted when |
+|------|-----------------|--------------|
+| `rulang.syntax_error`           | `error` | parsing the rule text failed |
+| `rulang.unknown_path`           | `error` | `Resolver.check_path` returned `PathInfo(exists=False)` |
+| `rulang.path_not_writable`      | `error` | `check_path` returned `PathInfo(writable=False)` for an assignment target |
+| `rulang.type_mismatch`          | `error` | consumer resolver flagged an assignment/comparison |
+| `rulang.unknown_workflow`       | `error` | consumer resolver flagged a workflow call |
+| `rulang.workflow_arg_mismatch`  | `error` | consumer resolver flagged workflow arg shape |
+| `rulang.invalid_literal`        | `error` | consumer resolver flagged a literal |
+
+The full list is exported as `rulang.validation.DIAGNOSTIC_CODES`. Adjust severities per call with `severity_overrides={"rulang.unknown_path": "warning"}`. Overrides apply to consumer-owned codes too.
+
+Resolver hooks return either the `OK` sentinel (no finding), the `UNKNOWN` sentinel (opt out — rulang emits nothing), or a list of `Diagnostic` objects. Defaults on `BaseResolver` are no-ops, so consumers override only what they care about.
+
 ### Programmatic rule building
 
 `rulang.builders` provides ergonomic constructors so consumers (visual
@@ -604,6 +622,28 @@ import rulang
 prompt_fragment = rulang.grammar_reference()
 ```
 
+The source of truth is [`docs/grammar-reference.md`](docs/grammar-reference.md). Edit that file and run `node scripts/generate_grammar_reference.mjs` to sync both runtimes.
+
+## Python ↔ TypeScript naming
+
+The runtimes are identical semantically but adapt to each language's idioms. Quick cheat sheet:
+
+| Python                                                         | TypeScript                                                    |
+|----------------------------------------------------------------|---------------------------------------------------------------|
+| `engine.add_rules`, `engine.get_rules`, `engine.evaluate`      | `engine.addRules`, `engine.getRules`, `engine.evaluate`       |
+| `engine.dry_run(entity, deep_copy=True)`                       | `engine.dryRun(entity, { deepCopy: true })`                   |
+| `detect_conflicts(rules, mode="all_match")`                    | `detectConflicts(rules, { mode: "all_match" })`               |
+| `validate(rule, resolver, severity_overrides=…)`               | `validate(rule, resolver, { severityOverrides: … })`          |
+| `format_ast`, `format_condition`, `format_action`, `format_path`, `format_expr` | `formatAst`, `formatCondition`, `formatAction`, `formatPath`, `formatExpr` |
+| `builders.and_`, `builders.or_`, `builders.not_`               | `builders.and`, `builders.or`, `builders.not`                 |
+| `builders.in_`, `builders.not_in`                              | `builders.inOp`, `builders.notIn`                             |
+| `builders.float_lit`, `builders.int_lit`                       | `builders.floatLit`, `builders.intLit`                        |
+| `BaseResolver.check_path`, `check_assignment`, `check_comparison`, `check_workflow_call` | `BaseResolver.checkPath`, `checkAssignment`, `checkComparison`, `checkWorkflowCall` |
+| `DryRunResult.matched_rules`, `.executed_actions`, `.final_entity` | `DryRunResult.matchedRules`, `.executedActions`, `.finalEntity` |
+| `grammar_reference()`                                           | `grammarReference()`                                         |
+
+**Parity notes.** Python distinguishes `int` from `float` at runtime; TypeScript has only `number`, so `lit(3)` and `lit(3.0)` both yield `literalType: "int"` in TS. Use `builders.float_lit(n)` / `builders.floatLit(n)` when you need float semantics with cross-runtime parity.
+
 ## Development
 
 ```bash
@@ -614,12 +654,30 @@ uv --directory python sync --all-extras
 # Run Python tests
 uv --directory python run python -m pytest tests/ -v
 
-# Run TypeScript tests
+# Run TypeScript tests (lint + build + vitest + ESM import smoke)
 npm run test:typescript
 
 # Regenerate parser (after grammar changes)
 npm run generate:parsers
+
+# Sync the grammar reference into both runtimes (after editing docs/grammar-reference.md)
+node scripts/generate_grammar_reference.mjs
 ```
+
+### Design proposals
+
+Forward-looking designs for each tooling capability are collected under [`docs/proposals/`](docs/proposals/):
+
+- [01 Public AST + extractors](docs/proposals/01-public-ast.md)
+- [02 Builder primitives](docs/proposals/02-builder-primitives.md)
+- [03 Canonical pretty-printer](docs/proposals/03-canonical-formatter.md)
+- [04 Generic validation framework](docs/proposals/04-validation-framework.md)
+- [05 Conflict detection](docs/proposals/05-conflict-detection.md)
+- [06 Scope / path resolution (deferred)](docs/proposals/06-scope-resolution-deferred.md)
+- [07 Grammar reference / rulang skill](docs/proposals/07-grammar-reference.md)
+- [08 Dry-run diff API](docs/proposals/08-dry-run-diff.md)
+
+These describe the *why* and *design choices*; the READMEs above describe the *how*.
 
 ## License
 
