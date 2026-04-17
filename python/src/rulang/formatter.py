@@ -220,8 +220,6 @@ def _format_string(value: str) -> str:
 
 
 def _format_path(path: Path) -> str:
-    parts = [path.root]
-    last_segment_is_index = False
     out = path.root
     for seg in path.segments:
         if isinstance(seg, FieldSegment):

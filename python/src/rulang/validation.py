@@ -24,7 +24,7 @@ Key design choices (see docs/proposals/04-validation-framework.md):
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, replace
+from dataclasses import dataclass, replace
 from typing import Any, Protocol, Union, runtime_checkable
 
 from rulang.ast import (

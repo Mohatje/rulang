@@ -36,7 +36,6 @@ from rulang.ast import (
     CompoundOp,
     Condition,
     Existence,
-    ExistenceKind,
     Expr,
     FieldSegment,
     FunctionCall,
