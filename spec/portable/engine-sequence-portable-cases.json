@@ -47,5 +47,183 @@
         "expected": [0, 1]
       }
     ]
+  },
+  {
+    "id": "engine_sequence::workflow_metadata_changes_introspection_for_implicit_paths",
+    "kind": "engine_sequence",
+    "mode": "all_match",
+    "rules": [
+      "parameters.computed_load_metric > 1 => parameters.processing_mode = 'expanded'",
+      "not (parameters.package_count is_empty) => workflow('calculate_load_metrics')"
+    ],
+    "steps": [
+      {
+        "op": "get_execution_order",
+        "expected": [0, 1]
+      },
+      {
+        "op": "get_execution_order",
+        "workflows": [
+          {
+            "name": "calculate_load_metrics",
+            "reads": [
+              "entity.parameters.package_count",
+              "entity.parameters.package_length",
+              "entity.parameters.package_width",
+              "entity.parameters.package_height",
+              "entity.parameters.package_weight",
+              "entity.parameters.stackable",
+              "entity.parameters.packaging_type",
+              "entity.parameters.weight_per_unit",
+              "entity.shipment.stops",
+              "entity.shipment.parameters.vehicle_type",
+              "entity.shipment.parameters.vehicle_group"
+            ],
+            "writes": [
+              "entity.parameters.computed_load_metric",
+              "entity.parameters.computed_load_index",
+              "entity.computed_load_metric",
+              "entity.computed_load_index"
+            ],
+            "steps": [
+              {
+                "type": "set",
+                "path": "parameters.computed_load_metric",
+                "value": {
+                  "type": "literal",
+                  "value": 1.3
+                }
+              },
+              {
+                "type": "set",
+                "path": "parameters.computed_load_index",
+                "value": {
+                  "type": "literal",
+                  "value": 13.71
+                }
+              }
+            ]
+          }
+        ],
+        "expected": [1, 0]
+      },
+      {
+        "op": "get_dependency_graph",
+        "workflows": [
+          {
+            "name": "calculate_load_metrics",
+            "reads": [
+              "entity.parameters.package_count",
+              "entity.parameters.package_length",
+              "entity.parameters.package_width",
+              "entity.parameters.package_height",
+              "entity.parameters.package_weight",
+              "entity.parameters.stackable",
+              "entity.parameters.packaging_type",
+              "entity.parameters.weight_per_unit",
+              "entity.shipment.stops",
+              "entity.shipment.parameters.vehicle_type",
+              "entity.shipment.parameters.vehicle_group"
+            ],
+            "writes": [
+              "entity.parameters.computed_load_metric",
+              "entity.parameters.computed_load_index",
+              "entity.computed_load_metric",
+              "entity.computed_load_index"
+            ],
+            "steps": [
+              {
+                "type": "set",
+                "path": "parameters.computed_load_metric",
+                "value": {
+                  "type": "literal",
+                  "value": 1.3
+                }
+              },
+              {
+                "type": "set",
+                "path": "parameters.computed_load_index",
+                "value": {
+                  "type": "literal",
+                  "value": 13.71
+                }
+              }
+            ]
+          }
+        ],
+        "expected": {
+          "1": [0]
+        }
+      },
+      {
+        "op": "evaluate",
+        "input": {
+          "parameters": {
+            "package_count": 3,
+            "package_length": 130,
+            "package_width": 110,
+            "package_height": 100,
+            "package_weight": 24000,
+            "stackable": true
+          }
+        },
+        "workflows": [
+          {
+            "name": "calculate_load_metrics",
+            "reads": [
+              "entity.parameters.package_count",
+              "entity.parameters.package_length",
+              "entity.parameters.package_width",
+              "entity.parameters.package_height",
+              "entity.parameters.package_weight",
+              "entity.parameters.stackable",
+              "entity.parameters.packaging_type",
+              "entity.parameters.weight_per_unit",
+              "entity.shipment.stops",
+              "entity.shipment.parameters.vehicle_type",
+              "entity.shipment.parameters.vehicle_group"
+            ],
+            "writes": [
+              "entity.parameters.computed_load_metric",
+              "entity.parameters.computed_load_index",
+              "entity.computed_load_metric",
+              "entity.computed_load_index"
+            ],
+            "steps": [
+              {
+                "type": "set",
+                "path": "parameters.computed_load_metric",
+                "value": {
+                  "type": "literal",
+                  "value": 1.3
+                }
+              },
+              {
+                "type": "set",
+                "path": "parameters.computed_load_index",
+                "value": {
+                  "type": "literal",
+                  "value": 13.71
+                }
+              }
+            ]
+          }
+        ],
+        "expected_result": true,
+        "expected_entity": {
+          "parameters": {
+            "package_count": 3,
+            "package_length": 130,
+            "package_width": 110,
+            "package_height": 100,
+            "package_weight": 24000,
+            "stackable": true,
+            "computed_load_metric": 1.3,
+            "computed_load_index": 13.71,
+            "processing_mode": "expanded"
+          }
+        }
+      }
+    ]
   }
 ]

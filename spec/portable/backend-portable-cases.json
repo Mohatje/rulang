@@ -138,42 +138,42 @@
     }
   },
   {
-    "id": "backend::goods_line::workflow_then_dependent_rule",
+    "id": "backend::workflow_then_dependent_rule",
     "kind": "evaluate",
     "mode": "all_match",
     "rules": [
-      "parameters.ll_check > 1 => parameters.transport_class = \"FTL\"",
-      "not (parameters.item_count is_empty) => workflow(\"transuniverse_ll_calculation\")"
+      "parameters.computed_load_metric > 1 => parameters.processing_mode = \"expanded\"",
+      "not (parameters.package_count is_empty) => workflow(\"calculate_load_metrics\")"
     ],
     "input": {
       "parameters": {
-        "item_count": 3,
-        "item_length": 130,
-        "item_width": 110,
-        "item_height": 100,
-        "item_weight": 24000,
+        "package_count": 3,
+        "package_length": 130,
+        "package_width": 110,
+        "package_height": 100,
+        "package_weight": 24000,
         "stackable": true
       }
     },
     "workflows": [
       {
-        "name": "transuniverse_ll_calculation",
+        "name": "calculate_load_metrics",
         "reads": [
-          "entity.parameters.item_count",
-          "entity.parameters.item_length",
-          "entity.parameters.item_width",
-          "entity.parameters.item_height",
-          "entity.parameters.item_weight",
+          "entity.parameters.package_count",
+          "entity.parameters.package_length",
+          "entity.parameters.package_width",
+          "entity.parameters.package_height",
+          "entity.parameters.package_weight",
           "entity.parameters.stackable"
         ],
         "writes": [
-          "entity.parameters.ll_check",
-          "entity.parameters.ll_icl"
+          "entity.parameters.computed_load_metric",
+          "entity.parameters.computed_load_index"
         ],
         "steps": [
           {
             "type": "set",
-            "path": "parameters.ll_check",
+            "path": "parameters.computed_load_metric",
             "value": {
               "type": "literal",
               "value": 1.3
@@ -181,7 +181,7 @@
           },
           {
             "type": "set",
-            "path": "parameters.ll_icl",
+            "path": "parameters.computed_load_index",
             "value": {
               "type": "literal",
               "value": 13.71
@@ -193,15 +193,15 @@
     "expected_result": true,
     "expected_entity": {
       "parameters": {
-        "item_count": 3,
-        "item_length": 130,
-        "item_width": 110,
-        "item_height": 100,
-        "item_weight": 24000,
+        "package_count": 3,
+        "package_length": 130,
+        "package_width": 110,
+        "package_height": 100,
+        "package_weight": 24000,
         "stackable": true,
-        "ll_check": 1.3,
-        "ll_icl": 13.71,
-        "transport_class": "FTL"
+        "computed_load_metric": 1.3,
+        "computed_load_index": 13.71,
+        "processing_mode": "expanded"
       }
     }
   }

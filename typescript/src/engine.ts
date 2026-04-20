@@ -127,13 +127,15 @@ export class RuleEngine {
     }
   }
 
-  public getDependencyGraph(): Record<number, Set<number>> {
-    this.ensureExecutionOrder(mergeWorkflows());
+  public getDependencyGraph(
+    workflows?: Record<string, WorkflowLike>,
+  ): Record<number, Set<number>> {
+    this.ensureExecutionOrder(mergeWorkflows(workflows));
     return this.graph.getGraph();
   }
 
-  public getExecutionOrder(): number[] {
-    this.ensureExecutionOrder(mergeWorkflows());
+  public getExecutionOrder(workflows?: Record<string, WorkflowLike>): number[] {
+    this.ensureExecutionOrder(mergeWorkflows(workflows));
     return [...(this.executionOrder ?? [])];
   }
 

@@ -466,6 +466,41 @@ class TestImplicitEntityDependencyGraph:
             cycle_warnings = [x for x in w if issubclass(x.category, CyclicDependencyWarning)]
             assert len(cycle_warnings) > 0
 
+    def test_dependency_graph_with_implicit_workflow_paths(self):
+        engine = RuleEngine(mode="all_match")
+        engine.add_rules([
+            'parameters.computed_load_metric > 1 => parameters.processing_mode = "expanded"',
+            'not (parameters.package_count is_empty) => workflow("calculate_load_metrics")',
+        ])
+
+        workflows = {
+            "calculate_load_metrics": Workflow(
+                fn=lambda e: None,
+                reads=[
+                    "entity.parameters.package_count",
+                    "entity.parameters.package_length",
+                    "entity.parameters.package_width",
+                    "entity.parameters.package_height",
+                    "entity.parameters.package_weight",
+                    "entity.parameters.stackable",
+                    "entity.parameters.packaging_type",
+                    "entity.parameters.weight_per_unit",
+                    "entity.shipment.stops",
+                    "entity.shipment.parameters.vehicle_type",
+                    "entity.shipment.parameters.vehicle_group",
+                ],
+                writes=[
+                    "entity.parameters.computed_load_metric",
+                    "entity.parameters.computed_load_index",
+                    "entity.computed_load_metric",
+                    "entity.computed_load_index",
+                ],
+            )
+        }
+
+        assert engine.get_dependency_graph(workflows=workflows) == {1: {0}}
+        assert engine.get_execution_order(workflows=workflows) == [1, 0]
+
 
 class TestBackwardCompatibility:
     """Test that explicit entity syntax still works correctly."""

@@ -349,26 +349,40 @@ class RuleEngine:
         if self._execution_order is None or self._execution_order_workflow_key != workflow_key:
             self._build_execution_order(workflows, workflow_key)
 
-    def get_dependency_graph(self) -> dict[int, set[int]]:
+    def get_dependency_graph(
+        self,
+        workflows: dict[str, Callable | Workflow] | None = None,
+    ) -> dict[int, set[int]]:
         """
         Get the computed dependency graph.
+
+        Args:
+            workflows: Optional workflows to include in dependency analysis.
 
         Returns:
             Dictionary mapping rule index to set of dependent rule indices.
             An edge from A to B means rule B depends on rule A.
         """
-        self._ensure_execution_order()
+        all_workflows = merge_workflows(workflows)
+        self._ensure_execution_order(all_workflows)
 
         return self._graph.get_graph()
 
-    def get_execution_order(self) -> list[int]:
+    def get_execution_order(
+        self,
+        workflows: dict[str, Callable | Workflow] | None = None,
+    ) -> list[int]:
         """
         Get the computed execution order of rules.
+
+        Args:
+            workflows: Optional workflows to include in dependency analysis.
 
         Returns:
             List of rule indices in the order they will be executed.
         """
-        self._ensure_execution_order()
+        all_workflows = merge_workflows(workflows)
+        self._ensure_execution_order(all_workflows)
 
         return self._execution_order.copy()
 

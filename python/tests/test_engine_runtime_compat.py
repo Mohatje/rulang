@@ -12,15 +12,20 @@ class TestRuntimeCompat:
 
         assert engine.get_execution_order() == [0, 1]
 
+        workflows = {
+            "mark_ready": Workflow(
+                fn=lambda current: current.__setitem__("ready", True),
+                writes=["entity.ready"],
+            )
+        }
+
+        assert engine.get_execution_order(workflows=workflows) == [1, 0]
+        assert engine.get_dependency_graph(workflows=workflows) == {1: {0}}
+
         entity = {"ready": False, "value": 7}
         result = engine.evaluate(
             entity,
-            workflows={
-                "mark_ready": Workflow(
-                    fn=lambda current: current.__setitem__("ready", True),
-                    writes=["entity.ready"],
-                )
-            },
+            workflows=workflows,
         )
 
         assert result == 7

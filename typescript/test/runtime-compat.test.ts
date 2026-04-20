@@ -61,20 +61,96 @@ describe("runtime compatibility", () => {
 
     expect(engine.getExecutionOrder()).toEqual([0, 1]);
 
+    const workflows = {
+      mark_ready: new Workflow({
+        fn: (entity) => {
+          (entity as { ready: boolean }).ready = true;
+        },
+        writes: ["entity.ready"],
+      }),
+    };
+
+    expect(engine.getExecutionOrder(workflows)).toEqual([1, 0]);
+    expect(engine.getDependencyGraph(workflows)).toEqual({ 1: new Set([0]) });
+
     const result = engine.evaluate(
       { ready: false, value: 7 },
-      {
-        mark_ready: new Workflow({
-          fn: (entity) => {
-            (entity as { ready: boolean }).ready = true;
-          },
-          writes: ["entity.ready"],
-        }),
-      },
+      workflows,
     );
 
     expect(result).toBe(7);
     expect(engine.getExecutionOrder()).toEqual([0, 1]);
+  });
+
+  test("tracks workflow-written dependencies for implicit paths with passed workflows", () => {
+    const engine = new RuleEngine("all_match");
+    engine.addRules([
+      "parameters.computed_load_metric > 1 => parameters.processing_mode = 'expanded'",
+      "not (parameters.package_count is_empty) => workflow('calculate_load_metrics')",
+    ]);
+
+    const workflows = {
+      calculate_load_metrics: new Workflow({
+        fn: (entity) => {
+          const parameters = (entity as {
+            parameters: {
+              computed_load_metric?: number;
+              computed_load_index?: number;
+            };
+          }).parameters;
+          parameters.computed_load_metric = 1.3;
+          parameters.computed_load_index = 13.71;
+        },
+        reads: [
+          "entity.parameters.package_count",
+          "entity.parameters.package_length",
+          "entity.parameters.package_width",
+          "entity.parameters.package_height",
+          "entity.parameters.package_weight",
+          "entity.parameters.stackable",
+          "entity.parameters.packaging_type",
+          "entity.parameters.weight_per_unit",
+          "entity.shipment.stops",
+          "entity.shipment.parameters.vehicle_type",
+          "entity.shipment.parameters.vehicle_group",
+        ],
+        writes: [
+          "entity.parameters.computed_load_metric",
+          "entity.parameters.computed_load_index",
+          "entity.computed_load_metric",
+          "entity.computed_load_index",
+        ],
+      }),
+    };
+
+    expect(engine.getExecutionOrder(workflows)).toEqual([1, 0]);
+    expect(engine.getDependencyGraph(workflows)).toEqual({ 1: new Set([0]) });
+
+    const entity = {
+      parameters: {
+        package_count: 3,
+        package_length: 130,
+        package_width: 110,
+        package_height: 100,
+        package_weight: 24000,
+        stackable: true,
+      },
+    };
+
+    expect(engine.evaluate(entity, workflows)).toBe(true);
+    expect(entity).toEqual({
+      parameters: {
+        package_count: 3,
+        package_length: 130,
+        package_width: 110,
+        package_height: 100,
+        package_weight: 24000,
+        stackable: true,
+        computed_load_metric: 1.3,
+        computed_load_index: 13.71,
+        processing_mode: "expanded",
+      },
+    });
   });
 
   test("supports workflow wrappers and list compound assignment", () => {

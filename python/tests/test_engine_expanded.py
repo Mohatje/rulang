@@ -10,7 +10,7 @@ from rulang.exceptions import (
     PathResolutionError,
     WorkflowNotFoundError,
 )
-from rulang.workflows import clear_workflow_registry
+from rulang.workflows import clear_workflow_registry, workflow
 
 
 @pytest.fixture(autouse=True)
@@ -495,6 +495,20 @@ class TestDependencyGraphAPIExpanded:
         assert order.index(2) < order.index(1)
         assert order.index(1) < order.index(0)
 
+    def test_get_execution_order_with_registered_workflow_dependencies(self):
+        @workflow("calculate", reads=["entity.value"], writes=["entity.result"])
+        def calculate(entity):
+            entity["result"] = entity["value"] * 2
+
+        engine = RuleEngine(mode="all_match")
+        engine.add_rules([
+            "entity.result > 0 => entity.status = 'done'",
+            "entity.ready == true => workflow('calculate')",
+        ])
+
+        assert engine.get_execution_order() == [1, 0]
+        assert engine.get_dependency_graph() == {1: {0}}
+
 
 class TestEdgeCasesExpanded:
     """Expanded tests for edge cases."""
@@ -560,4 +574,3 @@ class TestEdgeCasesExpanded:
         entity = {"value": 10, "processed": False}
         engine.evaluate(entity, entity_name="obj")
         assert entity["processed"] is True
-
