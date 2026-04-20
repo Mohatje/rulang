@@ -37,6 +37,12 @@ type EngineSequenceStep =
   | {
       op: "get_execution_order";
       expected: number[];
+      workflows?: WorkflowSpec[];
+    }
+  | {
+      op: "get_dependency_graph";
+      expected: Record<string, number[]>;
+      workflows?: WorkflowSpec[];
     }
   | {
       op: "evaluate";
@@ -239,7 +245,12 @@ function getErrorClass(errorType: string): typeof Error {
 
 function runEngineStep(engine: RuleEngine, step: EngineSequenceStep): void {
   if (step.op === "get_execution_order") {
-    expect(engine.getExecutionOrder()).toEqual(step.expected);
+    expect(engine.getExecutionOrder(buildWorkflows(step))).toEqual(step.expected);
+    return;
+  }
+
+  if (step.op === "get_dependency_graph") {
+    expect(normalizeGraph(engine.getDependencyGraph(buildWorkflows(step)))).toEqual(step.expected);
     return;
   }
 

@@ -119,16 +119,21 @@ def _get_error_class(name: str):
 
 def _run_engine_step(engine: RuleEngine, step: dict):
     op = step["op"]
+    workflows = _build_workflows(step)
 
     if op == "get_execution_order":
-        assert engine.get_execution_order() == step["expected"]
+        assert engine.get_execution_order(workflows=workflows) == step["expected"]
+        return
+
+    if op == "get_dependency_graph":
+        assert _normalize_graph(engine.get_dependency_graph(workflows=workflows)) == step["expected"]
         return
 
     if op == "evaluate":
         entity = copy.deepcopy(step["input"])
         result = engine.evaluate(
             entity,
-            workflows=_build_workflows(step),
+            workflows=workflows,
             entity_name=step.get("entity_name", "entity"),
         )
         assert result == step.get("expected_result")

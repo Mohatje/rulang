@@ -89,6 +89,53 @@
     }
   },
   {
+    "id": "dependency_graph::workflow_writes_reorder_implicit_paths",
+    "kind": "dependency_graph",
+    "rules": [
+      "parameters.computed_load_metric > 1 => parameters.processing_mode = 'expanded'",
+      "not (parameters.package_count is_empty) => workflow('calculate_load_metrics')"
+    ],
+    "workflows": [
+      {
+        "name": "calculate_load_metrics",
+        "reads": [
+          "entity.parameters.package_count",
+          "entity.parameters.package_length",
+          "entity.parameters.package_width",
+          "entity.parameters.package_height",
+          "entity.parameters.package_weight",
+          "entity.parameters.stackable",
+          "entity.parameters.packaging_type",
+          "entity.parameters.weight_per_unit",
+          "entity.shipment.stops",
+          "entity.shipment.parameters.vehicle_type",
+          "entity.shipment.parameters.vehicle_group"
+        ],
+        "writes": [
+          "entity.parameters.computed_load_metric",
+          "entity.parameters.computed_load_index",
+          "entity.computed_load_metric",
+          "entity.computed_load_index"
+        ],
+        "steps": [
+          {
+            "type": "return",
+            "value": {
+              "type": "literal",
+              "value": null
+            }
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "graph": {
+        "1": [0]
+      },
+      "execution_order": [1, 0]
+    }
+  },
+  {
     "id": "dependency_graph::prefix_path_match",
     "kind": "dependency_graph",
     "rules": [
